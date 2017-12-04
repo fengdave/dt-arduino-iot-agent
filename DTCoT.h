@@ -50,6 +50,7 @@ class CoTDeviceEthernet: public CoTDeviceBase { };
  * 	It should be hidden and selectable compile-time ( #define in DTCoTSetup.h? )
  */
 class CoTMQTTCommunication: public CoTCommunicationBase { };
+class CoTMQTTSNCommunication: public CoTCommunicatiobBase { };
 class CoTRESTCommunication: public CoTCommunicatiobBase { };
 
 /* Authentication mechanisms we support */
@@ -76,15 +77,38 @@ class CoTDevice32u4FONA: public CoTDeviceGPRS { };
 
 
 /* Since we have only one cloud - there is no need to abstract it
- * TODO: ask client if he wants to be able to have multiple cloud access (Azzure, DT, Adafruit)
+ * TODO: ask client if he wants to be able to have multiple 
+ *		cloud access (Azzure, DT, Adafruit)
  * If so - provid the abstraction hierarchy for the cloud too,
  * with this class as a "leaf" of the inheritance tree
 */
-class CoTCloud{
+class CoTCloud {
+public:
+	CoTCloud( const CoTDeviceBase& device, 
+		const CoTConfigBase& config );
+
+public:
+	bool init();
+
+puplic:
+	bool publish();
+	bool subscribe();
+
+public:
+	bool registerHandler( const CoTCloudMessage& message, 
+		const CoTCloudMessageHandler handler );
+
+public:
+	bool process();
+
 private:
-	const CoTCommunicationBase& _preferredCommunication;
+	const CoTCommunicationBase _preferedCommunication;
 	const CoTDeviceBase& _selectedDevice;
 	const CoTConfigBase& _cloudConfig;
+
+private:
+	CoTCloud( const CoTCloud& );
+
 };
 
 
