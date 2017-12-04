@@ -1,12 +1,12 @@
 #######################################
-# Syntax Coloring Map For Test
+# Syntax Coloring Map For CoT Arduino
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-Test	KEYWORD1
+CoT	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
