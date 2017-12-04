@@ -26,18 +26,9 @@
 /* Application-specific settings and definitions */
 const unsigned char COUNTER_THRESHOLD = 0xFF;
 
-/* Device-specific settings */
-//CoT::CoTDeviceConfig blinkerDeviceConfig =
-//  CoT::CreateDeviceConfig();
-
-/* Since we know this is a GPRS-capable device we provide
- * the appropriate settings here
- */
-//blinkerDeviceConfig.setGprsApn( "");
-//blinkerDeviceConfig.setGprsUserName( "");
-//blinkerDeviceConfig.setGprsPassword( "");
-
-CoT::CoTDevice blinkerDevice = CoTDeviceAdafruitHUZZAH("mm1-wifi", "password");
+// If you want to use a different wifi library from the default, ie WifiMulti, or
+// use an offboard module,etc. you can override this class. 
+CoT::CoTDevice blinkerDevice = CoTDeviceAdafruitHUZZAH("mm1-wifi", "password"); 
 
 /* Cloud-specific settings */
 const unsigned short CLOUD_SERVER_PORT = 1883;

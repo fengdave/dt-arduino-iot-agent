@@ -4,6 +4,8 @@
 /* Static compile-time library setup definitions */
 #include "DTCoTSetup.h"
 
+#if 0 // It doesn't compile, obviously. Just stopping it from breaking hte build at the moment
+
 namespace DTCoT 
 {
 
@@ -100,6 +102,8 @@ T CreateDeviceConfig<T>( const CoTConfigBase& devConfig){
 
 
 } /* namespace DTCoT */
+
+#endif
 
 #endif /* DTCoT_HEADER_FILE	 */
 
