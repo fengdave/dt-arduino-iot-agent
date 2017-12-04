@@ -27,18 +27,17 @@
 const unsigned char COUNTER_THRESHOLD = 0xFF;
 
 /* Device-specific settings */
-CoT::CoTDeviceConfig blinkerDeviceConfig =
-  CoT::CreateDeviceConfig();
+//CoT::CoTDeviceConfig blinkerDeviceConfig =
+//  CoT::CreateDeviceConfig();
 
 /* Since we know this is a GPRS-capable device we provide
  * the appropriate settings here
  */
-blinkerDeviceConfig.setGprsApn( "");
-blinkerDeviceConfig.setGprsUserName( "");
-blinkerDeviceConfig.setGprsPassword( "");
+//blinkerDeviceConfig.setGprsApn( "");
+//blinkerDeviceConfig.setGprsUserName( "");
+//blinkerDeviceConfig.setGprsPassword( "");
 
-CoT::CoTDevice blinkerDevice =
-    CoT::CreateCoTDevice<CoT::CoTDeviceAdafruitFONA>( blinkerDeviceConfig);
+CoT::CoTDevice blinkerDevice = CoTDeviceAdafruitHUZZAH("mm1-wifi", "password");
 
 /* Cloud-specific settings */
 const unsigned short CLOUD_SERVER_PORT = 1883;

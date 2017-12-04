@@ -72,7 +72,6 @@ class CoTAuthREST: public CoTAuthConfig {};
 namespace devices {
 class CoTDeviceFeatherM0: public CoTDeviceWiFi { };
 class CoTDevice32u4FONA: public CoTDeviceGPRS { };
-class CoTDeviceHUZZAH: public CoTDeviceWiFi { };
 }
 
 
