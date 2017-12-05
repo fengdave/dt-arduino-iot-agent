@@ -9,14 +9,15 @@
 namespace DTCoT {
 	class MQTTCommunication : public CommunicationBase {
 	public:
-		MQTTCommunication(DeviceBase & device);
+		MQTTCommunication(DeviceBase & device, const char * server, const char * username, const char * key);
 		
 		virtual void begin();
 		
-		virtual void send(char * key, char * value);
+		virtual void send(const char * key, const char * value);
 		
 	private:
 		class Adafruit_MQTT_Client mqtt;
+		const char * username;
 	};
 
 }
