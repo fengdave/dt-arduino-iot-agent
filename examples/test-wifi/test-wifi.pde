@@ -1,13 +1,16 @@
-#include "DTCoT.h"
+
+#include <DTCoTDeviceHUZZAH.h>
+#include <DTCoTDeviceWifi.h>
+
 
 // If you want to use a different wifi library from the default, ie WifiMulti, or
 // use an offboard module,etc. you can override this class. 
-CoT::Device blinkerDevice = CoT::DeviceAdafruitHUZZAH(); 
+DTCoT::DeviceWiFi device = DTCoT::DeviceAdafruitHUZZAH(); 
 
 
 void setup() {
 	Serial.println("Connecting to wifi...");
-	blinkerDevice.connect("mm1-wifi", "password");
+	device.connect("mm1-wifi", "password");
 	Serial.println("Connected!");
 }
 
