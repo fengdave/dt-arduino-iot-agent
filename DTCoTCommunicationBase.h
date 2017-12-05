@@ -9,10 +9,9 @@ namespace DTCoT {
 	class CommunicationBase {
 	
 	public:
-		CommunicationBase(DeviceBase & device)
-			: device(device)
-		{
-
+		CommunicationBase(DeviceBase & device) // @todo - pure virtual or move to cpp file?
+		: device(device) {
+			
 		}
 
 

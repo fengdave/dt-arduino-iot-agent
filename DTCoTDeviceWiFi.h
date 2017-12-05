@@ -4,7 +4,14 @@
 #include <DTCoTDeviceBase.h>
 
 #include <String.h>
+
+// @todo - derive this!
+#if defined(ESP8266)
+#include <ESP8266WiFi.h>
+#else
+unimplemented
 #include <WiFi.h>
+#endif
 
 namespace DTCoT {
 

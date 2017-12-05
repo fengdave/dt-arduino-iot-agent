@@ -10,14 +10,16 @@ DTCoT::MQTTCommunication communication = DTCoT::MQTTCommunication(device);
 
 
 void setup() {
+  Serial.begin(115200);
 	Serial.println("Connecting to wifi...");
-	device.begin("mm1-wifi", "password");
+	device.begin("mm1-technology-gast", "We2RF1tec");
 	Serial.println("Connected!");
-	
-	communication.send("temp", "25"); // Just provisional - we can setup a more universal protocol.
 }
 
 void loop() {
   /* Update cloud infrastructure client */
+    Serial.println("Sending to MQTT...");
+    communication.send("temp-newlib", "25"); // Just provisional - we can setup a more universal protocol.
+    delay(10000);
 
 }
