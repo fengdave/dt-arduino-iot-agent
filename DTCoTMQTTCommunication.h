@@ -11,7 +11,9 @@ namespace DTCoT {
 	public:
 		MQTTCommunication(DeviceBase & device);
 		
-		void send(char * key, char * value);
+		virtual void begin();
+		
+		virtual void send(char * key, char * value);
 		
 	private:
 		class Adafruit_MQTT_Client mqtt;
