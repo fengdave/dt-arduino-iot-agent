@@ -11,7 +11,7 @@ namespace DTCoT {
 class DeviceWiFi : public DeviceBase {
 	
 public:
-	void connect(char * ssid, char * password);
+	void begin(char * ssid, char * password);
 
 	virtual Client * getClient();
 

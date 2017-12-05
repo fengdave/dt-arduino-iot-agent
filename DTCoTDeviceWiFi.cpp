@@ -1,4 +1,4 @@
-#include <DTCoTDeviceWifi.h>
+#include <DTCoTDeviceWiFi.h>
 
 
 
@@ -7,7 +7,7 @@
 
 }*/
 
-void DTCoT::DeviceWiFi::connect(char * ssid, char * password) {
+void DTCoT::DeviceWiFi::begin(char * ssid, char * password) {
     delay(10);
 
     WiFi.begin(ssid, password);
