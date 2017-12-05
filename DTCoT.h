@@ -2,6 +2,7 @@
 #define DTCoT_HEADER_FILE	
 
 /* Static compile-time library setup definitions */
+
 #include "DTCoTSetup.h"
 
 namespace DTCoT 
@@ -14,15 +15,24 @@ namespace DTCoT
 class CoTConfigBase { };
 
 class CoTDeviceBase {
+public:
+	CoTDeviceBase( const CoTConfigBase& deviceConfig);
+
+public:
+	virtual bool init() = 0;
+	virtual void registerHandler( const CoTCloudMessage& message
+		, const CoTCloudMessaheHandler& handler ) = 0;
+
 private:
 	const CoTConfigBase& _deviceConfig;
 };
 
+/* Base class to distinguish between authentication details (like TLS/Fingerprint) */
 class CoTAuthBase { };
 
 class CoTCommunicationBase {
 private:
-	const CoTAuthBase& _authenticationConfig
+	const CoTAuthBase& _authenticationConfig;
 	const CoTConfigBase& _communicationConfig;
 }; 
 
@@ -40,10 +50,17 @@ class CoTCommunicationConfig: public CoTConfigBase { };
 /* Configurationf or any authentication */
 class CoTAuthConfig: public CoTConfigBase { };
 
-/* Type of devices we support (only connectivity criteria?) */
-class CoTDeviceGPRS: public CoTDeviceBase { };
-class CoTDeviceWiFi: public CoTDeviceBase { };
-class CoTDeviceEthernet: public CoTDeviceBase { };
+/* Types of devices we support (by connectivity criteria) */
+class CoTDeviceGPRS: public CoTDeviceBase { 
+};
+
+class CoTDeviceWiFi: public CoTDeviceBase { 
+public:
+	CoTDeviceWiFi( const CoTDeviceConfig& deviceConfig);
+};
+
+class CoTDeviceEthernet: public CoTDeviceBase { 
+};
 
 /* Communication types we support */
 /* Nothe: communication type does not belong to the Library public interface.
@@ -65,15 +82,38 @@ class CoTAuthTLS: public CoTAuthBase { };
 /* Concrete classes, instances will be used in the user code
  * preferred instanctiation methods - helper functions provided by the library (see below)
  */
-namespace config {
-class CoTAuthMQTT: public CoTAuthConfig {};
-class CoTAuthREST: public CoTAuthConfig {};
-}
 
-namespace devices {
-class CoTDeviceFeatherM0: public CoTDeviceWiFi { };
-class CoTDevice32u4FONA: public CoTDeviceGPRS { };
-}
+/* Available Authentication mechanisms (TLS/Fingerprint) */
+class CoTAuthTLS: public CoTAuthBase { };
+class CoTAuthFingerprint: public CoTAuthBase { };
+
+
+class CloudMessageHandlerParam { };
+
+class CloudVar: public CloudMessageHandlerParam { 
+
+public:
+	CloudVar( CloudVarNameType name, const T& value) 
+		: _name( name), _value( value) 
+		{ }
+
+public:
+	CloudVarNameType name() { return _name; }
+	T value() { return _value; }
+
+private:
+	CloudVarNameType _name;
+	T _value;
+};
+
+
+/* Setings needed for accessing any cloud service (DT/AZURE/ADAFRUIT) */
+class CoTCloudConfig: public CoTConfigBase {
+public:
+	CoTCloudConfig( const char* serverUrl
+		, const char* password
+		, unsigned long portNumber );
+};
 
 
 /* Since we have only one cloud - there is no need to abstract it
@@ -84,8 +124,8 @@ class CoTDevice32u4FONA: public CoTDeviceGPRS { };
 */
 class CoTCloud {
 public:
-	CoTCloud( const CoTDeviceBase& device, 
-		const CoTConfigBase& config );
+	CoTCloud( const CoTDeviceBase& device );
+	CoTCloud( const CoTDeviceBase& device,	const CoTConfigBase& cloudConfig );
 
 public:
 	bool init();
@@ -102,26 +142,14 @@ public:
 	bool process();
 
 private:
-	const CoTCommunicationBase _preferedCommunication;
-	const CoTDeviceBase& _selectedDevice;
-	const CoTConfigBase& _cloudConfig;
+	const CoTCommunicationBase _preferedCommunication; /* MQTT/MQTT-SN/REST/AZURE*/
+	const CoTDeviceBase& _selectedDevice;					/* M0/HUZZAH/FONA */
+	const CoTConfigBase& _cloudConfig;						/* URL/User/PWD/ID */
 
 private:
 	CoTCloud( const CoTCloud& );
 
 };
-
-
-
-/* Helper functions (mostly factory functions to facilitate 
- * instantiation of library public interface objects) 
-*/
-template<typename T>
-T CreateDeviceConfig<T>( const CoTConfigBase& devConfig){
-	T d( devConfig);
-	return d;
-}
-
 
 } /* namespace DTCoT */
 

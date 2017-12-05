@@ -1,7 +1,12 @@
 
 #include "DTCoT.h"
 
-using DTCoT;
+using namespace DTCoT;
+
+
+CoTDeviceBase::CoTDeviceBase( const CoTConfigBase& deviceConfig)
+	:_deviceConfig( deviceConfig) { }
+
 
 /* Apply preferred communication method selected
  * in the setup file.
@@ -27,8 +32,7 @@ CoTCloud::CoTCloud( const CoTDeviceBase& device
 
 bool CoTCloud::init() { return false; }
  
-bool CoTCloud::publish( const char* varName, 
-	onst char* value) { 
+bool CoTCloud::publish( const char* varName, onst char* value) { 
 	eturn false; 
 }
 
