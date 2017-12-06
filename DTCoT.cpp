@@ -2,11 +2,6 @@
 
 using namespace DTCoT;
 
-
-CoTDeviceBase::CoTDeviceBase( const CoTConfigBase& deviceConfig)
-	:_deviceConfig( deviceConfig) { }
-
-
 /* Apply preferred communication method selected
  * in the setup file.
  * Most of users will most likely not change the communication
@@ -30,6 +25,11 @@ CoTDeviceBase::CoTDeviceBase( const CoTConfigBase& deviceConfig)
 #endif
 
 
+CoTCloudConfig::CoTCloudConfig( const char* serverUrl
+	, const char* password
+	, unsigned long portNumber )
+	: CoTConfigBase( ) {
+}
 
 
 CoTCloud::CoTCloud( const CoTDeviceBase& device
@@ -49,9 +49,25 @@ CoTCloud::CoTCloud( const CoTDeviceBase& device
 
 bool CoTCloud::init() { return false; }
  
-bool publish( const char* varName, const char* varValue) { return false; }
-bool publish( const char* varName, unsigned long varValue) { return false; }
-bool publish( const char* varName, double varValue) { return false; }
+bool CoTCloud::publish( const char* varName
+	, const char* varValue) { 
+	return false; 
+}
+
+bool CoTCloud::publish( const char* varName
+	, unsigned long varValue) { 
+	return false; 
+}
+
+bool CoTCloud::publish( const char* varName
+	, double varValue) { 
+	return false; 
+}
+
+bool CoTCloud::subscribe( const char* varName
+	, const CoTHandler handler ) { 
+	return false; 
+}
 
 void CoTCloud::errorHandler( const CoTHandlerParam error) {
 	return false;

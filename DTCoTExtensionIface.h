@@ -11,13 +11,16 @@ namespace DTCoT
 {
 
 /* Configuration for every supported device */
-class CoTDeviceConfig: public CoTConfigBase { };
+class CoTConfigDevice: public CoTConfigBase { 
+public:
+	CoTConfigDevice();
+};
 
 /* Configuration for every communication method */
-class CoTCommunicationConfig: public CoTConfigBase { };
+class CoTConfigCommunication: public CoTConfigBase { };
 
 /* Configurationf or any authentication */
-class CoTAuthConfig: public CoTConfigBase { };
+class CoTConfigAuth: public CoTConfigBase { };
 
 /* Communication types we support */
 /* Nothe: communication type does not belong to the Library public interface.
@@ -25,10 +28,11 @@ class CoTAuthConfig: public CoTConfigBase { };
  */
 class CoTMQTTCommunication: public CoTCommunicationBase { 
 public:
-	CoTMWTTCommunication( const CoTDeviceBase& device
+	CoTMQTTCommunication( const CoTDeviceBase& device
 		, const CoTConfigBase& config
 		, const CoTAuthBase& authentication );
 };
+
 class CoTMQTTSNCommunication: public CoTCommunicationBase { };
 class CoTRESTCommunication: public CoTCommunicationBase { };
 

@@ -8,6 +8,11 @@ CoTCommunicationBase::CoTCommunicationBase(
 	, const CoTAuthBase& authentication )
 	: _authentication( authentication)
 	, _config( config)
-	, _device( device)  {
+	, _device( device) 
+{ } 
 
-} 
+CoTDeviceBase::CoTDeviceBase( 
+	const CoTConfigBase& deviceConfig)
+	: _deviceConfig( deviceConfig) 
+{ } 
+

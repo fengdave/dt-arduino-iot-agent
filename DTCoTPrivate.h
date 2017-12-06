@@ -10,13 +10,15 @@ namespace DTCoT
 typedef void* CoTHandlerParam;
 typedef void (*CoTHandler)(CoTHandlerParam);
 
-
-/* DTCoT Library Base Classes (will not be instantiated directly; 
- * to be used in platform/config/communication-independent code)
- * ----------------------------
+/* Base class for all kind of configurations used 
+ * in the library ( it covers Devicem, Cloud, 
+ * Communication, Authentication configs). 
+ * Everything that has to be configured and 
+ * configs - stored: passwords, IP, Port, URL, etc.
  */
 class CoTConfigBase { };
 
+/* Base class for each device library is capable of working with */
 class CoTDeviceBase {
 public:
 	CoTDeviceBase( const CoTConfigBase& deviceConfig);
@@ -24,17 +26,17 @@ public:
 public:
 	virtual bool init() = 0;
 
-	/* Overload to get the device-specific error handler */
+	/* Overload to get the device-specific error handling */
 	virtual void errorHandler( const CoTHandlerParam handler ) { };
 
 private:
 	const CoTConfigBase& _deviceConfig;
 };
 
-/* Base class to distinguish between authentication details (like TLS/Fingerprint) */
 class CoTAuthBase { };
 
 class CoTCommunicationBase {
+public:
 	CoTCommunicationBase( const CoTDeviceBase& device
 		, const CoTConfigBase& config
 		, const CoTAuthBase& authentication ); 

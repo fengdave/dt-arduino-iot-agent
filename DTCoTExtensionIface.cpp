@@ -8,5 +8,7 @@ CoTMQTTCommunication::CoTMQTTCommunication(
 	, const CoTAuthBase& authentication )
 	: CoTCommunicationBase( device, config, authentication) 
 {
-	
 }
+
+CoTConfigDevice::CoTConfigDevice(): CoTConfigBase() { }
+

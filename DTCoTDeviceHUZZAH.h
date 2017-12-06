@@ -6,23 +6,21 @@
 
 namespace DTCoT {
 
-class CoTConfigDeviceHUZZAH: public CoTConfigBase {
+class CoTConfigDeviceHUZZAH: public CoTConfigDeviceWiFi {
 public:
-	CoTConfigDeviceHUZZAH( const char* wifiSsid, const char* wifiPassword);
-
-public:
-	const char* getWiFiSsid();
-	const char* getWiFiPassword();
+	CoTConfigDeviceHUZZAH( const char* WiFiSSID
+		, const char* WiFiPassword );
 };
+
 
 class CoTDeviceHUZZAH : public CoTDeviceWiFi {
 public:
 	CoTDeviceHUZZAH( const CoTConfigDeviceHUZZAH& cfg );
 
 public:
-	bool init();
+	bool init();	
 
-	void errorHandler( const CoTHandlerParam handler ) { };
+	void errorHandler( const CoTHandlerParam& error );
 };
 
 } /* namespace DTCoT */
