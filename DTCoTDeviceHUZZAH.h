@@ -1,7 +1,8 @@
 #ifndef DT_COT_DEVICE_HUZZAH_HEADER_FILE
 #define DT_COT_DEVICE_HUZZAH_HEADER_FILE
 
-#include "DTCoT.h"
+#include "DTCoTPrivate.h"
+#include "DTCoTDeviceWiFi.h"
 
 namespace DTCoT {
 
@@ -21,8 +22,7 @@ public:
 public:
 	bool init();
 
-	void registerHandler( const CoTCloudMessage& message
-		, const CoTCloudMessaheHandler& handler );
+	void errorHandler( const CoTHandlerParam handler ) { };
 };
 
 } /* namespace DTCoT */

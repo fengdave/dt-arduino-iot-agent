@@ -16,11 +16,13 @@
  */
 
 #include "DTCoT.h"
-#include "DTCoTDeviceWiFi.h"
-#include "DTCoTDeviceHUZZAH.h"
 
 /* Application-specific settings and definitions */
+#define CLOUD_COUNTER_VAR_NAME "cloud-counter"
+#define ON_BOARD_LED 13
 const unsigned char COUNTER_THRESHOLD = 0xFF;
+
+
 
 DTCoT::CoTConfigDeviceHUZZAH blinkerDeviceConfig( "mm1-wifi", "password");
 
@@ -35,40 +37,46 @@ DTCoT::CoTCloudConfig cloudConfig ( "io.adafruit.com"
 
 /* Adafruit UserID: "f53d3470b1b0430297a51b8b881587df"  - Adafruit-specific setting */
 
-//DTCoT::CoTCloud cloud( blinkerDevice, cloudConfig);
-DTCoT::CoTCloud cloud( blinkerDevice);
+DTCoT::CoTCloud cloud( blinkerDevice, cloudConfig);
 
-
-void OnConfigError( const DTCoT::CloudMessageHandlerParam& param) {
-  
-}
-void setup() {
-
-  /* Subscribe to device-specific messages */
-  blinkerDevice.registerHandler( DTCoT::DeviceHandler::OnConfigError, OnConfigError);
-  
-  /* Subscribe to relevant */
-  cloud.registerHandler( DTCoT::CloudHandler::OnLoginFailed, OnLoginFailed);
-  cloud.registerHandler( DTCoT::CloudHandler::OnCloudVarChange, OnCloudVarChange);
-  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionEstablished, OnConnectionEstablished);
-  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionLost, OnConnectionLost);
-  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionTimeOut, OnConnectionTimeOut);
+void OnConfigError( void* error) {
+  /* TODO: check delivered param 
+   * TODO: cast to the known error type
+   * TODO: process the error accordingly
+   */
 }
 
-/* Check the counter value from the cloud-based variable */
-void OnCloudVarChange( const DTCoT::CloudMessageHandlerParam& param) {
-  /* Since we know the message - we can correctly cast the parameter */
-  const DTCoT::CloudVar cloudVar( param); 
+void onCounterValueChanged( void* newCounterValue) {
+  /* TODO: parameter NULL check 
+   * TODO: casting outcome check
+   * TODO: provide helper-macro for easy app-specific casting
+   * TODO: figure out how to avoid casting for different payload types
+   */
+  unsigned long counterValue = *(static_cast< unsigned long*>(newCounterValue) );
   
-  if( cloudVar.name() == "led-blink-counter") {
-    if( cloudVar.toInt() >= COUNTER_THRESHOLD) {
-        blinkLed10Times();
-    }
-    else {
-      turnLedOff();
-    }
+  if( counterValue >= COUNTER_THRESHOLD) {
+    digitalWrite( ON_BOARD_LED, HIGH);
+  }
+  else {
+    digitalWrite( ON_BOARD_LED, LOW);
   }
 }
+
+void setup() {
+  /* Subscribe to device-specific messages */
+//  blinkerDevice.registerHandler( DTCoT::DeviceHandler::OnConfigError, OnConfigError);
+
+  /* Subscribe to relevant */
+//  cloud.registerHandler( DTCoT::CloudHandler::OnLoginFailed, OnLoginFailed);
+//  cloud.registerHandler( DTCoT::CloudHandler::OnCloudVarChange, OnCloudVarChange);
+//  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionEstablished, OnConnectionEstablished);
+//  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionLost, OnConnectionLost);
+//  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionTimeOut, OnConnectionTimeOut);
+
+  /* Subscribe to the change of a cloud variable of interest */
+  cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged);
+}
+
 
 void loop() {
   /* Update cloud infrastructure client */
@@ -76,11 +84,11 @@ void loop() {
     /* TODO: process error here */      
   }
 
-  static unsigned char counter = 0;
+  static unsigned long counter = 0;
   ++counter;
   
   if( counter ) 
-  if( !cloud.publish( variable, value) ) {
+  if( !cloud.publish( "cloud-counter", counter) ) {
     /* TODO: process error here */      
   }
 }

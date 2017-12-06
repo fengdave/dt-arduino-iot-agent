@@ -1,6 +1,8 @@
 #ifndef DT_COT_DEVICE_WIFI_HEADER_FILE
 #define DT_COT_DEVICE_WIFI_HEADER_FILE
 
+#include "DTCoTPrivate.h"
+
 namespace DTCoT {
 
 class CoTDeviceWiFi: public CoTDeviceBase { 

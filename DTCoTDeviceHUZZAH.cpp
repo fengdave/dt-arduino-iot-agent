@@ -16,9 +16,7 @@ CoTDeviceHUZZAH::CoTDeviceHUZZAH( const CoTConfigDeviceHAZZAH& config):
 
 CoTDeviceHUZZAH::init() { return false; }
 
-void CoTDeviceHUZZAH::registerHandler( const CoTCloudMessage& message
-		, const CoTCloudMessaheHandler& handler ) 
-{
-}
+void CoTDeviceHUZZAH::errorHandler( 
+	const CoTHandlerParam& deviceError ) { }
 
 
