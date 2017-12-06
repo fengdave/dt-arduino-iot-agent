@@ -2,6 +2,7 @@
 
 using namespace DTCoT;
 
+
 CoTCommunicationBase::CoTCommunicationBase( 
 	const CoTDeviceBase& device
 	, const CoTConfigBase& config

@@ -17,34 +17,34 @@
 
 #include "DTCoT.h"
 
-/* Application-specific settings and definitions */
-#define CLOUD_COUNTER_VAR_NAME "cloud-counter"
-#define ON_BOARD_LED 13
+/* Application-specific settings */
+const unsigned char ON_BOARD_LED = 13;
+const char* CLOUD_COUNTER_VAR_NAME = "cloud-counter";
+
 const unsigned char COUNTER_THRESHOLD = 0xFF;
 
-
-
-DTCoT::CoTConfigDeviceHUZZAH blinkerDeviceConfig( "mm1-wifi", "password");
-
-DTCoT::CoTDeviceHUZZAH blinkerDevice( blinkerDeviceConfig);
-
-/* Cloud-specific settings */
 const unsigned short CLOUD_SERVER_PORT = 1883;
-DTCoT::CoTCloudConfig cloudConfig ( "io.adafruit.com"
-                                    , "mqtt_enthusiast"
-                                    , CLOUD_SERVER_PORT
-                                  );
+const char* CLOUD_SERVER_PASSWORD = "mqtt_enthusiast";
+const char* ADAFRUIT_USER_ID = "f53d3470b1b0430297a51b8b881587df";
 
-/* Adafruit UserID: "f53d3470b1b0430297a51b8b881587df"  - Adafruit-specific setting */
+using namespace DTCoT;
 
-DTCoT::CoTCloud cloud( blinkerDevice, cloudConfig);
+/* Setup the Cloud access and the device to communicate to cloud 
+ */
+CoTCloud cloud( 
+  /* Configure communcation settings of your DT Cloud-enabled device */
+  CoTDeviceHUZZAH( 
+    CoTConfigDeviceHUZZAH( "mm1-wifi", "password" )
+  )
+  
+  /* Setup the cloud communication method */ 
+  , CoTConfigCommunicationMQTT( "io.adafruit.com"
+    , CLOUD_SERVER_PORT
+    , CLOUD_SERVER_PASSWORD
+    , ADAFRUIT_USER_ID
+  )
+);
 
-void OnConfigError( void* error) {
-  /* TODO: check delivered param
-     TODO: cast to the known error type
-     TODO: process the error accordingly
-  */
-}
 
 void onCounterValueChanged( void* newCounterValue) {
   /* TODO: parameter NULL check
@@ -62,17 +62,8 @@ void onCounterValueChanged( void* newCounterValue) {
   }
 }
 
+
 void setup() {
-  /* Subscribe to device-specific messages */
-  //  blinkerDevice.registerHandler( DTCoT::DeviceHandler::OnConfigError, OnConfigError);
-
-  /* Subscribe to relevant */
-  //  cloud.registerHandler( DTCoT::CloudHandler::OnLoginFailed, OnLoginFailed);
-  //  cloud.registerHandler( DTCoT::CloudHandler::OnCloudVarChange, OnCloudVarChange);
-  //  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionEstablished, OnConnectionEstablished);
-  //  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionLost, OnConnectionLost);
-  //  cloud.registerHandler( DTCoT::CloudHandler::OnConnectionTimeOut, OnConnectionTimeOut);
-
   /* Subscribe to the change of a cloud variable of interest */
   cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged);
 }
@@ -87,9 +78,10 @@ void loop() {
   static unsigned long counter = 0;
   ++counter;
 
-  if ( counter )
+  if ( counter ) {
     if ( !cloud.publish( "cloud-counter", counter) ) {
       /* TODO: process error here */
     }
+  }
 }
 

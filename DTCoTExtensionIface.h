@@ -26,15 +26,36 @@ class CoTConfigAuth: public CoTConfigBase { };
 /* Nothe: communication type does not belong to the Library public interface.
  * 	It should be hidden and selectable compile-time ( #define in DTCoTSetup.h? )
  */
-class CoTMQTTCommunication: public CoTCommunicationBase { 
+
+class CoTConfigCommunicationMQTT: public CoTConfigBase {
 public:
-	CoTMQTTCommunication( const CoTDeviceBase& device
+	CoTConfigCommunicationMQTT( const char* serverUrl
+		, unsigned long portNumber 
+		, const char* password
+		, const char* userID );
+
+public:
+	const char* getUrl();
+	unsigned long getPortNumber();
+	const char* getPassword();
+	const char* getUserId();
+
+private:
+	const char* _serverUrl;
+	unsigned long _portNumber;
+	const char* _password;
+	const char* _userId;
+};
+
+class CoTCommunicationMQTT: public CoTCommunicationBase { 
+public:
+	CoTCommunicationMQTT( const CoTDeviceBase& device
 		, const CoTConfigBase& config
 		, const CoTAuthBase& authentication );
 };
 
-class CoTMQTTSNCommunication: public CoTCommunicationBase { };
-class CoTRESTCommunication: public CoTCommunicationBase { };
+class CoTCommunicationMQTTSN: public CoTCommunicationBase { };
+class CoTCommunicationREST: public CoTCommunicationBase { };
 
 /* Authentication mechanisms we support */
 class CoTAuthFingerPrint: public CoTAuthBase { };

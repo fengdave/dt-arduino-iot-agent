@@ -18,14 +18,6 @@
 
 namespace DTCoT {
 
-/* Setings needed for accessing any cloud service (DT/AZURE/ADAFRUIT) */
-class CoTCloudConfig: public CoTConfigBase {
-public:
-	CoTCloudConfig( const char* serverUrl
-		, const char* password
-		, unsigned long portNumber );
-};
-
 
 /* Since we have only one cloud - there is no need to abstract it
  * TODO: ask client if he wants to be able to have multiple 
@@ -55,8 +47,8 @@ public:
 
 private:
 	const CoTDeviceBase& _selectedDevice;					/* M0/HUZZAH/FONA */
-	const CoTConfigBase& _cloudConfig;						/* URL/User/PWD/ID */
-	const CoTCommunicationBase _preferedCommunication; /* MQTT/MQTT-SN/REST/AZURE*/
+	PREFERED_COMMUNICATION_METHOD 
+		_preferedCommunication; /* MQTT/MQTT-SN/REST/AZURE*/
 
 private:
 	CoTCloud( const CoTCloud& );

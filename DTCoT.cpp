@@ -2,18 +2,6 @@
 
 using namespace DTCoT;
 
-/* Apply preferred communication method selected
- * in the setup file.
- * Most of users will most likely not change the communication
- * method, but the library maintainer should be able to do this.
- */
-#if defined(COMMUNICATION_MQTT)
-	#define PREFERED_COMMUNICATION_METHOD CoTMQTTCommunication
-#elif defined(COMMUNICATION_MQTT_SN )
-	#define PREFERED_COMMUNICATION_METHOD CoTMQTTSNTCommunication
-#elif defined(COMMUNICATION_REST)
-	#define PREFERED_COMMUNICATION_METHOD CoTRESTCommunication
-#endif
 
 
 #if defined(AUTHENTICATION_TLS)
@@ -24,28 +12,20 @@ using namespace DTCoT;
 	#define PREFERED_AUTHENTICATION_METHOD CoTAuthNone
 #endif
 
-
-CoTCloudConfig::CoTCloudConfig( const char* serverUrl
-	, const char* password
-	, unsigned long portNumber )
-	: CoTConfigBase( ) {
+const CoTAuthBase& getCloudAuthMethodInst() {
+	static PREFERED_AUTHENTICATION_METHOD cloudAuthMethod;
+	return cloudAuthMethod;
 }
-
 
 CoTCloud::CoTCloud( const CoTDeviceBase& device
 	, const CoTConfigBase& config ) 
 	: _selectedDevice( device)
-	, _cloudConfig( config)
-	, _preferedCommunication( 
-		PREFERED_COMMUNICATION_METHOD ( 
+	, _preferedCommunication ( 
 			device
 			, config
-			, PREFERED_AUTHENTICATION_METHOD( )
+			, getCloudAuthMethodInst()
 		)
-	)
-{
-
-}
+{ }
 
 bool CoTCloud::init() { return false; }
  
