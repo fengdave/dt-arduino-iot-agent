@@ -1,9 +1,10 @@
-#ifndef CoTDeviceWiFi_h_
-#define CoTDeviceWiFi_h_
 
-#include <DTCoTDeviceBase.h>
+#ifndef DT_COT_DEVICE_WIFI_HEADER_FILE
+#define DT_COT_DEVICE_WIFI_HEADER_FILE
 
-#include <String.h>
+#include "DTCoTPrivate.h"
+#include "DTCoTExtensionIface.h"
+#include "DTCoTDeviceBase.h"
 
 // @todo - derive this!
 #if defined(ESP8266)
@@ -13,11 +14,28 @@ unimplemented
 #include <WiFi.h>
 #endif
 
+
 namespace DTCoT {
 
-class DeviceWiFi : public DeviceBase {
+class CoTConfigDeviceWiFi: public CoTConfigDevice {
+public:
+	CoTConfigDeviceWiFi( const char* WiFiSSID
+	, const char* WiFiPassword );
+
+public:
+	const char* getWiFiSSID();
+	const char* getWiFiPassword();
+
+private:
+	const char* _WiFiSSID;
+	const char* _WiFiPassword;
+};
+
+
+class CoTDeviceWiFi : public CoTDeviceBase {
 	
 public:
+	CoTDeviceWiFi( const CoTConfigDeviceWiFi& wifiDeviceConfig);
 	void begin(char * ssid, char * password);
 
 	virtual Client * getClient();
@@ -28,4 +46,10 @@ private:
 
 }
 
-#endif
+
+
+} /* namespace DTCoT */
+
+#endif /* DT_COT_DEVICE_WIFI_HEADER_FILE */
+
+

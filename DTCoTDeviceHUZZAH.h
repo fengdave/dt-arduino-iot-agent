@@ -1,15 +1,28 @@
-#ifndef CoTDeviceHUZZAH_h_
-#define CoTDeviceHUZZAH_h_
+#ifndef DT_COT_DEVICE_HUZZAH_HEADER_FILE
+#define DT_COT_DEVICE_HUZZAH_HEADER_FILE
 
-#include <DTCoTDeviceWifi.h>
+#include "DTCoTPrivate.h"
+#include "DTCoTDeviceWiFi.h"
 
 namespace DTCoT {
 
-class DeviceAdafruitHUZZAH : public DeviceWiFi {
+class CoTConfigDeviceHUZZAH: public CoTConfigDeviceWiFi {
 public:
-
+	CoTConfigDeviceHUZZAH( const char* WiFiSSID
+		, const char* WiFiPassword );
 };
 
-}
 
-#endif // CoTDeviceHUZZAH_h_
+class CoTDeviceHUZZAH : public CoTDeviceWiFi {
+public:
+	CoTDeviceHUZZAH( const CoTConfigDeviceHUZZAH& cfg );
+
+public:
+	bool init();	
+
+	void errorHandler( const CoTHandlerParam& error );
+};
+
+} /* namespace DTCoT */
+
+#endif /* DT_COT_DEVICE_ADAFRUIT_FONA_HEADER_FILE */

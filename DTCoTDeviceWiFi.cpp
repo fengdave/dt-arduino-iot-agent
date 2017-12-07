@@ -1,13 +1,37 @@
-#include <DTCoTDeviceWiFi.h>
 
-
+#include "DTCoTPrivate.h"
+#include "DTCoTDeviceWiFi.h"
+	
 #define DEBUG_PRINT(x) Serial.println(x) // @todo - make this universal?
+	
 
-/*DeviceWiFi::DeviceWiFi() {
+using namespace DTCoT;
 
-}*/
+CoTConfigDeviceWiFi::CoTConfigDeviceWiFi(
+	const char* WiFiSSID
+	, const char* WiFiPassword )
+	: _WiFiSSID( WiFiSSID)
+	, _WiFiPassword( WiFiPassword)
+	, CoTConfigDevice( )
+{
+}
 
-void DTCoT::DeviceWiFi::begin(char * ssid, char * password) {
+const char* CoTConfigDeviceWiFi::getWiFiSSID() { 
+	return _WiFiSSID;
+}
+
+const char* CoTConfigDeviceWiFi::getWiFiPassword() { 
+	return _WiFiPassword; 
+}
+
+
+CoTDeviceWiFi::CoTDeviceWiFi(	const CoTConfigDeviceWiFi& wifiConfig)
+	: CoTDeviceBase( wifiConfig)
+{
+}
+
+
+void CoTDeviceWiFi::begin(char * ssid, char * password) {
     delay(10);
 
 	DEBUG_PRINT("DTCoT::DeviceWiFi::begin");
@@ -23,6 +47,6 @@ void DTCoT::DeviceWiFi::begin(char * ssid, char * password) {
 	DEBUG_PRINT("DTCoT::DeviceWiFi::connected!");
 }
 
-Client * DTCoT::DeviceWiFi::getClient() {
+Client * DTCoT::CoTDeviceWiFi::getClient() {
 	return &wifiClient;
 }

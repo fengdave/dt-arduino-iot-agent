@@ -1,109 +1,60 @@
-#ifndef DTCoT_HEADER_FILE
-#define DTCoT_HEADER_FILE	
+#ifndef DT_COT_HEADER_FILE 
+#define DT_COT_HEADER_FILE 
 
-/* Static compile-time library setup definitions */
 #include "DTCoTSetup.h"
 
-#if 0 // It doesn't compile, obviously. Just stopping it from breaking hte build at the moment
+#include "DTCoTPrivate.h"
+#include "DTCoTExtensionIface.h"
 
-namespace DTCoT 
-{
+#include "DTCoTDeviceWiFi.h"
+#include "DTCoTDeviceGPRS.h"
+#include "DTCoTDeviceEthernet.h"
 
-/* DTCoT Library Base Classes (will not be instantiated directly; 
- * to be used in platform/config/communication-independent code)
- * ----------------------------
- */
-class CoTConfigBase { };
-
-class CoTDeviceBase {
-private:
-	const CoTConfigBase& _deviceConfig;
-};
-
-class CoTAuthBase { };
-
-class CoTCommunicationBase {
-private:
-	const CoTAuthBase& _authenticationConfig
-	const CoTConfigBase& _communicationConfig;
-}; 
-
-
-/* Library Extension Interface 
- * ----------------------------
- */
-
-/* Configuration for every supported device */
-class CoTDeviceConfig: public CoTConfigBase { };
-
-/* Configuration for every communication method */
-class CoTCommunicationConfig: public CoTConfigBase { };
-
-/* Configurationf or any authentication */
-class CoTAuthConfig: public CoTConfigBase { };
-
-/* Type of devices we support (only connectivity criteria?) */
-class CoTDeviceGPRS: public CoTDeviceBase { };
-class CoTDeviceWiFi: public CoTDeviceBase { };
-class CoTDeviceEthernet: public CoTDeviceBase { };
-
-/* Communication types we support */
-/* Nothe: communication type does not belong to the Library public interface.
- * 	It should be hidden and selectable compile-time ( #define in DTCoTSetup.h? )
- */
-class CoTMQTTCommunication: public CoTCommunicationBase { };
-class CoTRESTCommunication: public CoTCommunicatiobBase { };
-
-/* Authentication mechanisms we support */
-class CoTAuthFingerPrint: public CoTAuthBase { };
-class CoTAuthTLS: public CoTAuthBase { };
-
+#include "DTCoTDeviceHUZZAH.h"
 
 /* Library Public Interface 
  * ----------------------------
  */
 
-/* Concrete classes, instances will be used in the user code
- * preferred instanctiation methods - helper functions provided by the library (see below)
- */
-namespace config {
-class CoTAuthMQTT: public CoTAuthConfig {};
-class CoTAuthREST: public CoTAuthConfig {};
-}
-
-namespace devices {
-class CoTDeviceFeatherM0: public CoTDeviceWiFi { };
-class CoTDevice32u4FONA: public CoTDeviceGPRS { };
-}
+namespace DTCoT {
 
 
 /* Since we have only one cloud - there is no need to abstract it
- * TODO: ask client if he wants to be able to have multiple cloud access (Azzure, DT, Adafruit)
+ * TODO: ask client if he wants to be able to have multiple 
+ *		cloud access (Azzure, DT, Adafruit)
  * If so - provid the abstraction hierarchy for the cloud too,
  * with this class as a "leaf" of the inheritance tree
 */
-class CoTCloud{
+class CoTCloud {
+public:
+	CoTCloud( const CoTDeviceBase& device,	const CoTConfigBase& cloudConfig );
+
+public:
+	bool init();
+
+public:
+	bool publish( const char* varName, const char* varValue);
+	bool publish( const char* varName, unsigned long varValue);
+	bool publish( const char* varName, double varValue);
+	
+	bool subscribe( const char* varName, CoTHandler handler);
+
+public:
+	void errorHandler( const CoTHandlerParam error );
+
+public:
+	bool process( );
+
 private:
-	const CoTCommunicationBase& _preferredCommunication;
-	const CoTDeviceBase& _selectedDevice;
-	const CoTConfigBase& _cloudConfig;
+	const CoTDeviceBase& _selectedDevice;					/* M0/HUZZAH/FONA */
+	PREFERED_COMMUNICATION_METHOD 
+		_preferedCommunication; /* MQTT/MQTT-SN/REST/AZURE*/
+
+private:
+	CoTCloud( const CoTCloud& );
+
 };
-
-
-
-/* Helper functions (mostly factory functions to facilitate 
- * instantiation of library public interface objects) 
-*/
-template<typename T>
-T CreateDeviceConfig<T>( const CoTConfigBase& devConfig){
-	T d( devConfig);
-	return d;
-}
-
 
 } /* namespace DTCoT */
 
-#endif
-
-#endif /* DTCoT_HEADER_FILE	 */
-
+#endif /* DT_COT_HEADER_FILE */
