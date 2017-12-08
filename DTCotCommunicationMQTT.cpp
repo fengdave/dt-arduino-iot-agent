@@ -8,6 +8,7 @@
 
 using namespace DTCoT;
 
+#define DEBUG_PRINT(x) Serial.println(x) 
 
 
 CoTCommunicationMQTT::CoTCommunicationMQTT(
@@ -20,11 +21,13 @@ CoTCommunicationMQTT::CoTCommunicationMQTT(
 
 void CoTCommunicationMQTT::init()
 {
+	DEBUG_PRINT("CoTCommunicationMQTT::init");
 	CoTConfigCommunicationMQTT & config = (CoTConfigCommunicationMQTT&)_config;
 	
-//		((CoTDeviceBase*)&_selectedDevice)->init(); // @todo why is a device const?
+
+	((CoTDeviceBase*)&_device)->init(); // @todo why is a device const?
 	
-	DEBUG_PRINT("CoTCommunicationMQTT::init");
+	DEBUG_PRINT("CoTCommunicationMQTT::initted device");
 	
 	/*Adafruit_MQTT_Client mqtt(_device.getClient(), config.getUrl(),
 				config.getPortNumber(),

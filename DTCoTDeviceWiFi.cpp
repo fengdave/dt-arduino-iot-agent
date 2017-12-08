@@ -6,6 +6,8 @@
 
 using namespace DTCoT;
 
+#define DEBUG_PRINT(x) Serial.println(x) 
+
 CoTConfigDeviceWiFi::CoTConfigDeviceWiFi(
 	const char* WiFiSSID
 	, const char* WiFiPassword )
@@ -27,7 +29,6 @@ const char* CoTConfigDeviceWiFi::getWiFiPassword() {
 CoTDeviceWiFi::CoTDeviceWiFi(	const CoTConfigDeviceWiFi& wifiConfig)
 	: CoTDeviceBase( wifiConfig)
 {
-	DEBUG_PRINT("CoTDeviceWiFi::CoTDeviceWiFi");
 }
 
 
@@ -40,7 +41,12 @@ bool CoTDeviceWiFi::init() {
 
 	DEBUG_PRINT("DTCoT::DeviceWiFi::begin");
 
+	char out[256]; // @todo bounds checking
+	sprintf(out, "Connecting to %s pwd %s... ", config.getWiFiSSID(), config.getWiFiPassword());
+	DEBUG_PRINT(out);
+
     WiFi.begin(config.getWiFiSSID(), config.getWiFiPassword());
+
 
     while (WiFi.status() != WL_CONNECTED) {
 

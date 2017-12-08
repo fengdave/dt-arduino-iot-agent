@@ -4,6 +4,8 @@
 
 using namespace DTCoT;
 
+#define DEBUG_PRINT(x) Serial.println(x) 
+
 CoTConfigDeviceHUZZAH::CoTConfigDeviceHUZZAH ( 
 	const char* WiFiSSID
 	, const char* WiFiPassword )
@@ -14,10 +16,14 @@ CoTConfigDeviceHUZZAH::CoTConfigDeviceHUZZAH (
 CoTDeviceHUZZAH::CoTDeviceHUZZAH( const CoTConfigDeviceHUZZAH& config)
 	: CoTDeviceWiFi( config)
  {
-	 DEBUG_PRINT("CoTDeviceHUZZAH::CoTDeviceHUZZAH");
+
  }
 
-bool CoTDeviceHUZZAH::init() { return false; }
+bool CoTDeviceHUZZAH::init() { 
+	CoTDeviceWiFi::init();
+		 DEBUG_PRINT("CoTDeviceHUZZAH::CoTDeviceHUZZAH");
+	return false;
+}
 
 void CoTDeviceHUZZAH::errorHandler( const CoTHandlerParam& error )
 { }

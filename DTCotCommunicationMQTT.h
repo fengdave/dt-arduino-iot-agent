@@ -17,7 +17,7 @@ namespace DTCoT {
 			, const CoTConfigBase& config
 			, const CoTAuthBase& authentication );
 	
-	virtual void init();
+	void init();
 	
 	private:
 	

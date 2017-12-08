@@ -14,6 +14,8 @@
 
 #include "DTCoTDeviceHUZZAH.h"
 
+#include "DTCoTDebugOutput.h"
+
 /* Library Public Interface 
  * ----------------------------
  */
