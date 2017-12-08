@@ -17,6 +17,9 @@
 
 #include "DTCoT.h"
 
+// NOTE: You need to create this file with  SECRET_WIFI_SSID and SECRET_WIFI_PASSWORD defined
+#include "secrets.h"
+
 /* Application-specific settings */
 const unsigned char ON_BOARD_LED = 13;
 const char* CLOUD_COUNTER_VAR_NAME = "cloud-counter";
@@ -31,11 +34,14 @@ using namespace DTCoT;
 
 /* Setup the Cloud access and the device to communicate to cloud 
  */
+
+
+CoTConfigDeviceHUZZAH devConfig = CoTConfigDeviceHUZZAH(SECRET_WIFI_SSID, SECRET_WIFI_PASSWORD );
+CoTDeviceHUZZAH device = CoTDeviceHUZZAH(devConfig);
+
 CoTCloud cloud( 
   /* Configure communcation settings of your DT Cloud-enabled device */
-  CoTDeviceHUZZAH( 
-    CoTConfigDeviceHUZZAH( "mm1-wifi", "password" )
-  )
+    device
   
   /* Setup the cloud communication method */ 
   , CoTConfigCommunicationMQTT( "io.adafruit.com"
@@ -44,6 +50,7 @@ CoTCloud cloud(
     , ADAFRUIT_USER_ID
   )
 );
+
 
 
 void onCounterValueChanged( void* newCounterValue) {
@@ -64,16 +71,29 @@ void onCounterValueChanged( void* newCounterValue) {
 
 
 void setup() {
+  delay(100);
+  Serial.begin(115200);
+    delay(100);
+   DEBUG_PRINT("Setup...");
+
+// @todo - why is device const? Can't call it ffrom with CoTCloud
+device.init();
+  cloud.init();
+  
   /* Subscribe to the change of a cloud variable of interest */
   cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged);
 }
 
 
 void loop() {
+     DEBUG_PRINT("Loop");
+
+    //DEBUG_PRINT(device.getWiFiSSID());
+
   /* Update cloud infrastructure client */
   if ( !cloud.process() ) {
     /* TODO: process error here */
-  }
+
 
   static unsigned long counter = 0;
   ++counter;
@@ -83,5 +103,7 @@ void loop() {
       /* TODO: process error here */
     }
   }
-}
 
+  delay(1000);
+}
+}
