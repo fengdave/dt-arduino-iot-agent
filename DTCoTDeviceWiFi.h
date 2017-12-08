@@ -38,10 +38,10 @@ public:
 	CoTDeviceWiFi( const CoTConfigDeviceWiFi& wifiDeviceConfig);
 	bool init();
 
-	virtual Client * getClient() const;
+	//virtual Client * getClient() const;
 
 private:
-	WiFiClient wifiClient;
+	WiFiClient wifiClient; 
 };
 
 } /* namespace DTCoT */

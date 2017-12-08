@@ -1,5 +1,7 @@
 #include "DTCoTDeviceHUZZAH.h"
 
+#include "DTCoTDebugOutput.h"
+
 using namespace DTCoT;
 
 CoTConfigDeviceHUZZAH::CoTConfigDeviceHUZZAH ( 
@@ -11,7 +13,9 @@ CoTConfigDeviceHUZZAH::CoTConfigDeviceHUZZAH (
 
 CoTDeviceHUZZAH::CoTDeviceHUZZAH( const CoTConfigDeviceHUZZAH& config)
 	: CoTDeviceWiFi( config)
- { }
+ {
+	 DEBUG_PRINT("CoTDeviceHUZZAH::CoTDeviceHUZZAH");
+ }
 
 bool CoTDeviceHUZZAH::init() { return false; }
 

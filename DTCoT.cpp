@@ -28,6 +28,7 @@ CoTCloud::CoTCloud( const CoTDeviceBase& device
 { }
 
 bool CoTCloud::init() { 
+	 DEBUG_PRINT("CoTCloud::init");
 	_preferedCommunication.init();
 }
  

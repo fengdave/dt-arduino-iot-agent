@@ -5,23 +5,34 @@
 
 #include "DTCoTExtensionIface.h"
 
-#define DEBUG_PRINT(x) Serial.println(x) // @todo - make this universal?
 
 using namespace DTCoT;
+
+
 
 CoTCommunicationMQTT::CoTCommunicationMQTT(
 	const CoTDeviceBase& device
 	, const CoTConfigBase& config
 	, const CoTAuthBase& authentication )
 	: CoTCommunicationBase( device, config, authentication) 
-	, mqtt(device.getClient(), ((CoTConfigCommunicationMQTT&)config).getUrl(),
-			((CoTConfigCommunicationMQTT&)config).getPortNumber(),
-			((CoTConfigCommunicationMQTT&)config).getUserId(), ((CoTConfigCommunicationMQTT&)config).getPassword())
 {
 }
 
-void DTCoT::CoTCommunicationMQTT::init()
+void CoTCommunicationMQTT::init()
 {
+	CoTConfigCommunicationMQTT & config = (CoTConfigCommunicationMQTT&)_config;
+	
+//		((CoTDeviceBase*)&_selectedDevice)->init(); // @todo why is a device const?
+	
+	DEBUG_PRINT("CoTCommunicationMQTT::init");
+	
+	/*Adafruit_MQTT_Client mqtt(_device.getClient(), config.getUrl(),
+				config.getPortNumber(),
+				config.getUserId(), 
+				config.getPassword());
+	
+	
+	
 	int8_t ret;
     if (mqtt.connected()) {
       return;
@@ -40,7 +51,7 @@ void DTCoT::CoTCommunicationMQTT::init()
            // basically die and wait for WDT to reset me
            while (1);
          }
-    }
+    }*/
     DEBUG_PRINT("MQTT Connected!");
 }
 

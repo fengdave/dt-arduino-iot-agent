@@ -15,10 +15,12 @@ namespace DTCoT {
 			, const CoTConfigBase& config
 			, const CoTAuthBase& authentication ); 
 
-	private:
-		const CoTAuthBase& _authentication;
+	protected:
 		const CoTConfigBase& _config;
 		const CoTDeviceBase& _device;
+
+	private:
+		const CoTAuthBase& _authentication;
 	}; 
 
 }

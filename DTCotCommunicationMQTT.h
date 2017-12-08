@@ -20,7 +20,6 @@ namespace DTCoT {
 	virtual void init();
 	
 	private:
-		class Adafruit_MQTT_Client mqtt;
 	
 	/*class MQTTCommunication : public CommunicationBase {
 	public:

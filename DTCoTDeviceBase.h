@@ -16,7 +16,7 @@ namespace DTCoT
 		/* Overload to get the device-specific error handling */
 		//virtual void errorHandler( const CoTHandlerParam handler ) { };
 
-		virtual Client * getClient() const = 0; // Every device provides a client
+		//virtual Client * getClient() const = 0; // Every device provides a client
 		//@TODO - Via an Arduino Client interface? Or we abstract this further - can do later https://www.arduino.cc/en/Reference/ClientConstructor
 
 
