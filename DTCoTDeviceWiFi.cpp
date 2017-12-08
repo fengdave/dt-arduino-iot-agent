@@ -31,12 +31,14 @@ CoTDeviceWiFi::CoTDeviceWiFi(	const CoTConfigDeviceWiFi& wifiConfig)
 }
 
 
-void CoTDeviceWiFi::begin(char * ssid, char * password) {
+bool CoTDeviceWiFi::init() {
+	CoTConfigDeviceWiFi & config = (CoTConfigDeviceWiFi&)_deviceConfig;
+	
     delay(10);
 
 	DEBUG_PRINT("DTCoT::DeviceWiFi::begin");
 
-    WiFi.begin(ssid, password);
+    WiFi.begin(config.getWiFiSSID(), config.getWiFiPassword());
 
     while (WiFi.status() != WL_CONNECTED) {
 
@@ -47,6 +49,6 @@ void CoTDeviceWiFi::begin(char * ssid, char * password) {
 	DEBUG_PRINT("DTCoT::DeviceWiFi::connected!");
 }
 
-Client * DTCoT::CoTDeviceWiFi::getClient() {
-	return &wifiClient;
+Client * DTCoT::CoTDeviceWiFi::getClient() const {
+	return (Client*)(&wifiClient);
 }

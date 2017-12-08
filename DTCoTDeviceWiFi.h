@@ -36,17 +36,13 @@ class CoTDeviceWiFi : public CoTDeviceBase {
 	
 public:
 	CoTDeviceWiFi( const CoTConfigDeviceWiFi& wifiDeviceConfig);
-	void begin(char * ssid, char * password);
+	bool init();
 
-	virtual Client * getClient();
+	virtual Client * getClient() const;
 
 private:
 	WiFiClient wifiClient;
 };
-
-}
-
-
 
 } /* namespace DTCoT */
 

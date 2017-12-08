@@ -31,13 +31,5 @@ const char* CoTConfigCommunicationMQTT::getUserId() {
 }
 
 
-CoTCommunicationMQTT::CoTCommunicationMQTT(
-	const CoTDeviceBase& device
-	, const CoTConfigBase& config
-	, const CoTAuthBase& authentication )
-	: CoTCommunicationBase( device, config, authentication) 
-{
-}
-
 CoTConfigDevice::CoTConfigDevice(): CoTConfigBase() { }
 

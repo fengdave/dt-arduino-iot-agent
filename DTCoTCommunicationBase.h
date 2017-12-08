@@ -4,21 +4,26 @@
 
 namespace DTCoT {
 
-	class DeviceBase;
+	class CoTAuthBase;
+	class CoTConfigBase;
+	class CoTDeviceBase;
 
-	class CommunicationBase {
-	
+
+	class CoTCommunicationBase {
 	public:
-		CommunicationBase(DeviceBase & device) // @todo - pure virtual or move to cpp file?
-		: device(device) {
-			
-		}
-
+		CoTCommunicationBase( const CoTDeviceBase& device
+			, const CoTConfigBase& config
+			, const CoTAuthBase& authentication ); 
 
 	private:
-		DeviceBase & device; // the Communication class always has a device to communicate over
-	};
+		const CoTAuthBase& _authentication;
+		const CoTConfigBase& _config;
+		const CoTDeviceBase& _device;
+	}; 
 
 }
+
+
+
 
 #endif

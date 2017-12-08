@@ -6,6 +6,8 @@
 #include "DTCoTPrivate.h"
 #include "DTCoTExtensionIface.h"
 
+#include "DTCoTDeviceBase.h"
+
 #include "DTCoTDeviceWiFi.h"
 #include "DTCoTDeviceGPRS.h"
 #include "DTCoTDeviceEthernet.h"
@@ -27,7 +29,7 @@ namespace DTCoT {
 */
 class CoTCloud {
 public:
-	CoTCloud( const CoTDeviceBase& device,	const CoTConfigBase& cloudConfig );
+	CoTCloud(const CoTDeviceBase& device, const CoTConfigBase& cloudConfig );
 
 public:
 	bool init();
@@ -40,7 +42,7 @@ public:
 	bool subscribe( const char* varName, CoTHandler handler);
 
 public:
-	void errorHandler( const CoTHandlerParam error );
+	bool errorHandler( const CoTHandlerParam error );
 
 public:
 	bool process( );

@@ -32,6 +32,7 @@
 
 
 #if defined(COMMUNICATION_MQTT)
+#include "DTCotCommunicationMQTT.h"
 	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTT
 #elif defined(COMMUNICATION_MQTT_SN )
 	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTTSN

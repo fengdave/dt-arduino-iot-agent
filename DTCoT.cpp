@@ -27,11 +27,13 @@ CoTCloud::CoTCloud( const CoTDeviceBase& device
 		)
 { }
 
-bool CoTCloud::init() { return false; }
+bool CoTCloud::init() { 
+	_preferedCommunication.init();
+}
  
 bool CoTCloud::publish( const char* varName
 	, const char* varValue) { 
-	return false; 
+		return false;
 }
 
 bool CoTCloud::publish( const char* varName
@@ -49,7 +51,7 @@ bool CoTCloud::subscribe( const char* varName
 	return false; 
 }
 
-void CoTCloud::errorHandler( const CoTHandlerParam error) {
+bool CoTCloud::errorHandler( const CoTHandlerParam error) {
 	return false;
 }
 

@@ -47,12 +47,6 @@ private:
 	const char* _userId;
 };
 
-class CoTCommunicationMQTT: public CoTCommunicationBase { 
-public:
-	CoTCommunicationMQTT( const CoTDeviceBase& device
-		, const CoTConfigBase& config
-		, const CoTAuthBase& authentication );
-};
 
 class CoTCommunicationMQTTSN: public CoTCommunicationBase { };
 class CoTCommunicationREST: public CoTCommunicationBase { };
