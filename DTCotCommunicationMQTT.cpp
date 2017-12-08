@@ -2,7 +2,7 @@
 #include "DTCoTCommunicationMQTT.h"
 #include "DTCoTCommunicationBase.h"
 #include "DTCoTDeviceBase.h"
-
+#include "DTCoTDeviceWiFi.h"
 #include "DTCoTExtensionIface.h"
 
 
@@ -15,33 +15,57 @@ CoTCommunicationMQTT::CoTCommunicationMQTT(
 	const CoTDeviceBase& device
 	, const CoTConfigBase& config
 	, const CoTAuthBase& authentication )
-	: CoTCommunicationBase( device, config, authentication) 
+	: CoTCommunicationBase( device, config, authentication) // @todo - hardcoded 
+	, mqtt(_device.getClient(), ((CoTConfigCommunicationMQTT&)config).getUrl(),
+				((CoTConfigCommunicationMQTT&)config).getPortNumber(),
+				((CoTConfigCommunicationMQTT&)config).getUserId(), 
+				((CoTConfigCommunicationMQTT&)config).getPassword())
 {
 }
 
 void CoTCommunicationMQTT::init()
 {
+		
 	DEBUG_PRINT("CoTCommunicationMQTT::init");
+	reconnect();
+}
+
+void CoTCommunicationMQTT::publish(const char * key, const char * value) {
+	CoTConfigCommunicationMQTT & config = (CoTConfigCommunicationMQTT&)_config;
+	// @todo error handling/reconnect!
+	if (mqtt.connected() == false) {
+		DEBUG_PRINT("ERROR - could not send MQTT, not connected.");
+		reconnect();
+	}
+	
+	// @TODO - provide registerHandler, do not instantiate every time!
+				
+	char address[255]; // @todo bounds checking
+	sprintf(address, "%s/feeds/%s", config.getUserId(), key);
+	
+	DEBUG_PRINT(address);
+	DEBUG_PRINT(value);
+	
+	Adafruit_MQTT_Publish topic = Adafruit_MQTT_Publish(&mqtt, address);
+	topic.publish(value);
+}
+
+void CoTCommunicationMQTT::reconnect()
+{
 	CoTConfigCommunicationMQTT & config = (CoTConfigCommunicationMQTT&)_config;
 	
+	
 
-	((CoTDeviceBase*)&_device)->init(); // @todo why is a device const?
-	
-	DEBUG_PRINT("CoTCommunicationMQTT::initted device");
-	
-	/*Adafruit_MQTT_Client mqtt(_device.getClient(), config.getUrl(),
-				config.getPortNumber(),
-				config.getUserId(), 
-				config.getPassword());
-	
-	
-	
 	int8_t ret;
     if (mqtt.connected()) {
       return;
     }
 
     DEBUG_PRINT("Connecting to MQTT... ");
+
+	char out[256]; // @todo bounds checking
+	sprintf(out, "Connecting to MQTT %s pwd %s... ", config.getUrl(), config.getUserId());
+	DEBUG_PRINT(out);
 
     uint8_t retries = 3;
     while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
@@ -54,7 +78,7 @@ void CoTCommunicationMQTT::init()
            // basically die and wait for WDT to reset me
            while (1);
          }
-    }*/
+    }
     DEBUG_PRINT("MQTT Connected!");
 }
 
@@ -91,23 +115,5 @@ void DTCoT::MQTTCommunication::init()
     DEBUG_PRINT("MQTT Connected!");
 }
 
-void DTCoT::MQTTCommunication::send(const char * key, const char * value) {
-	
-	// @todo error handling/reconnect!
-	if (mqtt.connected() == false) {
-		DEBUG_PRINT("ERROR - could not send MQTT, not connected.");
-		return;
-	}
-	
-	// @TODO - provide registerHandler, do not instantiate every time!
-				
-	char address[255]; // @todo bounds checking
-	sprintf(address, "%s/feeds/%s", username, key);
-	
-	DEBUG_PRINT(address);
-	DEBUG_PRINT(value);
-	
-	Adafruit_MQTT_Publish topic = Adafruit_MQTT_Publish(&mqtt, address);
-	topic.publish(value);
-}*/
+v*/
 

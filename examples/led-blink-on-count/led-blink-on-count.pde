@@ -27,8 +27,9 @@ const char* CLOUD_COUNTER_VAR_NAME = "cloud-counter";
 const unsigned char COUNTER_THRESHOLD = 0xFF;
 
 const unsigned short CLOUD_SERVER_PORT = 1883;
-const char* CLOUD_SERVER_PASSWORD = "mqtt_enthusiast";
-const char* ADAFRUIT_USER_ID = "f53d3470b1b0430297a51b8b881587df";
+const char* CLOUD_SERVER_PASSWORD = "eaa66e7fe19c41e9836bdeec82e1fca9";
+const char* ADAFRUIT_USER_ID = "jimmyio";
+
 
 using namespace DTCoT;
 
@@ -39,16 +40,18 @@ using namespace DTCoT;
 CoTConfigDeviceHUZZAH devConfig = CoTConfigDeviceHUZZAH(SECRET_WIFI_SSID, SECRET_WIFI_PASSWORD );
 CoTDeviceHUZZAH device = CoTDeviceHUZZAH(devConfig);
 
-CoTCloud cloud( 
-  /* Configure communcation settings of your DT Cloud-enabled device */
-    device
-  
-  /* Setup the cloud communication method */ 
-  , CoTConfigCommunicationMQTT( "io.adafruit.com"
+CoTConfigCommunicationMQTT mqttConfig = CoTConfigCommunicationMQTT( "io.adafruit.com"
     , CLOUD_SERVER_PORT
     , CLOUD_SERVER_PASSWORD
     , ADAFRUIT_USER_ID
-  )
+  );
+
+CoTCloud cloud( 
+  /* Configure communcation settings of your DT Cloud-enabled device */
+    device // @todo - why do these need to be instantiated individually? Is it creating them on the stack?
+  
+  /* Setup the cloud communication method */ 
+  , mqttConfig
 );
 
 
@@ -81,7 +84,7 @@ device.init();
   cloud.init();
   
   /* Subscribe to the change of a cloud variable of interest */
-  cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged);
+  cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
 }
 
 
@@ -99,7 +102,7 @@ void loop() {
   ++counter;
 
   if ( counter ) {
-    if ( !cloud.publish( "cloud-counter", counter) ) {
+    if ( !cloud.publish( "newlib", "FOOOOO") ) { // @todo, send integers/reals
       /* TODO: process error here */
     }
   }

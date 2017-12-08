@@ -57,6 +57,6 @@ bool CoTDeviceWiFi::init() {
 	DEBUG_PRINT("DTCoT::DeviceWiFi::connected!");
 }
 
-/*Client * DTCoT::CoTDeviceWiFi::getClient() const {
+Client * DTCoT::CoTDeviceWiFi::getClient() const {
 	return (Client*)(&wifiClient);
-}*/
+}

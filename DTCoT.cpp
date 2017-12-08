@@ -34,7 +34,8 @@ bool CoTCloud::init() {
  
 bool CoTCloud::publish( const char* varName
 	, const char* varValue) { 
-		return false;
+		_preferedCommunication.publish(varName, varValue);
+		return true;
 }
 
 bool CoTCloud::publish( const char* varName

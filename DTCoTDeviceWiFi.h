@@ -38,7 +38,7 @@ public:
 	CoTDeviceWiFi( const CoTConfigDeviceWiFi& wifiDeviceConfig);
 	bool init();
 
-	//virtual Client * getClient() const;
+	Client * getClient() const;
 
 private:
 	WiFiClient wifiClient; 

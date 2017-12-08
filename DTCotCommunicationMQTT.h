@@ -19,7 +19,14 @@ namespace DTCoT {
 	
 	void init();
 	
+	void publish(const char * key, const char * value);
+	
 	private:
+	void reconnect();
+	
+	private:
+	
+	Adafruit_MQTT_Client mqtt;
 	
 	/*class MQTTCommunication : public CommunicationBase {
 	public:
