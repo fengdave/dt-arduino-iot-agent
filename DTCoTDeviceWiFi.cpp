@@ -34,7 +34,7 @@ CoTDeviceWiFi::CoTDeviceWiFi(	const CoTConfigDeviceWiFi& wifiConfig)
 
 bool CoTDeviceWiFi::init() {
 		DEBUG_PRINT("CoTDeviceWiFi::init");
-	
+
 	CoTConfigDeviceWiFi & config = (CoTConfigDeviceWiFi&)_deviceConfig;
 	
     delay(10);
@@ -47,14 +47,15 @@ bool CoTDeviceWiFi::init() {
 
     WiFi.begin(config.getWiFiSSID(), config.getWiFiPassword());
 
-
     while (WiFi.status() != WL_CONNECTED) {
-
+		/* TODO: Check re-tries here, report with "false" return value */
 		DEBUG_PRINT("connecting...");
 	  	delay(500);
     }
 
 	DEBUG_PRINT("DTCoT::DeviceWiFi::connected!");
+	
+	return true;
 }
 
 Client * DTCoT::CoTDeviceWiFi::getClient() const {

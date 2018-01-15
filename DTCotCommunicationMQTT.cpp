@@ -8,7 +8,7 @@
 
 using namespace DTCoT;
 
-#define DEBUG_PRINT(x) Serial.println(x) 
+#define DEBUG_PRINT(x) Serial.println(x)
 
 
 CoTCommunicationMQTT::CoTCommunicationMQTT(
@@ -37,7 +37,7 @@ void CoTCommunicationMQTT::publish(const char * key, const char * value) {
 		DEBUG_PRINT("ERROR - could not send MQTT, not connected.");
 		reconnect();
 	}
-	
+
 	// @TODO - provide registerHandler, do not instantiate every time!
 				
 	char address[255]; // @todo bounds checking

@@ -27,9 +27,10 @@ const char* CLOUD_COUNTER_VAR_NAME = "cloud-counter";
 const unsigned char COUNTER_THRESHOLD = 0xFF;
 
 const unsigned short CLOUD_SERVER_PORT = 1883;
-const char* CLOUD_SERVER_PASSWORD = "eaa66e7fe19c41e9836bdeec82e1fca9";
-const char* ADAFRUIT_USER_ID = "jimmyio";
 
+#if !defined(CLOUD_SERVER_PASSWORD) || !defined(ADAFRUIT_USER_ID)
+#error Can't find Cloud credentials: Create secrets.h file and place it next to this example (see readme for details)
+#endif /* CLOUD_SERVER_PASSWORD */
 
 using namespace DTCoT;
 
@@ -110,3 +111,4 @@ void loop() {
   delay(1000);
 }
 }
+
