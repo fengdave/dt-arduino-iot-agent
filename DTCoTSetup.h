@@ -40,6 +40,67 @@
 #elif defined(COMMUNICATION_REST)
 	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationREST
 #endif
+ 
+ 
+ /**
+ * Hardware Platform specific includes
+ */
+ 
+ /**
+ * Define which hardware
+ */
+
+#define HUZZAH                0
+#define GIMASI_TUINO1         1
+/**********************************/
+#define HW_PLATTFORM          GIMASI_TUINO1
+/**********************************/
+ 
+
+#if HW_PLATTFORM == HUZZAH
+   #define HUZZAH_ENABLED     1
+ 
+
+#elif HW_PLATTFORM == GIMASI_TUINO1
+  #define TUINO1_ENABLED      1
+
+
+#endif
+ /**********************************/
+ 
+ 
+ /**
+ * Define which communication path
+ */
+#define WIFI                  0
+#define NB_IOT                1
+#define GSM                   2
+/**********************************/
+#define CONN_TYPE             NB_IOT
+/**********************************/
+
+
+/**
+ * communication path specific includes
+ */
+
+#if CONN_TYPE == WIFI
+
+	#define WIFI_ENABLED      1
+
+
+#elif CONN_TYPE == NB_IOT
+
+	#define NB_IOT_ENABLED    1
+
+
+#elif CONN_TYPE == GSM
+
+	#define GSM_ENABLED       1 
+
+
+#endif
+/**********************************/
 
 #endif /* DTCoT_SETUP_HEADER_FILE */
 

@@ -20,7 +20,7 @@
 #include "gmx_nbiot.h"
 #include "Regexp.h"
 #include <string.h>
-#include "DbgSerialInit.h"
+//#include "DbgSerialInit.h"
 
 
 #define DEBUG 0

@@ -8,12 +8,34 @@
 
 #include "DTCoTDeviceBase.h"
 
-#include "DTCoTDeviceWiFi.h"
-#include "DTCoTDeviceGPRS.h"
-#include "DTCoTDeviceEthernet.h"
+#ifdef WIFI_ENABLED
 
-#include "DTCoTDeviceHUZZAH.h"
-#include "DTCoTDeviceGimasi.h"
+	#include "DTCoTDeviceWiFi.h"
+	#include "DTCoTDeviceGPRS.h"
+	#include "DTCoTDeviceEthernet.h"
+
+
+#elif defined(NB_IOT_ENABLED)
+
+	#include "DTCotDeviceGimasi.h"
+
+#elif defined(GSM_ENABLED)
+
+	#include "DTCotDeviceGPRS.h"
+	#include "DTCoTDevice32uFONA.h"
+
+
+#endif
+
+#ifdef HUZZAH_ENABLED
+
+	#include "DTCoTDeviceHUZZAH.h"
+
+#elif defined(TUINO1_ENABLED)
+
+	#include "DTCoTDeviceGimasi.h"
+
+#endif
 
 #include "DTCoTDebugOutput.h"
 

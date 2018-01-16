@@ -7,9 +7,32 @@ using namespace DTCoT;
 
 #define DEBUG_PRINT(x) Serial.println(x)
 
-CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT()
-	: CoTConfigDevice( )
+CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT(
+	const char* serverIP
+	, const char* serverPort
+	, const char* imsi
+	, const char* password)
+	:  _serverIP(serverIP), _serverPort(serverPort), 
+		_imsi(imsi), _password(password), CoTConfigDevice()
 {
+}
+
+const char* CoTConfigDeviceNBIoT::getServerIP() { 
+	return _serverIP;
+}
+
+const char* CoTConfigDeviceNBIoT::getServerPort() { 
+	return _serverPort;
+}
+
+
+const char* CoTConfigDeviceNBIoT::getIMSI() { 
+	return _imsi;
+}
+
+
+const char* CoTConfigDeviceNBIoT::getPassword() { 
+	return _password; 
 }
 
 CoTDeviceNBIoT::CoTDeviceNBIoT(	const CoTConfigDeviceNBIoT& nbiotConfig)

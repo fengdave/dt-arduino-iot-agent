@@ -14,9 +14,10 @@ CoTCommunicationMQTTSN::CoTCommunicationMQTTSN(
 	, const CoTConfigBase& config
 	, const CoTAuthBase& authentication )
 	: CoTCommunicationBase( device, config, authentication) // @todo - hardcoded 
-	, mqttsn(_device.getClient()
-	, ( (CoTConfigCommunicationMQTTSN&)config).getUrl(),
-		( (CoTConfigCommunicationMQTTSN&)config).getPortNumber() )
+		, nbiotClient((CoTConfigCommunicationMQTTSN&)config).getServerIP(), 
+		((CoTConfigCommunicationMQTTSN&)config).getServerPort(), 
+		((CoTConfigCommunicationMQTTSN&)config).getIMSI(),
+		((CoTConfigCommunicationMQTTSN&)config).getPassword() )
 {
 }
 

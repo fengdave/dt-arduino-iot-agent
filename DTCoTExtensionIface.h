@@ -47,6 +47,29 @@ private:
 	const char* _userId;
 };
 
+class CoTConfigCommunicationMQTTSN: public CoTConfigBase {
+public:
+	CoTConfigCommunicationMQTTSN( const char* serverIP
+		, const char* serverPort
+		, const char* imsi
+		, const char* password 
+		);
+
+public:
+	const char* getServerIP();
+	const char* getServerPort();
+	const char* getIMSI();
+	const char* getPassword();
+
+
+private:
+	const char* _serverIP;
+	const char* _serverPort;
+	const char* _imsi;
+	const char* _password;
+
+};
+
 
 class CoTCommunicationREST: public CoTCommunicationBase { };
 

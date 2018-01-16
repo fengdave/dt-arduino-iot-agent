@@ -14,7 +14,8 @@ namespace DTCoT {
 	class CoTCommunicationMQTT: public CoTCommunicationBase { 
 	public:
 		CoTCommunicationMQTT(const CoTDeviceBase& device
-			, const CoTConfigBase& config );
+			, const CoTConfigBase& config
+			, const CoTAuthBase& authentication	);
 	
 	void init();
 	
@@ -27,7 +28,8 @@ namespace DTCoT {
 	
 	Adafruit_MQTT_Client mqtt;
 	
-	/*class MQTTCommunication : public CommunicationBase {
+	/*
+	class MQTTCommunication : public CommunicationBase {
 	public:
 		MQTTCommunication(DeviceBase & device, const char * server, const char * username, const char * key);
 		
@@ -37,6 +39,8 @@ namespace DTCoT {
 		
 
 		const char * username;
+	
+	};
 	*/
 };
 

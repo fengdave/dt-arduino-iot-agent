@@ -15,7 +15,7 @@
  */
 
  
-#include "DbgSerialInit.h"
+//#include "DbgSerialInit.h"
 
 extern "C" {
 	// #include "utility/wl_definitions.h"
@@ -56,7 +56,15 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream)
 	NbiotClient::NbiotClient(uint8_t sock) : _sock(sock) {
 }
 
-
+NbiotClient::NbiotClient(const String& serverIP, const String& serverPort, const String& imsi, const String& password)  
+	: _serverIP(serverIP)
+	, _serverPort(serverPort)
+	, _imsi(imsi)
+	, _password(password)
+		
+		
+{
+}
 
 
 /**

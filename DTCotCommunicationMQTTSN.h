@@ -3,13 +3,16 @@
 
 #include "DTCoTPrivate.h"
 #include "DTCoTCommunicationBase.h"
+#include "NbIoTClient.h"
 
 namespace DTCoT {
 	
 class CoTCommunicationMQTTSN: public CoTCommunicationBase {
 public:
-	CoTCommunicationMQTTSN(const CoTDeviceBase& device
-		, const CoTConfigBase& config );
+	CoTCommunicationMQTTSN(
+		const CoTDeviceBase& device
+		, const CoTConfigBase& config 	
+		, const CoTAuthBase& authentication);
 	
 	void init();
 	
@@ -19,7 +22,7 @@ private:
 	void reconnect();
 	
 private:	
-	NbiotClient _nbiotClient;
+	NbiotClient nbiotClient;
 };
 
 }

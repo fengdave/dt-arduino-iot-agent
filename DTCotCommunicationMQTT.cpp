@@ -1,4 +1,3 @@
-
 #include "DTCoTCommunicationMQTT.h"
 #include "DTCoTCommunicationBase.h"
 #include "DTCoTDeviceBase.h"

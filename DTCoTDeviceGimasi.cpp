@@ -6,12 +6,17 @@ using namespace DTCoT;
 
 #define DEBUG_PRINT(x) Serial.println(x) 
 
-CoTConfigDeviceGimasi::CoTConfigDeviceGimasi ( )
-	: CoTConfigDeviceNBIoT( )
+CoTConfigDeviceGimasi::CoTConfigDeviceGimasi ( 
+	const char* serverIP
+	, const char* serverPort
+	, const char* imsi
+	, const char* password)
+	: CoTConfigDeviceNBIoT( serverIP, serverPort, 
+		imsi, password)
 {
 }
 
-CoTDeviceGimasi::CoTDeviceGimasi( const CoTConfigDeviceNBIoT& config)
+CoTDeviceGimasi::CoTDeviceGimasi( const CoTConfigDeviceGimasi& config)
 	: CoTDeviceNBIoT( config)
  {
  }

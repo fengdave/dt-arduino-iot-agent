@@ -10,7 +10,12 @@
 #if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #else
-unimplemented
+
+/**
+* !!! unimplemented !!!
+**/
+
+
 #include <WiFi.h>
 #endif
 
@@ -22,13 +27,13 @@ public:
 	CoTConfigDeviceWiFi( const char* WiFiSSID
 	, const char* WiFiPassword );
 
-public:
-	const char* getWiFiSSID();
-	const char* getWiFiPassword();
-
-private:
-	const char* _WiFiSSID;
-	const char* _WiFiPassword;
+	public:
+		const char* getWiFiSSID();
+		const char* getWiFiPassword();
+	
+	private:
+		const char* _WiFiSSID;
+		const char* _WiFiPassword;
 };
 
 

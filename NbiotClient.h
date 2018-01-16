@@ -28,6 +28,11 @@ public:
   );
 	
   explicit NbiotClient( uint8_t sock);
+  
+  explicit NbiotClient(const String& serverIP
+	, const String& serverPort
+	, const String& imsi
+	, const String& password);
 
   uint8_t status();
   virtual int connect( IPAddress ip, uint16_t port);
@@ -54,6 +59,12 @@ private:
   String _ipaddrStr;
   int _dstport;
   String _ipAddress;
+  String _serverPort;
+  String _serverIP;
+  String _imsi;
+  String _password;
+  
+  
 
 private:
 	uint8_t getFirstSocket();
