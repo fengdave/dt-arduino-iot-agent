@@ -11,8 +11,8 @@
 
 /* Select the cloud communication method here */
 
-#define COMMUNICATION_MQTT
-// #define COMMUNICATION_MQTT_SN
+// #define COMMUNICATION_MQTT
+#define COMMUNICATION_MQTTSN
 // #define COMMUNICATION_REST
 // #define COMMUNICATION_RAW_SOCKET
 
@@ -34,7 +34,8 @@
 #if defined(COMMUNICATION_MQTT)
 #include "DTCotCommunicationMQTT.h"
 	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTT
-#elif defined(COMMUNICATION_MQTT_SN )
+#elif defined(COMMUNICATION_MQTTSN )
+#include "DTCotCommunicationMQTTSN.h"
 	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTTSN
 #elif defined(COMMUNICATION_REST)
 	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationREST

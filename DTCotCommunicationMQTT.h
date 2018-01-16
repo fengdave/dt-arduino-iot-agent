@@ -14,8 +14,7 @@ namespace DTCoT {
 	class CoTCommunicationMQTT: public CoTCommunicationBase { 
 	public:
 		CoTCommunicationMQTT(const CoTDeviceBase& device
-			, const CoTConfigBase& config
-			, const CoTAuthBase& authentication );
+			, const CoTConfigBase& config );
 	
 	void init();
 	

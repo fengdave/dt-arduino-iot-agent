@@ -48,7 +48,6 @@ private:
 };
 
 
-class CoTCommunicationMQTTSN: public CoTCommunicationBase { };
 class CoTCommunicationREST: public CoTCommunicationBase { };
 
 /* Authentication mechanisms we support */

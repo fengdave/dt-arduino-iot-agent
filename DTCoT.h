@@ -13,6 +13,7 @@
 #include "DTCoTDeviceEthernet.h"
 
 #include "DTCoTDeviceHUZZAH.h"
+#include "DTCoTDeviceGimasi.h"
 
 #include "DTCoTDebugOutput.h"
 
