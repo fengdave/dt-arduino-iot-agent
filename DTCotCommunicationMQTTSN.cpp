@@ -14,15 +14,17 @@ CoTCommunicationMQTTSN::CoTCommunicationMQTTSN(
 	, const CoTConfigBase& config
 	, const CoTAuthBase& authentication )
 	: CoTCommunicationBase( device, config, authentication) // @todo - hardcoded 
-		, nbiotClient((CoTConfigCommunicationMQTTSN&)config).getServerIP(), 
-		((CoTConfigCommunicationMQTTSN&)config).getServerPort(), 
-		((CoTConfigCommunicationMQTTSN&)config).getIMSI(),
-		((CoTConfigCommunicationMQTTSN&)config).getPassword() )
+		, mqttsn(
+		((CoTConfigCommunicationMQTTSN&)config).getServerIP(), /* should be the clientId */  
+		(unsigned short)((CoTConfigCommunicationMQTTSN&)config).getServerPort(), 
+		*device.getClient()
+		)
 {
 }
 
 void CoTCommunicationMQTTSN::init() {
 	DEBUG_PRINT("CoTCommunicationMQTTSN::init");
+	delay(1000);
 	reconnect();
 }
 
@@ -50,8 +52,8 @@ void CoTCommunicationMQTTSN::reconnect()
     DEBUG_PRINT("Connecting to MQTTSN Gateway ... ");
 
     uint8_t retries = 3;
-    while ((ret = mqttsn.connect()) != 0) { // connect will return 0 for connected
-         DEBUG_PRINT(mqtt.connectErrorString(ret));
+    while ((ret = mqttsn.connect(FLAG_CLEAN, 3)) != 0) { // connect will return 0 for connected
+         DEBUG_PRINT(mqttsn.connectErrorString(ret));
          DEBUG_PRINT("Retrying MQTT connection in 5 seconds...");
          mqttsn.disconnect();
          delay(5000);

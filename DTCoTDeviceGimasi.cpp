@@ -14,6 +14,8 @@ CoTConfigDeviceGimasi::CoTConfigDeviceGimasi (
 	: CoTConfigDeviceNBIoT( serverIP, serverPort, 
 		imsi, password)
 {
+	
+   
 }
 
 CoTDeviceGimasi::CoTDeviceGimasi( const CoTConfigDeviceGimasi& config)
@@ -23,7 +25,8 @@ CoTDeviceGimasi::CoTDeviceGimasi( const CoTConfigDeviceGimasi& config)
 
 bool CoTDeviceGimasi::init() {
 	CoTDeviceNBIoT::init();
-		 DEBUG_PRINT("CoTDeviceGimasi::CoTDeviceGimasi");
+	DEBUG_PRINT("CoTDeviceGimasi::CoTDeviceGimasi");
+	
 	return false;
 }
 

@@ -29,12 +29,16 @@ public:
 	
   explicit NbiotClient( uint8_t sock);
   
+  explicit NbiotClient();
+  
   explicit NbiotClient(const String& serverIP
 	, const String& serverPort
 	, const String& imsi
-	, const String& password);
+	, const String& password
+	);
 
   uint8_t status();
+  
   virtual int connect( IPAddress ip, uint16_t port);
   virtual int connect( const char *host, uint16_t port);
   virtual size_t write( uint8_t);

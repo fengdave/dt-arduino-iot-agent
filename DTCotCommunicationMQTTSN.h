@@ -4,6 +4,8 @@
 #include "DTCoTPrivate.h"
 #include "DTCoTCommunicationBase.h"
 #include "NbIoTClient.h"
+#include "mm1MqttSn.h"
+
 
 namespace DTCoT {
 	
@@ -22,7 +24,8 @@ private:
 	void reconnect();
 	
 private:	
-	NbiotClient nbiotClient;
+	//NbiotClient nbiotClient;
+	MM1MqttSn mqttsn;
 };
 
 }

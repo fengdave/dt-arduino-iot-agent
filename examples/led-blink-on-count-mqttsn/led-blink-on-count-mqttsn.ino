@@ -14,10 +14,10 @@
    When the variable value reaches certain threshold - LED will blink several times
 
 */
-
+#include "secrets.h"
 #include "DTCoT.h"
 
-#include "secrets.h"
+
 
 /* Application-specific settings */
 const unsigned char ON_BOARD_LED = 13;
@@ -30,12 +30,16 @@ const unsigned short CLOUD_SERVER_PORT = 1883;
 using namespace DTCoT;
 
 CoTConfigDeviceGimasi devConfig 
-  = CoTConfigDeviceGimasi();
+  = CoTConfigDeviceGimasi(NB_IOT_SERVER_IP
+    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD);
 
 CoTDeviceGimasi device = CoTDeviceGimasi(devConfig);
 
-CoTCommunicationMQTTSN mqttsnConfig = CoTCommunicationMQTTSN( devConfig, 
-  );
+CoTConfigCommunicationMQTTSN mqttsnConfig(NB_IOT_SERVER_IP
+    , NB_IOT_SERVER_PORT
+    , NB_IOT_IMSI
+    , NB_IOT_COT_PWD
+    );
 
 CoTCloud cloud( 
   /* Configure communcation settings of your DT Cloud-enabled device */
@@ -72,6 +76,7 @@ void setup() {
 
 // @todo - why is device const? Can't call it ffrom with CoTCloud
 device.init();
+DEBUG_PRINT("Setup...");
   cloud.init();
   
   /* Subscribe to the change of a cloud variable of interest */

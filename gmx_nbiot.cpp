@@ -173,7 +173,8 @@ void _log(String data )
  /*FIXME param by reference*/
 #ifdef DEBUG
   // _log(data);
-  getSerialInst().println(data);
+  //getSerialInst().println(data);
+	Serial.println(data);
 #endif
 }
 

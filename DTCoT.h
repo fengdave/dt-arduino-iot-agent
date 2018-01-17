@@ -74,8 +74,7 @@ public:
 
 private:
 	const CoTDeviceBase& _selectedDevice;					/* M0/HUZZAH/FONA */
-	PREFERED_COMMUNICATION_METHOD 
-		_preferedCommunication; /* MQTT/MQTT-SN/REST/AZURE*/
+	PREFERED_COMMUNICATION_METHOD _preferedCommunication; /* MQTT/MQTT-SN/REST/AZURE*/
 
 private:
 	CoTCloud( const CoTCloud& );

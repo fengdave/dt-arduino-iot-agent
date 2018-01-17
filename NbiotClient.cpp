@@ -47,7 +47,7 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream)
 	, _modemInitialized( false)
 	, _ipAddress( ipAddress)
 {
-	_dbgOutputStream.println("NbiotClient::NbiotClient():");
+	//_dbgOutputStream.println("NbiotClient::NbiotClient():");
 }
 
 /**
@@ -57,13 +57,27 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream)
 }
 
 NbiotClient::NbiotClient(const String& serverIP, const String& serverPort, const String& imsi, const String& password)  
+	
 	: _serverIP(serverIP)
 	, _serverPort(serverPort)
 	, _imsi(imsi)
 	, _password(password)
+	, _dbgOutputStream(Serial)
+	//,_dbgOutputStream( dbgOutputStream)
+	
 		
 		
 {
+	//_dbgOutputStream.println("NbiotClient::NbiotClient():");
+	//Serial.println("NbiotClient::NbiotClient():");
+	//delay(1000);
+	
+}
+
+NbiotClient::NbiotClient()  
+		
+{
+	//Serial.println("NbiotClient::NbiotClient():");
 }
 
 

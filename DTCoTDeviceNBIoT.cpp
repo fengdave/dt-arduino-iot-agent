@@ -14,7 +14,9 @@ CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT(
 	, const char* password)
 	:  _serverIP(serverIP), _serverPort(serverPort), 
 		_imsi(imsi), _password(password), CoTConfigDevice()
+	
 {
+	//DEBUG_PRINT("CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT");
 }
 
 const char* CoTConfigDeviceNBIoT::getServerIP() { 
@@ -37,6 +39,14 @@ const char* CoTConfigDeviceNBIoT::getPassword() {
 
 CoTDeviceNBIoT::CoTDeviceNBIoT(	const CoTConfigDeviceNBIoT& nbiotConfig)
 	: CoTDeviceBase( nbiotConfig)
+		
+	,_nbiotClient (NbiotClient(nbiotConfig.getServerIP()
+				, nbiotConfig.getServerPort()
+				, nbiotConfig.getIMSI()
+				, nbiotConfig.getPassword()
+				))
+					
+					
 {
 }
 
