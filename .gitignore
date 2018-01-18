@@ -1,2 +1,5 @@
 secrets.h
 
+CMakeLists.txt
+.idea
+cmake-build-debug
