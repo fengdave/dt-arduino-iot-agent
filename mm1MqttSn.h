@@ -17,10 +17,10 @@ public:
 public:
   bool init();
 
-  bool publish( const char* topic
-    , unsigned short topicId
+  bool publish(
+    int topicId
     , const void* value
-    , unsigned char dataLen );
+    );
   
   int connect(const uint8_t flags, const uint16_t duration);
   String connectErrorString(int error);

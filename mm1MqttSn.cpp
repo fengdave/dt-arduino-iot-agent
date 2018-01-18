@@ -59,12 +59,25 @@ void MM1MqttSn::disconnect() {
 	
 }
 
-bool MM1MqttSn::publish( const char* topic
-  , unsigned short topicId
+bool MM1MqttSn::publish( 
+  int topicId
   , const void* value
-  , unsigned char dataLen ) {
-  const int tmpFlags = 0;
+  ) {
+  const int tmpFlags = 0x20;
+  
+  int dataLen = strlen(value);
+
+  
   MQTTSN::publish( tmpFlags, topicId, value, dataLen);
+  
+  while(waiting_for_response) {
+		Serial.println("MM1MqttSn::connect() - calling parse_stream()");
+		parse_stream();
+    }
+	
+	Serial.print("BG: MM1MqttSn::connect() Response: ");
+	Serial.println((char*)response_buffer);
+	
   return true;  
 }
 

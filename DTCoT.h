@@ -71,7 +71,9 @@ public:
 	#ifdef COMMUNICATION_MQTTSN
 	
 	int Mqttsn_RegisterTopic(char* topic, char valueType);
-
+	bool publish( int topicId, const char* varValue);
+	bool publish( int topicId, unsigned long varValue);
+	bool publish( int topicId, double varValue);
 	
 	
 	#endif

@@ -62,6 +62,22 @@ int CoTCloud::Mqttsn_RegisterTopic(char* topic, char valueType) {
 	
 }
 
+bool CoTCloud::publish( int topicId
+	, const char* varValue) { 
+		_preferedCommunication.publish(topicId, varValue);
+		return true;
+}
+
+bool CoTCloud::publish( int topicId
+	, unsigned long varValue) { 
+	return false; 
+}
+
+bool CoTCloud::publish( int topicId
+	, double varValue) { 
+	return false; 
+}
+
 
 
 bool CoTCloud::errorHandler( const CoTHandlerParam error) {

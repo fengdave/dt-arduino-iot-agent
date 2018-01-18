@@ -18,7 +18,7 @@ public:
 	
 	void init();
 	
-	void publish(const char * key, const char * value);
+	void publish(int topicId, const char * value);
 	/**
 	 * @brief Registers a topic after connecting to the cloud of things.
 	 * @param topic A topic string.

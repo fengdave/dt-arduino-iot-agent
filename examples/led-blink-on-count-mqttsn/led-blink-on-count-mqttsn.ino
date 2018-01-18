@@ -27,6 +27,8 @@ const unsigned char COUNTER_THRESHOLD = 0xFF;
 
 const unsigned short CLOUD_SERVER_PORT = 1883;
 
+int myMqttsnTopicId = MQTTSN_TOPIC_INVALID_ID;
+
 using namespace DTCoT;
 
 CoTConfigDeviceGimasi devConfig 
@@ -76,11 +78,33 @@ void setup() {
 
 // @todo - why is device const? Can't call it ffrom with CoTCloud
 device.init();
+
 DEBUG_PRINT("Setup...");
   cloud.init();
   
   /* Subscribe to the change of a cloud variable of interest */
   cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
+
+  Serial.println("connected, registering topic...");
+  myMqttsnTopicId = cloud.Mqttsn_RegisterTopic(MQTTSN_TOPIC_MEASUREMENT, MQTTSN_MEAS_TYPE_TEMPERATURE);
+  if(myMqttsnTopicId == MQTTSN_TOPIC_INVALID_ID)
+  {
+    /*TODO topic reg failed, disconnect / restart connect*/
+    Serial.println("INVALID MQTTSN_TOPIC_ID");
+    
+  }
+  else {
+    Serial.println("topic registered, uploading data...");
+    Serial.print("myMqttsnTopicId: ");
+    Serial.println(myMqttsnTopicId);
+  //if(Mqttsn_PublishMeasurementData(myMqttsnTopicId, "25.4") == false)
+  {
+    /*TODO data upload failed, disconnect / restart connect*/
+   
+  }
+  }
+
+  
 }
 
 
@@ -98,7 +122,7 @@ void loop() {
   ++counter;
 
   if ( counter ) {
-    if ( !cloud.publish( "newlib", "FOOOOO") ) { // @todo, send integers/reals
+    if ( !cloud.publish(myMqttsnTopicId, "24.5") ) { // @todo, send integers/reals
       /* TODO: process error here */
     }
   }

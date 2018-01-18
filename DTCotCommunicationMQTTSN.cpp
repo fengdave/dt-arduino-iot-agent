@@ -29,15 +29,17 @@ void CoTCommunicationMQTTSN::init() {
 	reconnect();
 }
 
-void CoTCommunicationMQTTSN::publish( const char * key, const char * value) {
+void CoTCommunicationMQTTSN::publish( int topicId, const char * value) {
 	CoTConfigCommunicationMQTTSN & config = (CoTConfigCommunicationMQTTSN&)_config;
 	// @todo error handling/reconnect!
 	if ( mqttsn.connected() == false) {
-		DEBUG_PRINT("ERROR - could not send MQTTSN, not connected.");
+		DEBUG_PRINT("CoTCommunicationMQTTSN::publish not connected - will reconnect...");
 		reconnect();
 	}
 	else {
 		/* TODO: Implement MQTTSN publish here */
+		
+		mqttsn.publish(topicId, value);
 	}
 
 	
