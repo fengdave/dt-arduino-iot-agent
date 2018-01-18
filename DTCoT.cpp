@@ -54,6 +54,16 @@ bool CoTCloud::subscribe( const char* varName
 	return false; 
 }
 
+
+int CoTCloud::Mqttsn_RegisterTopic(char* topic, char valueType) {
+	
+ 	return _preferedCommunication.Mqttsn_RegisterTopic(topic, valueType);
+	
+	
+}
+
+
+
 bool CoTCloud::errorHandler( const CoTHandlerParam error) {
 	return false;
 }

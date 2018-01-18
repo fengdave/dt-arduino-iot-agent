@@ -32,6 +32,7 @@ extern "C" {
 #include "Regexp.h"
 #include "gmx_nbiot.h"
 #include "NbiotClient.h"
+#include "DTCoTSetup.h"
 
 
 #define MAX_SOCK_NUM  0xFF
@@ -45,7 +46,7 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream)
 	: _sock( MAX_SOCK_NUM)
 	, _dbgOutputStream( dbgOutputStream)
 	, _modemInitialized( false)
-	, _ipAddress( ipAddress)
+	, _serverPort( ipAddress)
 {
 	//_dbgOutputStream.println("NbiotClient::NbiotClient():");
 }
@@ -56,14 +57,13 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream)
 	NbiotClient::NbiotClient(uint8_t sock) : _sock(sock) {
 }
 
-NbiotClient::NbiotClient(const String& serverIP, const String& serverPort, const String& imsi, const String& password)  
+NbiotClient::NbiotClient(const String& serverIP, const String& serverPort, const String& imsi, const String& password, Stream& dbgOutputStream = Serial)  
 	
 	: _serverIP(serverIP)
 	, _serverPort(serverPort)
 	, _imsi(imsi)
 	, _password(password)
-	, _dbgOutputStream(Serial)
-	//,_dbgOutputStream( dbgOutputStream)
+	, _dbgOutputStream( dbgOutputStream)
 	
 		
 		
@@ -91,11 +91,22 @@ NbiotClient::NbiotClient()
 int NbiotClient::connect(const char* host, uint16_t port) {
 
 	_dbgOutputStream.println("NbiotClient::connect(const char* host, uint16_t port)");
-  /*NOTE Do some stupid stuff to make the compiler happy. :-| */
-  host = host;
-  port = port;
+	/*NOTE Do some stupid stuff to make the compiler happy. :-| */
+	host = host;
+	port = port;
 	/*Error: no host name resolution with NB-IoT*/
-
+	
+	if( !_modemInitialized ) {
+		_modemInitialized = initNBIoTModem();
+		if( !_modemInitialized ) { 
+			return 0;
+		}
+	}
+	
+	gmxNB_connect(_serverIP, _serverPort.toInt());
+	_socket = gmxNB_SocketOpen();
+	
+	
 	return 0;
 }
 
@@ -109,23 +120,22 @@ int NbiotClient::connect(const char* host, uint16_t port) {
  * @param port Destination port.
  * @returns 1 if connected successfully, 0 on failure.
  */
-int NbiotClient::connect( IPAddress ip, uint16_t port) {
-	_dbgOutputStream.println( "NbiotClient::connect( ip=" + String( ip) 
-		+ ", port=" + String( port) + ")" );
+int NbiotClient::connect(IPAddress ip, uint16_t port) {
+	_dbgOutputStream.println( "NbiotClient::connect( ip=" + String( _serverIP) 
+		+ ", port=" + String( _serverPort) + ")" );
 
-  // String ipAddrStr = ip().toString();
-  _ipaddrStr = String( ip);
-  _dstport = port;
-  
-  gmxNB_connect(_ipaddrStr, _dstport);
-  gmxNB_SocketOpen();
-
+	
+	
 	if( !_modemInitialized ) {
 		_modemInitialized = initNBIoTModem();
 		if( !_modemInitialized ) { 
 			return 0;
 		}
 	}
+	
+	gmxNB_connect(_serverIP, _serverPort.toInt());
+  	_socket = gmxNB_SocketOpen();
+  
 
   return 1;
 }
@@ -221,16 +231,16 @@ int NbiotClient::read(uint8_t* buf, size_t size) {
   int myUdpPort;
 
   /*TODO check if socket is active*/
-  status = gmxNB_RXData(remoteIp, myUdpPort, (byte*)buf, _size);
+  status = gmxNB_RXData(_serverIP, _serverPort.toInt(), (byte*)buf, _size);
   
   if( status != GMXNB_OK )
   {
-    _dbgOutputStream.println("Err CoT connection failed.");
+    _dbgOutputStream.println("NbiotClient::read(): Err CoT connection failed.");
     return -1;
   }
   else
   {
-    return 0;
+    return _size;
   }
 
 
@@ -344,9 +354,10 @@ uint8_t NbiotClient::getFirstSocket()
 bool NbiotClient::initNBIoTModem() {
 	// Init NB IoT board
 	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Initialyzing modem ... ");
+	
 	byte initStatus = gmxNB_init( /*forceReset:*/ false
-		, String( _ipAddress)
-		, NbiotClient::_srcport
+		,  _serverIP
+		, _serverPort.toInt()
 		, NULL );
 
 	if( ( initStatus != NB_NETWORK_JOINED) && ( initStatus != GMXNB_OK) ) {
@@ -367,16 +378,16 @@ bool NbiotClient::initNBIoTModem() {
 
 	if (initStatus != NB_NETWORK_JOINED) {
 		/* TODO: check for return code after it is implemented in the driver! */
-		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Connecting to DT network ... " );
+		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Configuring for DT network ... " );
 		gmxNB_startDT();
-		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Connected to DT network" );
+		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Configured for DT network" );
 	}
 
 	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Attempting to join the network ..." );
 	unsigned long netJoinRetryCounter = 0;
-	const unsigned long MAX_NETWORK_JOIN_RETRIES = 100;
+	//const unsigned long MAX_NETWORK_JOIN_RETRIES = 100; /* moved to DTCoTSetup.h */
 	for( ; netJoinRetryCounter < MAX_NETWORK_JOIN_RETRIES
-		; ++netJoinRetryCounter ) {
+		; netJoinRetryCounter++ ) {
 
 		if( gmxNB_isNetworkJoined() == NB_NETWORK_JOINED) {
 			break;
@@ -391,7 +402,7 @@ bool NbiotClient::initNBIoTModem() {
 	}
 
 	if( netJoinRetryCounter >= MAX_NETWORK_JOIN_RETRIES) {
-		_dbgOutputStream.println( "Fail");
+		_dbgOutputStream.println( "NbiotClient::initNBIoTModem(): Failed to join network");
 		return false;
 	}
 	
@@ -410,5 +421,23 @@ bool NbiotClient::initNBIoTModem() {
 	_modemInitialized = true;
 	
 	return true;
+}
+
+
+int NbiotClient::init() {
+	
+	/*
+	
+	if( !_modemInitialized ) {
+		_modemInitialized = initNBIoTModem();
+		if( !_modemInitialized ) {
+			_dbgOutputStream.println( "NbiotClient::init(): ERROR: Failed to initialize the modem");
+			return 0;
+		}
+	}
+	
+	*/
+	
+	
 }
 

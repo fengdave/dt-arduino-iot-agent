@@ -2,6 +2,7 @@
 #define DT_COT_HEADER_FILE 
 
 #include "DTCoTSetup.h"
+#include "DTCoTMqttSn-config.h"
 
 #include "DTCoTPrivate.h"
 #include "DTCoTExtensionIface.h"
@@ -60,11 +61,20 @@ public:
 	bool init();
 
 public:
+	
 	bool publish( const char* varName, const char* varValue);
 	bool publish( const char* varName, unsigned long varValue);
 	bool publish( const char* varName, double varValue);
 	
 	bool subscribe( const char* varName, CoTHandler handler);
+	
+	#ifdef COMMUNICATION_MQTTSN
+	
+	int Mqttsn_RegisterTopic(char* topic, char valueType);
+
+	
+	
+	#endif
 
 public:
 	bool errorHandler( const CoTHandlerParam error );

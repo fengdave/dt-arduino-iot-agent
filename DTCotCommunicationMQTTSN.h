@@ -19,7 +19,17 @@ public:
 	void init();
 	
 	void publish(const char * key, const char * value);
-	
+	/**
+	 * @brief Registers a topic after connecting to the cloud of things.
+	 * @param topic A topic string.
+	 * @returns The assigned topic id; @ref MQTTSN_TOPIC_INVALID_ID if 
+	 * topic registration failed.
+	 * @note At the moment, only topic "MEAS" is supported.
+	 */
+	 int Mqttsn_RegisterTopic(char* topic, char valueType);
+	 
+	 
+	 
 private:
 	void reconnect();
 	

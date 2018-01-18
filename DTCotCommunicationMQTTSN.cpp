@@ -15,9 +15,10 @@ CoTCommunicationMQTTSN::CoTCommunicationMQTTSN(
 	, const CoTAuthBase& authentication )
 	: CoTCommunicationBase( device, config, authentication) // @todo - hardcoded 
 		, mqttsn(
-		((CoTConfigCommunicationMQTTSN&)config).getServerIP(), /* should be the clientId */  
-		(unsigned short)((CoTConfigCommunicationMQTTSN&)config).getServerPort(), 
-		*device.getClient()
+		  ((CoTConfigCommunicationMQTTSN&)config).getIMSI() /* at DT NB-IoT, the Client ID is the IMSI */  
+		, (unsigned short)((CoTConfigCommunicationMQTTSN&)config).getServerPort()
+		, ((CoTConfigCommunicationMQTTSN&)config).getPassword()
+		, *device.getClient()
 		)
 {
 }
@@ -35,9 +36,33 @@ void CoTCommunicationMQTTSN::publish( const char * key, const char * value) {
 		DEBUG_PRINT("ERROR - could not send MQTTSN, not connected.");
 		reconnect();
 	}
+	else {
+		/* TODO: Implement MQTTSN publish here */
+	}
 
-	/* TODO: Implement MQTTSN publish here */
+	
 }
+
+int CoTCommunicationMQTTSN::Mqttsn_RegisterTopic(char* topic, char valueType) {
+	
+	if ( mqttsn.connected() == false) {
+		DEBUG_PRINT("ERROR - could not send MQTTSN, not connected.");
+		reconnect();
+	}
+	else {
+		/* TODO: Implement Mqttsn_RegisterTopic here */
+		
+		
+		return mqttsn.RegisterTopicDTCoT(topic, valueType);
+		
+		
+		
+	}
+	
+	
+}
+
+
 
 void CoTCommunicationMQTTSN::reconnect()
 {
@@ -46,6 +71,8 @@ void CoTCommunicationMQTTSN::reconnect()
 
 	int8_t ret;
     if (mqttsn.connected()) {
+		
+		DEBUG_PRINT("CoTCommunicationMQTTSN::reconnect() - mqttsn.connected() == true");
       return;
     }
 

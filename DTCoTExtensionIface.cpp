@@ -42,8 +42,13 @@ CoTConfigCommunicationMQTTSN::CoTConfigCommunicationMQTTSN(
 	, _serverPort (serverPort)
 	, _imsi( imsi)
 	, _password( password)
+	, _clientId  (String(_imsi) + String(_password))
 	, CoTConfigBase( )
-{ }
+{
+	
+	
+		
+}
 
 const char* CoTConfigCommunicationMQTTSN::getServerIP() { 
 	return _serverIP;
@@ -60,6 +65,13 @@ const char* CoTConfigCommunicationMQTTSN::getIMSI() {
 
 const char* CoTConfigCommunicationMQTTSN::getPassword() { 
 	return _password;
+}
+
+const char* CoTConfigCommunicationMQTTSN::getClientId() {
+	
+	return _clientId.c_str();
+	
+	
 }
 
 

@@ -10,8 +10,9 @@
 class MM1MqttSn: public MQTTSN {
 public:
   MM1MqttSn( const char* clientId
-  , unsigned short brokerPort
-  , Client& ioStream );
+	, unsigned short brokerPort
+	, const char* password
+	, Client& ioStream );
 
 public:
   bool init();
@@ -24,6 +25,7 @@ public:
   int connect(const uint8_t flags, const uint16_t duration);
   String connectErrorString(int error);
   void disconnect();
+  int RegisterTopicDTCoT(String topic, char valueType);
 
 public:
 	void gwinfo_handler( const msg_gwinfo* msg);
@@ -34,8 +36,10 @@ public:
 
 
 private:
-  const char* _clientId;
+  String _clientId;
   uint16_t _brokerPort;
+  const char* _imsi;
+  const char* _password;
   
 };
 

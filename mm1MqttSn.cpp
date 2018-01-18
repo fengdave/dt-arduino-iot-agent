@@ -5,11 +5,13 @@
 /* MM1MqttSn Library Header File */
 /* TODO: make sure platform-dependent WiFi header file is selected */
 
-MM1MqttSn::MM1MqttSn( const char* clientId
-  , unsigned short brokerPort
+MM1MqttSn::MM1MqttSn( const char* imsi
+  , unsigned short brokerPort, const char* password
   , Client& ioStream ) 
-  : _clientId( clientId)
+  : _clientId( String(String(imsi) + String(password)))
   , _brokerPort( brokerPort)
+  ,_imsi(imsi)
+  ,_password(password)
   , MQTTSN( ioStream)
   { }
 
@@ -22,12 +24,27 @@ MM1MqttSn::MM1MqttSn( const char* clientId
 */
 bool MM1MqttSn::init() {
 	Serial.println( "DBG: MM1MqttSn::init()" );
-	MQTTSN::searchgw( HOPS_TO_SEARCH_GATEWAY);
+	//MQTTSN::searchgw( HOPS_TO_SEARCH_GATEWAY);
 }
 
 
 int MM1MqttSn::connect(const uint8_t flags, const uint16_t duration) {
-		MQTTSN::connect(flags, duration, _clientId);
+		
+	Serial.print("BG: MM1MqttSn::connect() with clientId: ");
+	Serial.println(_clientId);
+	
+	_ioStream.connect("",""); /* FIXME: Dummy values because of virtual definition of function */
+	
+	MQTTSN::connect(flags, duration, _clientId.c_str());
+	
+	while(waiting_for_response) {
+		Serial.println("MM1MqttSn::connect() - calling parse_stream()");
+		parse_stream();
+    }
+	
+	Serial.print("BG: MM1MqttSn::connect() Response: ");
+	Serial.println((char*)response_buffer);
+	
 		return 0;
 		
 }
@@ -49,6 +66,80 @@ bool MM1MqttSn::publish( const char* topic
   const int tmpFlags = 0;
   MQTTSN::publish( tmpFlags, topicId, value, dataLen);
   return true;  
+}
+
+
+int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
+	
+	Serial.print("MM1MqttSn::RegisterTopicDTCoT: topic: ");
+	Serial.print(topic);
+	Serial.print(" - valueType: ");
+	Serial.println(valueType);
+	
+	/*                               len   type  topicId     msgId*/
+	char myPayload[255] = {/*FIXME:*/0x00, 0x0A, 0x00, 0x00, (char)(_message_id / 256), (char)(_message_id % 256)};
+	int myStrLen;
+	byte readChars;
+	
+	int mqttsnTopicId = 0;
+	
+	/*protocol header*/
+    _message_id++;
+  	myStrLen = 6;
+  	/*IMSI of the SIM card + topic selection*/
+  	myStrLen += sprintf(&(myPayload[myStrLen]), ("NBIoT/" + String(_imsi) + "/" + topic + "/").c_str());
+  	myPayload[myStrLen] = valueType;
+  	myStrLen++;
+  	/*FIXME this payload length treatment doesn't work for sizes (>127)!*/
+  	myPayload[0] = (char)myStrLen;
+	
+	Serial.print("MM1MqttSn::RegisterTopicDTCoT(): Payload: ");
+	Serial.print("NBIoT/");
+	Serial.print("{_imsi}");
+	Serial.print(_imsi);
+	Serial.print("/{topic}");
+	Serial.print(topic);
+	Serial.print("/{valueType}");
+	Serial.println(valueType);
+	
+	_ioStream.write(myPayload, myStrLen); /* TODO: add error handling */
+    //_ioStream.flush();
+
+    readChars = _ioStream.read((byte*)myPayload, myStrLen);
+	if( readChars <= 0 )
+  {
+    Serial.println("MM1MqttSn::RegisterTopicDTCoT(): Err CoT connection failed.");
+  }
+  else
+  {
+	  Serial.print("myStrLen: ");
+	  Serial.println(myStrLen);
+	  Serial.print("myPayload: ");
+	  Serial.println(myPayload);
+	  Serial.print("readChars: ");
+	  Serial.println(readChars);
+	  
+	  
+	  
+    if(readChars == 7)
+    {
+      /*TODO detailled check of content!*/
+      mqttsnTopicId = myPayload[2] * 256;
+      mqttsnTopicId += myPayload[3];
+      Serial.println("Got topic id: " + String(mqttsnTopicId));
+      return mqttsnTopicId;
+    }
+    else
+    {
+      Serial.println("Err unknown topic reg response.");
+    }
+  }
+  return mqttsnTopicId;
+	
+	
+
+	
+	
 }
 
 void MM1MqttSn::gwinfo_handler( const msg_gwinfo* msg) {

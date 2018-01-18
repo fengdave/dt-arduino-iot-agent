@@ -78,7 +78,7 @@ byte gmxNB_SocketClose(int sock);
 byte gmxNB_SocketClose(void);
 int gmxNB_Available(void);
 byte gmxNB_TXData(const char *binaryData, int len);
-byte gmxNB_RXData(String &remoteIp, int &udpPortNr, byte *binaryData, int &len);
+byte gmxNB_RXData(String &remoteIp, int udpPortNr, byte *binaryData, int &len);
 
 /*data conversion binary <-> hex */
 String AtResponseTokenize(String atResponse, String delimiter, int &indexStart);

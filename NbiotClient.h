@@ -35,6 +35,7 @@ public:
 	, const String& serverPort
 	, const String& imsi
 	, const String& password
+	, Stream& dbgOutputStream = Serial
 	);
 
   uint8_t status();
@@ -51,6 +52,7 @@ public:
   virtual void stop();
   virtual uint8_t connected();
   virtual operator bool();
+  int init();
 
   // friend class NbiotServer;
 

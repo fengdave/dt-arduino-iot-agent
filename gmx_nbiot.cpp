@@ -287,6 +287,11 @@ byte gmxNB_connect(String ipAddress, int udpPort)
 {
   udp_socket_ip = ipAddress;
   udp_port = udpPort;
+  
+  Serial.print("GMXNB ipAddress: ");
+  Serial.println(udp_socket_ip);
+  Serial.print("GMXNB udpPort: ");
+  Serial.println(udp_port);
   return GMXNB_OK;
 }
 
@@ -453,32 +458,35 @@ void gmxNB_startDT()
 	/* TODO: Provide meaningful return values */
 	/* TODO: move to provider-specific code - this is not a part of the driver ! */
 
-  _sendCmd( "AT+NCONFIG=CR_0354_0338_SCRAMBLING,TRUE\r" );
-  _parseResponse(dummyResponse);
-
-  _sendCmd( "AT+NCONFIG=CR_0859_SI_AVOID,TRUE\r" );
-  _parseResponse(dummyResponse);
-
-  /*WARNING Do not delete this line! gmxNB_radioOFF() and gmxNB_radioON() depend on it.*/
-  //wrong warning :( gmxNB_getIMSI(dummyResponse);
-  gmxNB_getIMSI(dummyResponse);
-
-  /*TODO radio off can fail. find out why!*/
-  gmxNB_radioOFF(dummyResponse);
-
-  // ak: should be auto-configured from provider
-  // _sendCmd( "AT+CGDCONT=1,\"IP\",\"internet.nbiot.telekom.de.MNC040.MCC901.GPRS\"\r" );
-  // _parseResponse(dummyResponse);
-  // gmxNB_setAPN("internet.nbiot.telekom.de.MNC040.MCC901.GPRS"); 
-  gmxNB_setAPN( DT_COT_APN);
-
-  gmxNB_radioON(dummyResponse);
-
-  _sendCmd( "AT+NBAND=8\r" );
-  _parseResponse(dummyResponse);
-
-  _sendCmd( "AT+COPS=1,2,\"26201\"\r" );
-  _parseResponse(dummyResponse);
+	_sendCmd( "AT+NCONFIG=AUTOCONNECT,TRUE\r" );
+	_parseResponse(dummyResponse);
+	
+	_sendCmd( "AT+NCONFIG=CR_0354_0338_SCRAMBLING,TRUE\r" );
+	_parseResponse(dummyResponse);
+	
+	_sendCmd( "AT+NCONFIG=CR_0859_SI_AVOID,TRUE\r" );
+	_parseResponse(dummyResponse);
+	
+	/*WARNING Do not delete this line! gmxNB_radioOFF() and gmxNB_radioON() depend on it.*/
+	//wrong warning :( gmxNB_getIMSI(dummyResponse);
+	gmxNB_getIMSI(dummyResponse);
+	
+	/*TODO radio off can fail. find out why!*/
+	gmxNB_radioOFF(dummyResponse);
+	
+	// ak: should be auto-configured from provider
+	// _sendCmd( "AT+CGDCONT=1,\"IP\",\"internet.nbiot.telekom.de.MNC040.MCC901.GPRS\"\r" );
+	// _parseResponse(dummyResponse);
+	// gmxNB_setAPN("internet.nbiot.telekom.de.MNC040.MCC901.GPRS"); 
+	gmxNB_setAPN( DT_COT_APN);
+	
+	gmxNB_radioON(dummyResponse);
+	
+	_sendCmd( "AT+NBAND=8\r" );
+	_parseResponse(dummyResponse);
+	
+	_sendCmd( "AT+COPS=1,2,\"26201\"\r" );
+	_parseResponse(dummyResponse);
 
 }
 
@@ -714,7 +722,7 @@ int gmxNB_Available(void)
 
 
 /*Wait for incoming data packet*/
-byte gmxNB_RXData(String &remoteIp, int &udpPortNr, byte *binaryData, int &len)
+byte gmxNB_RXData(String &remoteIp, int udpPortNr, byte *binaryData, int &len)
 {
   /*FIXME Data rx should better be non-blocking!*/
 
@@ -838,6 +846,9 @@ byte gmxNB_RXData(String &remoteIp, int &udpPortNr, byte *binaryData, int &len)
       /*get hex encoded version of payload from rxStr*/
       _log("payload: " + subStr);
       gmxNB_HexToBinary(subStr, binaryData);
+	  Serial.print("binaryData length: ");
+	  Serial.println(sizeof(binaryData));
+	  
     }
   }
   

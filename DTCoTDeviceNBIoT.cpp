@@ -54,9 +54,13 @@ bool CoTDeviceNBIoT::init() {
 		DEBUG_PRINT("CoTDeviceNBIoT::init");
 
 	/* TODO: Initialize Gimasi modem here */
+		
+	_nbiotClient.init();	
+		
 	
 	return false;
 }
+
 
 Client * DTCoT::CoTDeviceNBIoT::getClient() const {
 	return (Client*)(&_nbiotClient);

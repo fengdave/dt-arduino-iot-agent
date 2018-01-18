@@ -101,6 +101,9 @@
 
 #endif
 /**********************************/
+ 
+ 
+ #define MAX_NETWORK_JOIN_RETRIES 100
 
 #endif /* DTCoT_SETUP_HEADER_FILE */
 

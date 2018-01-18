@@ -34,7 +34,7 @@ THE SOFTWARE.
 MQTTSN::MQTTSN( Client& ioStream) :
 	waiting_for_response(true),
 	response_to_wait_for(ADVERTISE),
-	_message_id(0),
+	_message_id(1),
 	topic_count(0),
 	_gateway_id(0),
 	_response_timer(0),
@@ -97,7 +97,7 @@ uint16_t MQTTSN::find_topic_id(const char* name, uint8_t& index) {
 
 void MQTTSN::parse_stream() {
 
-	if( _ioStream.read( response_buffer, MAX_BUFFER_SIZE) <= 0 ) {
+	if( _ioStream.read( response_buffer, MAX_BUFFER_SIZE) < 0 ) {
 		return;
 	}
 
@@ -109,6 +109,11 @@ void MQTTSN::parse_stream() {
 void MQTTSN::dispatch() {
     message_header* response_message = (message_header*)response_buffer;
     bool handled = true;
+	
+	Serial.print("MQTTSN::dispatch() - response_message->type: ");
+	Serial.println(response_message->type);
+	Serial.print("MQTTSN::dispatch() - response_to_wair_for: ");
+	Serial.println(response_to_wait_for);
 
     switch (response_message->type) {
     case ADVERTISE:
@@ -125,6 +130,7 @@ void MQTTSN::dispatch() {
 
     case CONNACK:
         if (waiting_for_response && response_to_wait_for == CONNACK) {
+			Serial.println("MQTTSN::dispatch() - CONNACK");
             connack_handler((msg_connack*)response_buffer);
         } else {
             handled = false;
@@ -212,21 +218,34 @@ void MQTTSN::dispatch() {
         break;
 
     default:
+	
+		Serial.println("Unknown Response");
+		
         return;
     }
 
     if (handled) {
+		
+		Serial.print("MQTTSN::dispatch() handled = true");
         waiting_for_response = false;
     }
 }
 
 void MQTTSN::send_message() {
     message_header* hdr = reinterpret_cast<message_header*>(message_buffer);
+	
+	Serial.println("MQTTSN::send_message()");
 
     _ioStream.write(message_buffer, hdr->length); /* TODO: add error handling */
     _ioStream.flush();
 
-    if (!waiting_for_response) {
+    /*
+	while(waiting_for_response) {
+		parse_stream();
+    }
+	*/
+	
+	if (!waiting_for_response) {
         _response_timer = millis();
         _response_retries = N_RETRY;
 
@@ -371,6 +390,8 @@ void MQTTSN::connect( const uint8_t flags
 	, const uint16_t duration
 	, const char* client_id ) {
 
+		
+	Serial.println("MQTTSN::connect()");
     msg_connect* msg = reinterpret_cast<msg_connect*>(message_buffer);
 
     msg->length = sizeof(msg_connect) + strlen(client_id);
@@ -383,6 +404,9 @@ void MQTTSN::connect( const uint8_t flags
     send_message();
     waiting_for_response = true;
     response_to_wait_for = CONNACK;
+	Serial.print("MQTTSN::connect() - response_to_wair_for should be CONNACK and is ");
+	Serial.println(response_to_wait_for);
+	
 }
 
 

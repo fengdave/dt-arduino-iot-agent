@@ -32,6 +32,7 @@ public:
 	CoTDeviceNBIoT( const CoTConfigDeviceNBIoT& nbiotDeviceConfig);
 	bool init();
 
+
 	Client* getClient() const;
 
 private:

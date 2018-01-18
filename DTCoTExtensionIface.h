@@ -60,6 +60,7 @@ public:
 	const char* getServerPort();
 	const char* getIMSI();
 	const char* getPassword();
+	const char* getClientId();
 
 
 private:
@@ -67,6 +68,7 @@ private:
 	const char* _serverPort;
 	const char* _imsi;
 	const char* _password;
+	String _clientId;
 
 };
 

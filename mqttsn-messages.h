@@ -100,23 +100,27 @@ private:
     uint16_t bswap(const uint16_t val);
     void send_message();
 
-    // Set to true when we're waiting for some sort of acknowledgement from the
-    //server that will transition our state.
-    bool waiting_for_response;
+    
     uint8_t response_to_wait_for;
-    uint16_t _message_id;
+    
     uint8_t topic_count;
 
-    uint8_t message_buffer[MAX_BUFFER_SIZE];
-    uint8_t response_buffer[MAX_BUFFER_SIZE];
+    
     topic topic_table[MAX_TOPICS];
 
     uint8_t _gateway_id;
-    uint32_t _response_timer;
-    uint8_t _response_retries;
+    
 
 protected:
-	 Client& _ioStream;
+	uint8_t message_buffer[MAX_BUFFER_SIZE];
+    uint8_t response_buffer[MAX_BUFFER_SIZE];
+	uint32_t _response_timer;
+    uint8_t _response_retries;
+	// Set to true when we're waiting for some sort of acknowledgement from the
+    //server that will transition our state.
+    bool waiting_for_response;
+	uint16_t _message_id;
+	Client& _ioStream;
 };
 
 #endif
