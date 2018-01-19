@@ -71,16 +71,23 @@ bool MM1MqttSn::publish(
   const int tmpFlags = 0x20;
   
   int dataLen = strlen(value);
+  int trialCounter = 0;
 
   
   MQTTSN::publish( tmpFlags, topicId, value, dataLen);
   
   while(waiting_for_response) {
-		Serial.println("MM1MqttSn::connect() - calling parse_stream()");
+		Serial.println("MM1MqttSn::publish() - calling parse_stream()");
+		trialCounter++;
 		parse_stream();
+		Serial.print("MM1MqttSn::publish() - trialCounter: ");
+		Serial.println(trialCounter);
+		if(trialCounter > 2) {
+			waiting_for_response = false;
+		}
     }
 	
-	Serial.print("BG: MM1MqttSn::connect() Response: ");
+	Serial.print("BG: MM1MqttSn::publish() Response: ");
 	Serial.println((char*)response_buffer);
 	
   return true;  

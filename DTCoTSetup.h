@@ -8,10 +8,32 @@
  * uncomment or comment the definition of the feature respectively.
  */
 
+
+/**
+* Define which hardware
+*/
+
+#define HUZZAH                0
+#define GIMASI_TUINO1         1
+/**********************************/
+
+/**
+* Define which communication path
+*/
+#define WIFI                  0
+#define NB_IOT                1
+#define GSM                   2
+/**********************************/
+
+
+/************************************************************************************************/
+/************************  CONFIGURATION / ONLY CHANGE HERE        ******************************/
+/************************************************************************************************/
+
 /**********************************/
 /* Select the cloud communication method here */
-#define COMMUNICATION_MQTT
-//#define COMMUNICATION_MQTTSN
+//#define COMMUNICATION_MQTT
+#define COMMUNICATION_MQTTSN
 // #define COMMUNICATION_REST
 // #define COMMUNICATION_RAW_SOCKET
 /**********************************/
@@ -33,39 +55,23 @@
 
 /**********************************/
 /* Select the connection type here */
-//#define CONN_TYPE             NB_IOT
-#define CONN_TYPE             WIFI
+#define CONN_TYPE             NB_IOT
+//#define CONN_TYPE             WIFI
 //#define CONN_TYPE             GSM
 /**********************************/
 
 /**********************************/
 /* Select the Hardware platform here */
-//#define HW_PLATTFORM          GIMASI_TUINO1
-#define HW_PLATTFORM          HUZZAH
+#define HW_PLATTFORM          GIMASI_TUINO1
+//#define HW_PLATTFORM          HUZZAH
 /**********************************/
 
+/************************************************************************************************/
+/************************************************************************************************/
 
 /**
-* Define which hardware
+* Hardware Platform specific includes
 */
-
-#define HUZZAH                0
-#define GIMASI_TUINO1         1
-/**********************************/
-
-/**
-* Define which communication path
-*/
-#define WIFI                  0
-#define NB_IOT                1
-#define GSM                   2
-/**********************************/
-
-
-
- /**
- * Hardware Platform specific includes
- */
  
 
  

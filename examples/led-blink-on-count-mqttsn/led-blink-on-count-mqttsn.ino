@@ -14,10 +14,9 @@
    When the variable value reaches certain threshold - LED will blink several times
 
 */
+
 #include "secrets.h"
 #include "DTCoT.h"
-
-
 
 /* Application-specific settings */
 const unsigned char ON_BOARD_LED = 13;
