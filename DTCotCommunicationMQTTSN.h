@@ -1,6 +1,10 @@
 #ifndef MQTTSNCommunication_h_
 #define MQTTSNCommunication_h_
 
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include "DTCoTPrivate.h"
 #include "DTCoTCommunicationBase.h"
 #include "NbIoTClient.h"
@@ -39,6 +43,8 @@ private:
 };
 
 }
+
+#endif
 
 #endif // MQTTCommunication_h_
 

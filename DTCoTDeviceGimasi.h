@@ -1,6 +1,10 @@
 #ifndef DT_COT_DEVICE_GIMASI_HEADER_FILE
 #define DT_COT_DEVICE_GIMASI_HEADER_FILE
 
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include "DTCoTPrivate.h"
 #include "DTCoTDeviceNBIoT.h"
 
@@ -8,13 +12,13 @@ namespace DTCoT {
 
 class CoTConfigDeviceGimasi: public CoTConfigDeviceNBIoT {
 public:
-	CoTConfigDeviceGimasi(const char* serverIP, const char* serverPort, const char* imsi, const char* password  );
+	CoTConfigDeviceGimasi(const char* serverIP, const unsigned short serverPort, const char* imsi, const char* password  );
 };
 
 
 class CoTDeviceGimasi : public CoTDeviceNBIoT {
 public:
-	CoTDeviceGimasi( const CoTConfigDeviceGimasi& cfg );
+	CoTDeviceGimasi(  CoTConfigDeviceGimasi& cfg );
 
 public:
 	bool init();	
@@ -23,5 +27,7 @@ public:
 };
 
 } /* namespace DTCoT */
+
+#endif
 
 #endif /* DT_COT_DEVICE_GIMASI_HEADER_FILE */

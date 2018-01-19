@@ -50,14 +50,14 @@ private:
 class CoTConfigCommunicationMQTTSN: public CoTConfigBase {
 public:
 	CoTConfigCommunicationMQTTSN( const char* serverIP
-		, const char* serverPort
+		, const unsigned short serverPort
 		, const char* imsi
 		, const char* password 
 		);
 
 public:
 	const char* getServerIP();
-	const char* getServerPort();
+	const unsigned short getServerPort();
 	const char* getIMSI();
 	const char* getPassword();
 	const char* getClientId();
@@ -65,7 +65,7 @@ public:
 
 private:
 	const char* _serverIP;
-	const char* _serverPort;
+	const unsigned short _serverPort;
 	const char* _imsi;
 	const char* _password;
 	String _clientId;

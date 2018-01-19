@@ -34,7 +34,7 @@ const char* CoTConfigCommunicationMQTT::getUserId() {
 
 CoTConfigCommunicationMQTTSN::CoTConfigCommunicationMQTTSN( 
 	const char* serverIP
-	, const char* serverPort
+	, const unsigned short serverPort
 	, const char* imsi
 	, const char* password
 	 )
@@ -54,7 +54,7 @@ const char* CoTConfigCommunicationMQTTSN::getServerIP() {
 	return _serverIP;
 }
 
-const char* CoTConfigCommunicationMQTTSN::getServerPort() { 
+const unsigned short CoTConfigCommunicationMQTTSN::getServerPort() {
 	return _serverPort;
 }
 

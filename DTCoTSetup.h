@@ -8,53 +8,66 @@
  * uncomment or comment the definition of the feature respectively.
  */
 
-
+/**********************************/
 /* Select the cloud communication method here */
-
-// #define COMMUNICATION_MQTT
-#define COMMUNICATION_MQTTSN
+#define COMMUNICATION_MQTT
+//#define COMMUNICATION_MQTTSN
 // #define COMMUNICATION_REST
 // #define COMMUNICATION_RAW_SOCKET
+/**********************************/
 
-/* Select the MQTT Broker here */
-
+/**********************************/
 /* io.adaafruit.com*/
-#define MQTT_BROKER_ADAFRUIT
-#define MQTT_BROKER_DT
+//#define MQTT_BROKER_ADAFRUIT
+//#define MQTT_BROKER_DT
 /* https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support */
-#define MQTT_BROKER_AZURE
+//#define MQTT_BROKER_AZURE
+/**********************************/
 
-
+/**********************************/
 /*Select the authentication method */
 #define AUTHENTICATION_NONE
 // #define AUTHENTICATION_TLS
 // #define AUTHENTICATION_FINGERPRINT
+/**********************************/
+
+/**********************************/
+/* Select the connection type here */
+//#define CONN_TYPE             NB_IOT
+#define CONN_TYPE             WIFI
+//#define CONN_TYPE             GSM
+/**********************************/
+
+/**********************************/
+/* Select the Hardware platform here */
+//#define HW_PLATTFORM          GIMASI_TUINO1
+#define HW_PLATTFORM          HUZZAH
+/**********************************/
 
 
-#if defined(COMMUNICATION_MQTT)
-#include "DTCotCommunicationMQTT.h"
-	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTT
-#elif defined(COMMUNICATION_MQTTSN )
-#include "DTCotCommunicationMQTTSN.h"
-	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTTSN
-#elif defined(COMMUNICATION_REST)
-	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationREST
-#endif
- 
- 
- /**
- * Hardware Platform specific includes
- */
- 
- /**
- * Define which hardware
- */
+/**
+* Define which hardware
+*/
 
 #define HUZZAH                0
 #define GIMASI_TUINO1         1
 /**********************************/
-#define HW_PLATTFORM          GIMASI_TUINO1
+
+/**
+* Define which communication path
+*/
+#define WIFI                  0
+#define NB_IOT                1
+#define GSM                   2
 /**********************************/
+
+
+
+ /**
+ * Hardware Platform specific includes
+ */
+ 
+
  
 
 #if HW_PLATTFORM == HUZZAH
@@ -68,16 +81,8 @@
 #endif
  /**********************************/
  
- 
- /**
- * Define which communication path
- */
-#define WIFI                  0
-#define NB_IOT                1
-#define GSM                   2
-/**********************************/
-#define CONN_TYPE             NB_IOT
-/**********************************/
+
+
 
 
 /**
@@ -101,9 +106,21 @@
 
 #endif
 /**********************************/
- 
- 
- #define MAX_NETWORK_JOIN_RETRIES 100
+
+
+#if defined(COMMUNICATION_MQTT)
+#include "DTCotCommunicationMQTT.h"
+	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTT
+#elif defined(COMMUNICATION_MQTTSN )
+#include "DTCotCommunicationMQTTSN.h"
+#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTTSN
+#elif defined(COMMUNICATION_REST)
+#define PREFERED_COMMUNICATION_METHOD CoTCommunicationREST
+#endif
+
+
+
+#define MAX_NETWORK_JOIN_RETRIES 100
 
 #endif /* DTCoT_SETUP_HEADER_FILE */
 

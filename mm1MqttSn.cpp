@@ -1,3 +1,8 @@
+
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include <Arduino.h>
 
 #include "mm1MqttSn.h"
@@ -33,7 +38,7 @@ int MM1MqttSn::connect(const uint8_t flags, const uint16_t duration) {
 	Serial.print("BG: MM1MqttSn::connect() with clientId: ");
 	Serial.println(_clientId);
 	
-	_ioStream.connect("",""); /* FIXME: Dummy values because of virtual definition of function */
+	_ioStream.connect("",0); /* FIXME: Dummy values because of virtual definition of function */
 	
 	MQTTSN::connect(flags, duration, _clientId.c_str());
 	
@@ -196,3 +201,4 @@ void MM1MqttSn::willmsgreq_handler(const message_header* msg) {
 }
 
 
+#endif

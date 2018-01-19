@@ -14,7 +14,11 @@
  * GitHub:  https://github.com/gimasi
  */
 
- 
+
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 //#include "DbgSerialInit.h"
 
 extern "C" {
@@ -42,11 +46,11 @@ uint16_t NbiotClient::_srcport = 1883;
 
 
 
-NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream)
+NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream /* default = Serial */)
 	: _sock( MAX_SOCK_NUM)
 	, _dbgOutputStream( dbgOutputStream)
 	, _modemInitialized( false)
-	, _serverPort( ipAddress)
+	, _serverIP( ipAddress)
 {
 	//_dbgOutputStream.println("NbiotClient::NbiotClient():");
 }
@@ -54,10 +58,13 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream)
 /**
  * @brief Initialise / start modem here.
  */
-	NbiotClient::NbiotClient(uint8_t sock) : _sock(sock) {
+	NbiotClient::NbiotClient(uint8_t sock, Stream& dbgOutputStream /* default = Serial */)
+			:	 _sock(sock)
+				,_dbgOutputStream( dbgOutputStream) {
+
 }
 
-NbiotClient::NbiotClient(const String& serverIP, const String& serverPort, const String& imsi, const String& password, Stream& dbgOutputStream = Serial)  
+NbiotClient::NbiotClient(const String& serverIP, const unsigned short& serverPort, const String& imsi, const String& password, Stream& dbgOutputStream /* default = Serial */)
 	
 	: _serverIP(serverIP)
 	, _serverPort(serverPort)
@@ -74,7 +81,8 @@ NbiotClient::NbiotClient(const String& serverIP, const String& serverPort, const
 	
 }
 
-NbiotClient::NbiotClient()  
+NbiotClient::NbiotClient(Stream& dbgOutputStream /* default = Serial */)
+	: _dbgOutputStream( dbgOutputStream)
 		
 {
 	//Serial.println("NbiotClient::NbiotClient():");
@@ -103,7 +111,7 @@ int NbiotClient::connect(const char* host, uint16_t port) {
 		}
 	}
 	
-	gmxNB_connect(_serverIP, _serverPort.toInt());
+	gmxNB_connect(_serverIP, _serverPort);
 	_socket = gmxNB_SocketOpen();
 	
 	
@@ -133,7 +141,7 @@ int NbiotClient::connect(IPAddress ip, uint16_t port) {
 		}
 	}
 	
-	gmxNB_connect(_serverIP, _serverPort.toInt());
+	gmxNB_connect(_serverIP, _serverPort);
   	_socket = gmxNB_SocketOpen();
   
 
@@ -231,7 +239,7 @@ int NbiotClient::read(uint8_t* buf, size_t size) {
   int myUdpPort;
 
   /*TODO check if socket is active*/
-  status = gmxNB_RXData(_serverIP, _serverPort.toInt(), (byte*)buf, _size);
+  status = gmxNB_RXData(_serverIP, _serverPort, (byte*)buf, _size);
   
   if( status != GMXNB_OK )
   {
@@ -357,7 +365,7 @@ bool NbiotClient::initNBIoTModem() {
 	
 	byte initStatus = gmxNB_init( /*forceReset:*/ false
 		,  _serverIP
-		, _serverPort.toInt()
+		, _serverPort
 		, NULL );
 
 	if( ( initStatus != NB_NETWORK_JOINED) && ( initStatus != GMXNB_OK) ) {
@@ -441,3 +449,4 @@ int NbiotClient::init() {
 	
 }
 
+#endif

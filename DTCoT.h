@@ -61,19 +61,25 @@ public:
 	bool init();
 
 public:
+
+	#ifdef COMMUNICATION_MQTT
 	
-	bool publish( const char* varName, const char* varValue);
-	bool publish( const char* varName, unsigned long varValue);
-	bool publish( const char* varName, double varValue);
+		bool publish( const char* varName, const char* varValue);
+		bool publish( const char* varName, unsigned long varValue);
+		bool publish( const char* varName, double varValue);
 	
-	bool subscribe( const char* varName, CoTHandler handler);
+
+
+    #endif
+
+		bool subscribe( const char* varName, CoTHandler handler);
 	
 	#ifdef COMMUNICATION_MQTTSN
 	
-	int Mqttsn_RegisterTopic(char* topic, char valueType);
-	bool publish( int topicId, const char* varValue);
-	bool publish( int topicId, unsigned long varValue);
-	bool publish( int topicId, double varValue);
+		int Mqttsn_RegisterTopic(char* topic, char valueType);
+		bool publish( int topicId, const char* varValue);
+		bool publish( int topicId, unsigned long varValue);
+		bool publish( int topicId, double varValue);
 	
 	
 	#endif

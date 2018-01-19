@@ -32,7 +32,9 @@ bool CoTCloud::init() {
 	 delay(1000);
 	_preferedCommunication.init();
 }
- 
+
+#ifdef COMMUNICATION_MQTT
+
 bool CoTCloud::publish( const char* varName
 	, const char* varValue) { 
 		_preferedCommunication.publish(varName, varValue);
@@ -49,12 +51,16 @@ bool CoTCloud::publish( const char* varName
 	return false; 
 }
 
+
+
+#endif
+
 bool CoTCloud::subscribe( const char* varName
-	, const CoTHandler handler ) { 
-	return false; 
+		, const CoTHandler handler ) {
+	return false;
 }
 
-
+#ifdef COMMUNICATION_MQTTSN
 int CoTCloud::Mqttsn_RegisterTopic(char* topic, char valueType) {
 	
  	return _preferedCommunication.Mqttsn_RegisterTopic(topic, valueType);
@@ -77,7 +83,7 @@ bool CoTCloud::publish( int topicId
 	, double varValue) { 
 	return false; 
 }
-
+#endif
 
 
 bool CoTCloud::errorHandler( const CoTHandlerParam error) {

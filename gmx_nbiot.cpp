@@ -17,6 +17,10 @@
 
 */
 
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include "gmx_nbiot.h"
 #include "Regexp.h"
 #include <string.h>
@@ -140,6 +144,8 @@ String NbRingBuffReadString(void)
 
   return retStr;
 }
+
+
 
 
 //
@@ -856,3 +862,4 @@ byte gmxNB_RXData(String &remoteIp, int udpPortNr, byte *binaryData, int &len)
 }
 
 
+#endif

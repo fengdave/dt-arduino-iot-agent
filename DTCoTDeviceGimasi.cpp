@@ -1,3 +1,8 @@
+
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include "DTCoTDeviceGimasi.h"
 
 #include "DTCoTDebugOutput.h"
@@ -8,7 +13,7 @@ using namespace DTCoT;
 
 CoTConfigDeviceGimasi::CoTConfigDeviceGimasi ( 
 	const char* serverIP
-	, const char* serverPort
+	, const unsigned short serverPort
 	, const char* imsi
 	, const char* password)
 	: CoTConfigDeviceNBIoT( serverIP, serverPort, 
@@ -18,7 +23,7 @@ CoTConfigDeviceGimasi::CoTConfigDeviceGimasi (
    
 }
 
-CoTDeviceGimasi::CoTDeviceGimasi( const CoTConfigDeviceGimasi& config)
+CoTDeviceGimasi::CoTDeviceGimasi(  CoTConfigDeviceGimasi& config)
 	: CoTDeviceNBIoT( config)
  {
  }
@@ -34,3 +39,4 @@ void CoTDeviceGimasi::errorHandler( const CoTHandlerParam& error )
 { }
 
 
+#endif

@@ -16,6 +16,12 @@
  *      License: it's free - do whatever you want! ( provided you leave the credits)
  *
  */
+
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
+
 #ifndef _GMX_NBIOT_H
 #define _GMX_NBIOT_H
 
@@ -97,6 +103,9 @@ void gmxNB_Led2(byte led_state);
 void gmxNB_Led3(byte led_state);
 
 void gmxNB_Reset(void);
+
+
+#endif
 
 #endif /*_GMX_NBIOT_H*/
 

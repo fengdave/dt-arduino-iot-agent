@@ -1,6 +1,10 @@
 #ifndef MM1_MQTTSN_HEADER_FILE
 #define MM1_MQTTSN_HEADER_FILE
 
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include <Arduino.h>
 #include <Client.h>
 
@@ -43,5 +47,6 @@ private:
   
 };
 
+#endif
 
 #endif /* MM1_MQTTSN_HEADER_FILE */

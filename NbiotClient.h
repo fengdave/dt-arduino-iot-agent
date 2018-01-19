@@ -15,6 +15,10 @@
 #ifndef _nbiotclient_h
 #define _nbiotclient_h
 
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include "Arduino.h"	
 #include "Print.h"
 #include "Client.h"
@@ -27,12 +31,12 @@ public:
 	, Stream& dbgOutputStream = Serial
   );
 	
-  explicit NbiotClient( uint8_t sock);
+  explicit NbiotClient( uint8_t sock,  Stream& dbgOutputStream = Serial);
   
-  explicit NbiotClient();
+  explicit NbiotClient( Stream& dbgOutputStream = Serial);
   
   explicit NbiotClient(const String& serverIP
-	, const String& serverPort
+	, const unsigned short& serverPort
 	, const String& imsi
 	, const String& password
 	, Stream& dbgOutputStream = Serial
@@ -59,16 +63,16 @@ public:
   using Print::write;
 
 private:
-  static uint16_t _srcport;
-  uint8_t _sock;   //not used
-  uint16_t  _socket;
-  String _ipaddrStr;
-  int _dstport;
-  String _ipAddress;
-  String _serverPort;
-  String _serverIP;
-  String _imsi;
-  String _password;
+	static uint16_t _srcport;
+	uint8_t _sock;   //not used
+	uint16_t  _socket;
+	String _ipaddrStr;
+	int _dstport;
+	String _ipAddress;
+	unsigned short _serverPort;
+	String _serverIP;
+	String _imsi;
+	String _password;
   
   
 
@@ -80,5 +84,7 @@ private:
 	Stream& _dbgOutputStream;
 	bool _modemInitialized;
 };
+
+#endif
 
 #endif /*_nbiotclient_h*/

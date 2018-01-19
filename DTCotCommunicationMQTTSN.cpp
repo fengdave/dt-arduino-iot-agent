@@ -1,3 +1,7 @@
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include "DTCoTCommunicationMQTTSN.h"
 #include "DTCoTCommunicationBase.h"
 #include "DTCoTDeviceBase.h"
@@ -16,7 +20,7 @@ CoTCommunicationMQTTSN::CoTCommunicationMQTTSN(
 	: CoTCommunicationBase( device, config, authentication) // @todo - hardcoded 
 		, mqttsn(
 		  ((CoTConfigCommunicationMQTTSN&)config).getIMSI() /* at DT NB-IoT, the Client ID is the IMSI */  
-		, (unsigned short)((CoTConfigCommunicationMQTTSN&)config).getServerPort()
+		, ((CoTConfigCommunicationMQTTSN&)config).getServerPort()
 		, ((CoTConfigCommunicationMQTTSN&)config).getPassword()
 		, *device.getClient()
 		)
@@ -96,3 +100,4 @@ void CoTCommunicationMQTTSN::reconnect()
 }
 
 
+#endif

@@ -1,3 +1,8 @@
+
+#include "DTCOTSetup.h"
+
+#if CONN_TYPE == NB_IOT
+
 #include "DTCoTPrivate.h"
 #include "DTCoTDeviceNBIoT.h"
 
@@ -9,7 +14,7 @@ using namespace DTCoT;
 
 CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT(
 	const char* serverIP
-	, const char* serverPort
+	, const unsigned short serverPort
 	, const char* imsi
 	, const char* password)
 	:  _serverIP(serverIP), _serverPort(serverPort), 
@@ -23,7 +28,7 @@ const char* CoTConfigDeviceNBIoT::getServerIP() {
 	return _serverIP;
 }
 
-const char* CoTConfigDeviceNBIoT::getServerPort() { 
+const unsigned short CoTConfigDeviceNBIoT::getServerPort() {
 	return _serverPort;
 }
 
@@ -37,13 +42,13 @@ const char* CoTConfigDeviceNBIoT::getPassword() {
 	return _password; 
 }
 
-CoTDeviceNBIoT::CoTDeviceNBIoT(	const CoTConfigDeviceNBIoT& nbiotConfig)
+CoTDeviceNBIoT::CoTDeviceNBIoT(	 CoTConfigDeviceNBIoT& nbiotConfig)
 	: CoTDeviceBase( nbiotConfig)
 		
-	,_nbiotClient (NbiotClient(nbiotConfig.getServerIP()
-				, nbiotConfig.getServerPort()
-				, nbiotConfig.getIMSI()
-				, nbiotConfig.getPassword()
+	,_nbiotClient (NbiotClient( nbiotConfig.getServerIP()
+				,  nbiotConfig.getServerPort()
+				,  nbiotConfig.getIMSI()
+				,  nbiotConfig.getPassword()
 				))
 					
 					
@@ -65,3 +70,5 @@ bool CoTDeviceNBIoT::init() {
 Client * DTCoT::CoTDeviceNBIoT::getClient() const {
 	return (Client*)(&_nbiotClient);
 }
+
+#endif
