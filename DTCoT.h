@@ -18,7 +18,8 @@
 
 #elif defined(NB_IOT_ENABLED)
 
-	#include "DTCotDeviceGimasi.h"
+	#include "DTCoTDeviceNBioT.h"
+
 
 #elif defined(GSM_ENABLED)
 
@@ -35,6 +36,12 @@
 #elif defined(TUINO1_ENABLED)
 
 	#include "DTCoTDeviceGimasi.h"
+
+#elif defined(FEATHER_M0_NBIOT)
+	#include "DTCoTDeviceFeatherM0-NBIoT.h"
+
+#elif defined(FEATHER_M0_WIFI)
+	#include "DTCoTDeviceFeatherM0-WiFi.h"
 
 #endif
 

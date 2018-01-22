@@ -147,7 +147,6 @@ String NbRingBuffReadString(void)
 
 
 
-
 //
 // ISR
 //
@@ -157,7 +156,6 @@ ISR(PCINT1_vect) {
       _NBRing();
   }
 }
-
 
 
 void _resetGMX() {

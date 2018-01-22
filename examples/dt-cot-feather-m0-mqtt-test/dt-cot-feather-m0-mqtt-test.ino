@@ -47,8 +47,8 @@ using namespace DTCoT;
  */
 
 
-CoTConfigDeviceHUZZAH devConfig = CoTConfigDeviceHUZZAH(SECRET_WIFI_SSID, SECRET_WIFI_PASSWORD );
-CoTDeviceHUZZAH device = CoTDeviceHUZZAH(devConfig);
+CoTConfigDeviceFeatherM0_WiFi devConfig = CoTConfigDeviceFeatherM0_WiFi(SECRET_WIFI_SSID, SECRET_WIFI_PASSWORD );
+CoTDeviceFeatherM0_WiFi device = CoTDeviceFeatherM0_WiFi(devConfig);
 
 CoTConfigCommunicationMQTT mqttConfig = CoTConfigCommunicationMQTT( "io.adafruit.com"
     , CLOUD_SERVER_PORT
