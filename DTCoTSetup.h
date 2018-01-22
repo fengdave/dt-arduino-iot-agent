@@ -15,6 +15,7 @@
 
 #define HUZZAH                0
 #define GIMASI_TUINO1         1
+#define FEATHER_M0			  2
 /**********************************/
 
 /**
@@ -32,8 +33,8 @@
 
 /**********************************/
 /* Select the cloud communication method here */
-#define COMMUNICATION_MQTT
-//#define COMMUNICATION_MQTTSN
+//#define COMMUNICATION_MQTT
+#define COMMUNICATION_MQTTSN
 // #define COMMUNICATION_REST
 // #define COMMUNICATION_RAW_SOCKET
 /**********************************/
@@ -55,15 +56,16 @@
 
 /**********************************/
 /* Select the connection type here */
-//#define CONN_TYPE             NB_IOT
-#define CONN_TYPE             WIFI
+#define CONN_TYPE             NB_IOT
+//#define CONN_TYPE             WIFI
 //#define CONN_TYPE             GSM
 /**********************************/
 
 /**********************************/
 /* Select the Hardware platform here */
-//#define HW_PLATTFORM          GIMASI_TUINO1
-#define HW_PLATTFORM          HUZZAH
+#define HW_PLATTFORM          GIMASI_TUINO1
+//#define HW_PLATTFORM          HUZZAH
+//#define HW_PLATTFORM          FEATHER_M0
 /**********************************/
 
 /************************************************************************************************/

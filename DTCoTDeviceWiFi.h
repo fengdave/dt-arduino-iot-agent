@@ -8,15 +8,18 @@
 
 // @todo - derive this!
 #if defined(ESP8266)
-#include <ESP8266WiFi.h>
+	#include <ESP8266WiFi.h>
+	//#error "ESP8266"
+#elif defined(ARDUINO_ARCH_SAMD) 
+	// for Feather M0
+	#include <WiFi101.h>
+	//#error "Feather M0"
+	
 #else
-
-/**
-* !!! unimplemented !!!
-**/
-
-
-#include <WiFi.h>
+	//* !!! unimplemented !!!	
+	//#error "the normal case"
+	#include <WiFi.h>
+		
 #endif
 
 

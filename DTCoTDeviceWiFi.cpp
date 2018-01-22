@@ -44,7 +44,20 @@ bool CoTDeviceWiFi::init() {
 	char out[256]; // @todo bounds checking
 	sprintf(out, "Connecting to %s pwd %s... ", config.getWiFiSSID(), config.getWiFiPassword());
 	DEBUG_PRINT(out);
-
+	/*
+	#if defined(ARDUINO_ARCH_SAMD)
+ 		// necessary because feather M0 need the ssid as not const instead of the huzzah
+		#error "feather M0"
+		char _feather_ssid[255];
+		strcpy(_feather_ssid, config.getWiFiSSID());
+		WiFi.begin(_feather_ssid, config.getWiFiPassword());
+		
+	#else 
+		#error "ich komm doch hier her"
+		WiFi.begin(config.getWiFiSSID(), config.getWiFiPassword());
+	
+	#endif
+	*/
     WiFi.begin(config.getWiFiSSID(), config.getWiFiPassword());
 
     while (WiFi.status() != WL_CONNECTED) {

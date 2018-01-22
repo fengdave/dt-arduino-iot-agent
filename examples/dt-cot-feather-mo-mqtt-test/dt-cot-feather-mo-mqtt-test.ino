@@ -1,3 +1,5 @@
+
+
 /** Cloud-based blinker
 
    Objective:
@@ -15,7 +17,7 @@
 
 */
 
-
+#include <avr/dtostrf.h>
 #include "DTCoT.h"
 // NOTE: You need to create this file with  SECRET_WIFI_SSID and SECRET_WIFI_PASSWORD defined
 #include "secrets.h"
@@ -87,8 +89,11 @@ void setup() {
     delay(100);
    DEBUG_PRINT("Setup...");
 
-// @todo - why is device const? Can't call it ffrom with CoTCloud
-device.init();
+   //Configure pins for Adafruit ATWINC1500 Feather
+  WiFi.setPins(8,7,4,2);
+
+  // @todo - why is device const? Can't call it ffrom with CoTCloud
+  device.init();
   cloud.init();
   
   /* Subscribe to the change of a cloud variable of interest */
