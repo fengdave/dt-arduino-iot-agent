@@ -28,11 +28,16 @@ const unsigned short CLOUD_SERVER_PORT = 1883;
 
 int myMqttsnTopicId = MQTTSN_TOPIC_INVALID_ID;
 
+float exampleTemp = 25.4;
+String tmpDirection = "up";
+int tmpCounter = 0;
+char examplTempStr[10];
+
 using namespace DTCoT;
 
 CoTConfigDeviceGimasi devConfig 
   = CoTConfigDeviceGimasi(NB_IOT_SERVER_IP
-    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD);
+    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD, RESET_PIN, SERIIAL_IN, SERIAL:OUT);
 
 CoTDeviceGimasi device = CoTDeviceGimasi(devConfig);
 
@@ -96,7 +101,7 @@ DEBUG_PRINT("Setup...");
     Serial.println("topic registered, uploading data...");
     Serial.print("myMqttsnTopicId: ");
     Serial.println(myMqttsnTopicId);
-  //if(Mqttsn_PublishMeasurementData(myMqttsnTopicId, "25.4") == false)
+  //if(Mqttsn_PublishMeasurementData(myMqttsnTopicId, String(exampleFloat) == false)
   {
     /*TODO data upload failed, disconnect / restart connect*/
    
@@ -121,7 +126,35 @@ void loop() {
   ++counter;
 
   if ( counter ) {
-    if ( !cloud.publish(myMqttsnTopicId, "24.5") ) { // @todo, send integers/reals
+
+      if (tmpDirection == "up") {
+          if(tmpCounter < 10) {
+            exampleTemp += 0.5;
+            tmpCounter++;
+          }
+          else {
+            tmpCounter = 0;
+            tmpDirection = "down";
+            exampleTemp -= 0.5;
+          }
+      }
+      else {
+        if(tmpCounter < 10) {
+            exampleTemp -= 0.5;
+            tmpCounter++;
+          }
+          else {
+            tmpCounter = 0;
+            tmpDirection = "up";
+            exampleTemp += 0.5;
+          }
+      }
+
+     dtostrf(exampleTemp, 2, 2, examplTempStr);
+     Serial.print("### Sending Temperature: ");
+     Serial.println(examplTempStr);
+    
+    if ( !cloud.publish(myMqttsnTopicId, examplTempStr) ) { // @todo, send integers/reals
       /* TODO: process error here */
     }
   }

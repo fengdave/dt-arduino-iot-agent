@@ -15,8 +15,8 @@
 
 */
 
-#include "DTCoT.h"
 
+#include "DTCoT.h"
 // NOTE: You need to create this file with  SECRET_WIFI_SSID and SECRET_WIFI_PASSWORD defined
 #include "secrets.h"
 
@@ -28,8 +28,15 @@ const unsigned char COUNTER_THRESHOLD = 0xFF;
 
 const unsigned short CLOUD_SERVER_PORT = 1883;
 
+float exampleTemp = 25.4;
+String tmpDirection = "up";
+int tmpCounter = 0;
+char examplTempStr[10];
+
+
+
 #if !defined(CLOUD_SERVER_PASSWORD) || !defined(ADAFRUIT_USER_ID)
-#error Can't find Cloud credentials: Create secrets.h file and place it next to this example (see readme for details)
+#error "Can't find Cloud credentials: Create secrets.h file and place it next to this example (see readme for details)"
 #endif /* CLOUD_SERVER_PASSWORD */
 
 using namespace DTCoT;
@@ -103,12 +110,40 @@ void loop() {
   ++counter;
 
   if ( counter ) {
-    if ( !cloud.publish( "newlib", "FOOOOO") ) { // @todo, send integers/reals
+
+     if (tmpDirection == "up") {
+          if(tmpCounter < 10) {
+            exampleTemp += 0.5;
+            tmpCounter++;
+          }
+          else {
+            tmpCounter = 0;
+            tmpDirection = "down";
+            exampleTemp -= 0.5;
+          }
+      }
+      else {
+        if(tmpCounter < 10) {
+            exampleTemp -= 0.5;
+            tmpCounter++;
+          }
+          else {
+            tmpCounter = 0;
+            tmpDirection = "up";
+            exampleTemp += 0.5;
+          }
+      }
+
+     dtostrf(exampleTemp, 2, 2, examplTempStr);
+     Serial.print("### Sending Temperature: ");
+     Serial.println(examplTempStr);
+    
+    if ( !cloud.publish( "lyns-huzzah", examplTempStr) ) { // @todo, send integers/reals
       /* TODO: process error here */
     }
   }
 
-  delay(1000);
+  delay(30000);
 }
 }
 
