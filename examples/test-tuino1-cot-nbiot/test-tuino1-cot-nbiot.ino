@@ -37,7 +37,7 @@ using namespace DTCoT;
 
 CoTConfigDeviceGimasi devConfig 
   = CoTConfigDeviceGimasi(NB_IOT_SERVER_IP
-    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD, RESET_PIN, SERIIAL_IN, SERIAL:OUT);
+    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD);
 
 CoTDeviceGimasi device = CoTDeviceGimasi(devConfig);
 
