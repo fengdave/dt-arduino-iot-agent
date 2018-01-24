@@ -1,5 +1,5 @@
 /**
- * @file NbiotClient.h
+ * @file protocols/NbIoTClient.h
  * @description Network interface of an NB-IoT Modem.
  * @author akrause
  * @copyright (C) 2017 mm1 Technology GmbH - all rights reserved.

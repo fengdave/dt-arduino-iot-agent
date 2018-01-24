@@ -3,9 +3,9 @@
 #if CONN_TYPE == NB_IOT
 
 #include "DTCoTCommunicationMQTTSN.h"
-#include "DTCoTCommunicationBase.h"
-#include "DTCoTDeviceBase.h"
-#include "DTCoTDeviceNBIoT.h"
+#include "base-classes/DTCoTCommunicationBase.h"
+#include "base-classes/DTCoTDeviceBase.h"
+#include "devices/DTCoTDeviceNBIoT.h"
 #include "DTCoTExtensionIface.h"
 
 

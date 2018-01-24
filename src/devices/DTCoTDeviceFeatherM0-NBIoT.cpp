@@ -5,7 +5,7 @@
 
 #include "DTCoTDeviceFeatherM0-NBIoT.h"
 
-#include "DTCoTDebugOutput.h"
+#include "utility/DTCoTDebugOutput.h"
 
 using namespace DTCoT;
 

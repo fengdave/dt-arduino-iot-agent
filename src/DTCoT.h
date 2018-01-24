@@ -2,50 +2,49 @@
 #define DT_COT_HEADER_FILE 
 
 #include "DTCoTSetup.h"
-#include "DTCoTMqttSn-config.h"
+#include "protocols/DTCoTMqttSn-config.h"
 
 #include "DTCoTPrivate.h"
 #include "DTCoTExtensionIface.h"
 
-#include "DTCoTDeviceBase.h"
+#include "base-classes/DTCoTDeviceBase.h"
 
 #ifdef WIFI_ENABLED
 
-	#include "DTCoTDeviceWiFi.h"
-	#include "DTCoTDeviceGPRS.h"
-	#include "DTCoTDeviceEthernet.h"
+	#include "devices/DTCoTDeviceWiFi.h"
+	#include "devices/DTCoTDeviceGPRS.h"
+	#include "devices/DTCoTDeviceEthernet.h"
 
 
 #elif defined(NB_IOT_ENABLED)
 
-	#include "DTCoTDeviceNBioT.h"
+	#include "devices/DTCoTDeviceNBioT.h"
 
 
 #elif defined(GSM_ENABLED)
 
-	#include "DTCotDeviceGPRS.h"
-	#include "DTCoTDevice32uFONA.h"
+	#include "devices/DTCotDeviceGPRS.h"
+	#include "devices/DTCoTDevice32uFONA.h"
 
 
 #endif
 
 #ifdef HUZZAH_ENABLED
 
-	#include "DTCoTDeviceHUZZAH.h"
+	#include "devices/DTCoTDeviceHUZZAH.h"
 
 #elif defined(TUINO1_ENABLED)
-
-	#include "DTCoTDeviceGimasi.h"
+	#include "devices/DTCoTDeviceGimasi.h"
 
 #elif defined(FEATHER_M0_NBIOT)
-	#include "DTCoTDeviceFeatherM0-NBIoT.h"
+	#include "devices/DTCoTDeviceFeatherM0-NBIoT.h"
 
 #elif defined(FEATHER_M0_WIFI)
-	#include "DTCoTDeviceFeatherM0-WiFi.h"
+	#include "devices/DTCoTDeviceFeatherM0-WiFi.h"
 
 #endif
 
-#include "DTCoTDebugOutput.h"
+#include "utility/DTCoTDebugOutput.h"
 
 /* Library Public Interface 
  * ----------------------------

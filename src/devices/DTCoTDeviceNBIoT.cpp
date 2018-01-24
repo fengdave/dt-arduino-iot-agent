@@ -4,9 +4,9 @@
 #if CONN_TYPE == NB_IOT
 
 #include "DTCoTPrivate.h"
-#include "DTCoTDeviceNBIoT.h"
+#include "devices/DTCoTDeviceNBIoT.h"
 
-#include "DTCoTDebugOutput.h"
+#include "utility/DTCoTDebugOutput.h"
 
 using namespace DTCoT;
 

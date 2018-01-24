@@ -6,7 +6,7 @@
 #include <Adafruit_MQTT_Client.h>
 
 #include "DTCoTPrivate.h"
-#include "DTCoTCommunicationBase.h"
+#include "base-classes/DTCoTCommunicationBase.h"
 
 namespace DTCoT {
 	

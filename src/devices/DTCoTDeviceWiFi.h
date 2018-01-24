@@ -4,7 +4,7 @@
 
 #include "DTCoTPrivate.h"
 #include "DTCoTExtensionIface.h"
-#include "DTCoTDeviceBase.h"
+#include "base-classes/DTCoTDeviceBase.h"
 
 // @todo - derive this!
 #if defined(ESP8266)

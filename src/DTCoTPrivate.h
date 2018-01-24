@@ -1,9 +1,9 @@
 #ifndef DT_COT_PRIVATE_HEADER_FILE 
 #define DT_COT_PRIVATE_HEADER_FILE 
 
-#include "DTCoTConfigBase.h"
-#include "DTCoTDeviceBase.h"
-#include "DTCoTCommunicationBase.h"
+#include "base-classes/DTCoTConfigBase.h"
+#include "base-classes/DTCoTDeviceBase.h"
+#include "base-classes/DTCoTCommunicationBase.h"
 
 /* DTCoT Private abstraction interface */
 

@@ -1,7 +1,7 @@
 #include "DTCoTCommunicationMQTT.h"
-#include "DTCoTCommunicationBase.h"
-#include "DTCoTDeviceBase.h"
-#include "DTCoTDeviceWiFi.h"
+#include "base-classes/DTCoTCommunicationBase.h"
+#include "base-classes/DTCoTDeviceBase.h"
+#include "devices/DTCoTDeviceWiFi.h"
 #include "DTCoTExtensionIface.h"
 
 

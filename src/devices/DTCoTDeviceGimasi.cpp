@@ -5,7 +5,7 @@
 
 #include "DTCoTDeviceGimasi.h"
 
-#include "DTCoTDebugOutput.h"
+#include "utility/DTCoTDebugOutput.h"
 
 using namespace DTCoT;
 

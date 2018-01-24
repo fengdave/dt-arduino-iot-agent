@@ -7,9 +7,9 @@
 
 #include "DTCoTPrivate.h"
 #include "DTCoTExtensionIface.h"
-#include "DTCoTDeviceBase.h"
+#include "base-classes/DTCoTDeviceBase.h"
 
-#include "NbiotClient.h"
+#include "protocols/NbIoTClient.h"
 
 namespace DTCoT {
 

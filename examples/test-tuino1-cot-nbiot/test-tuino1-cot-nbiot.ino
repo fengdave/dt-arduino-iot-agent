@@ -15,8 +15,10 @@
 
 */
 
-#include "secrets.h"
+
 #include "DTCoT.h"
+// NOTE: You need to create this file with  SECRET_WIFI_SSID and SECRET_WIFI_PASSWORD defined
+#include "secrets.h"
 
 /* Application-specific settings */
 const unsigned char ON_BOARD_LED = 13;

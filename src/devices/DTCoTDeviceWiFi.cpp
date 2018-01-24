@@ -2,7 +2,7 @@
 #include "DTCoTPrivate.h"
 #include "DTCoTDeviceWiFi.h"
 
-#include "DTCoTDebugOutput.h"
+#include "utility/DTCoTDebugOutput.h"
 
 using namespace DTCoT;
 

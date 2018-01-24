@@ -63,9 +63,9 @@
 
 /**********************************/
 /* Select the Hardware platform here */
-//#define HW_PLATTFORM          GIMASI_TUINO1
-//#define HW_PLATTFORM          HUZZAH
-#define HW_PLATTFORM          FEATHER_M0
+//#define HW_PLATFORM          GIMASI_TUINO1
+//#define HW_PLATFORM          HUZZAH
+#define HW_PLATFORM          FEATHER_M0
 /**********************************/
 
 /************************************************************************************************/
@@ -78,17 +78,17 @@
 
  
 
-#if HW_PLATTFORM == HUZZAH
+#if HW_PLATFORM == HUZZAH
    	#define HUZZAH_ENABLED     	1
  
 
-#elif HW_PLATTFORM == GIMASI_TUINO1
+#elif HW_PLATFORM == GIMASI_TUINO1
   	#define TUINO1_ENABLED      1
 
-#elif HW_PLATTFORM == FEATHER_M0 && CONN_TYPE == NB_IOT
+#elif HW_PLATFORM == FEATHER_M0 && CONN_TYPE == NB_IOT
 	#define FEATHER_M0_NBIOT	1
 
-#elif HW_PLATTFORM == FEATHER_M0 && CONN_TYPE == WIFI
+#elif HW_PLATFORM == FEATHER_M0 && CONN_TYPE == WIFI
 	#define FEATHER_M0_WIFI		1
 
 #endif
@@ -122,10 +122,10 @@
 
 
 #if defined(COMMUNICATION_MQTT)
-#include "DTCotCommunicationMQTT.h"
+#include "communication/DTCotCommunicationMQTT.h"
 	#define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTT
 #elif defined(COMMUNICATION_MQTTSN )
-#include "DTCotCommunicationMQTTSN.h"
+#include "communication/DTCotCommunicationMQTTSN.h"
 #define PREFERED_COMMUNICATION_METHOD CoTCommunicationMQTTSN
 #elif defined(COMMUNICATION_REST)
 #define PREFERED_COMMUNICATION_METHOD CoTCommunicationREST

@@ -1,6 +1,6 @@
 #include "DTCoTDeviceFeatherM0-WiFi.h"
 
-#include "DTCoTDebugOutput.h"
+#include "utility/DTCoTDebugOutput.h"
 
 using namespace DTCoT;
 

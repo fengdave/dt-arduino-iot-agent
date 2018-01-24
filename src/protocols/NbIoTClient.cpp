@@ -33,9 +33,9 @@ extern "C" {
 // #include "WiFiServer.h"
 // #include "utility/server_drv.h"
 
-#include "Regexp.h"
+#include "utility/Regexp.h"
 #include "gmx_nbiot.h"
-#include "NbiotClient.h"
+#include "protocols/NbIoTClient.h"
 #include "DTCoTSetup.h"
 
 

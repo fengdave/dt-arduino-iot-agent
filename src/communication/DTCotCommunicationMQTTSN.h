@@ -6,9 +6,9 @@
 #if CONN_TYPE == NB_IOT
 
 #include "DTCoTPrivate.h"
-#include "DTCoTCommunicationBase.h"
-#include "NbIoTClient.h"
-#include "mm1MqttSn.h"
+#include "base-classes/DTCoTCommunicationBase.h"
+#include "protocols/NbIoTClient.h"
+#include "protocols/mm1MqttSn.h"
 
 
 namespace DTCoT {

@@ -7,7 +7,7 @@
 #if CONN_TYPE == NB_IOT
 
 #include "DTCoTPrivate.h"
-#include "DTCoTDeviceNBIoT.h"
+#include "devices/DTCoTDeviceNBIoT.h"
 
 namespace DTCoT {
 

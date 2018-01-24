@@ -22,7 +22,7 @@
 #if CONN_TYPE == NB_IOT
 
 #include "gmx_nbiot.h"
-#include "Regexp.h"
+#include "utility/Regexp.h"
 #include <string.h>
 //#include "DbgSerialInit.h"
 
