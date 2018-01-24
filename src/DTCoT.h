@@ -55,15 +55,32 @@ namespace DTCoT {
 
 /* Since we have only one cloud - there is no need to abstract it
  * TODO: ask client if he wants to be able to have multiple 
- *		cloud access (Azzure, DT, Adafruit)
+ *		cloud access (Azure, DT, Adafruit)
  * If so - provid the abstraction hierarchy for the cloud too,
  * with this class as a "leaf" of the inheritance tree
 */
+	
+/**
+* High-level object for accessing the service.
+* To use the CoT service, you should instantiate this object. It allows you to publish and subscribe variables
+* hosted on the CoT service.
+*
+*/
 class CoTCloud {
 public:
+	/**
+	* Instantiate the CoT system
+	* This will prepare the system using the given device and configuration parameters.
+	* @param device the device to connect uisng. This should match the hardware platform you are compiling for
+	* @param cloudConfig configuration settings for the connection.
+	*/
 	CoTCloud(const CoTDeviceBase& device, const CoTConfigBase& cloudConfig );
 
 public:
+	/**
+	* Initialise the CoT system
+	* Begin interacting with the CoT service.
+	*/
 	bool init();
 
 public:
