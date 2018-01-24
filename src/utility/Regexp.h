@@ -67,6 +67,10 @@ typedef void (*GlobalReplaceCallback) (const char * match,          // matching 
                                        char * & replacement,
                                        unsigned int & replacement_length,
                                        const MatchState & ms);      // MatchState in use (to get captures)
+
+									   /**
+									    * Third-party regular expression parsing library.
+									    */
 typedef class MatchState {
 private:
   

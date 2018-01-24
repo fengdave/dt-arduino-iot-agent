@@ -33,6 +33,9 @@ THE SOFTWARE.
 #define MAX_TOPICS 10
 #define MAX_BUFFER_SIZE 66
 
+/**
+ * Third-party MQTT-SN library
+ */
 class MQTTSN {
 public:
     MQTTSN( Client& ioStream);

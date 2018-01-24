@@ -13,8 +13,18 @@
 
 namespace DTCoT {
 
+   /**
+    * Config class for NBIoT capable device.
+    */
 class CoTConfigDeviceNBIoT: public CoTConfigDevice {
 public:
+   /**
+    * Constructor
+    * @param serverIP IP address of the NBIoT server
+    * @param serverPort port of the NBIoT server
+    * @param imsi IMSI UID of this device
+    * @param cot_pwd matching password fo the connection
+    */
 	CoTConfigDeviceNBIoT( const char* serverIP, const unsigned short serverPort, const char* imsi, const char* cot_pwd  );
 	
 	public:
@@ -30,7 +40,9 @@ private:
 	const char* _password;
 };
 
-
+/**
+ * Device class for NBIoT capable device.
+ */
 class CoTDeviceNBIoT : public CoTDeviceBase {
 public:
 	CoTDeviceNBIoT(  CoTConfigDeviceNBIoT& nbiotDeviceConfig);

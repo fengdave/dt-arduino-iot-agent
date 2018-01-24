@@ -9,15 +9,31 @@
 
 namespace DTCoT {
 
+	/**
+	 * Config class for Feather M0 WiFi setup
+	 */
 class CoTConfigDeviceFeatherM0_WiFi: public CoTConfigDeviceWiFi {
 public:
+   /**
+    * Constructor
+    * @param WiFiSSID wifi AP name
+    * @param WiFiPassword password for the wifi network
+    */
 	CoTConfigDeviceFeatherM0_WiFi( const char* WiFiSSID
 		, const char* WiFiPassword  );
 };
 
 
+
+/**
+ * Feather M0 board running WiFi connection
+ */
 class CoTDeviceFeatherM0_WiFi : public CoTDeviceWiFi {
 public:
+/**
+ * constructor
+* @param cfg configuration class to setup the device.
+*/
 	CoTDeviceFeatherM0_WiFi(  const CoTConfigDeviceFeatherM0_WiFi& cfg );
 
 public:

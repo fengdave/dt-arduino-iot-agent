@@ -6,12 +6,18 @@
 
 namespace DTCoT {
 
+   /**
+    * Config class for generic Ethernet device.
+    */
 class CoTConfigDeviceEthernet: public CoTConfigDevice {
 public:
 	CoTConfigDeviceEthernet();
 };
 
 
+/**
+ * Config class for generic Ethernet-capable device.
+ */
 class CoTDeviceEthernet: public CoTDeviceBase { 
 public:
 	CoTDeviceEthernet( const CoTConfigDeviceEthernet& config);

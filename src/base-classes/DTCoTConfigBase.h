@@ -3,11 +3,14 @@
 
 namespace DTCoT 
 {
-	/* Base class for all kind of configurations used 
-	 * in the library ( it covers Devicem, Cloud, 
+	/**
+	 Base class for all kind of configurations used 
+	 * in the library.
+	 * (it covers Devicem, Cloud, 
 	 * Communication, Authentication configs). 
 	 * Everything that has to be configured and 
 	 * configs - stored: passwords, IP, Port, URL, etc.
+	 * This abstraction may be useful for logging / remote configuration purposes.
 	 */
 	class CoTConfigBase { };
 }

@@ -11,19 +11,39 @@
 
 namespace DTCoT {
 
+	/**
+	* Hardware interface representing the Feather M0 board running NBIoT communications.
+	*/
 class CoTConfigDeviceFeatherM0_NBIoT: public CoTConfigDeviceNBIoT {
 public:
+   /**
+    * Constructor
+    * @param serverIP IP address of the NBIoT server
+    * @param serverPort port of the NBIoT server
+    * @param imsi IMSI UID of this device
+    * @param password matching password for the connection
+    */
 	CoTConfigDeviceFeatherM0_NBIoT(const char* serverIP, const unsigned short serverPort, const char* imsi, const char* password  );
 };
 
 
+/**
+ * Feather M0 board running NBIoT connection
+ */
 class CoTDeviceFeatherM0_NBIoT : public CoTDeviceNBIoT {
 public:
+	/**
+	 * constructor
+	* @param cfg configuration class to setup the device.
+	*/
 	CoTDeviceFeatherM0_NBIoT(  CoTConfigDeviceFeatherM0_NBIoT& cfg );
 
 public:
 	bool init();	
 
+	/**
+	 * Called on an error conditions.
+	*/
 	void errorHandler( const CoTHandlerParam& error );
 };
 

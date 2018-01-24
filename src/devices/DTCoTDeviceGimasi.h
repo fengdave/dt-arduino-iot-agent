@@ -6,16 +6,21 @@
 #if CONN_TYPE == NB_IOT
 
 #include "DTCoTPrivate.h"
-#include "DTCoTDeviceNBIoT.h"
+#include "devices/DTCoTDeviceNBIoT.h"
 
 namespace DTCoT {
 
+   /**
+    * Config class for Tuino 1 IoT device.
+    */
 class CoTConfigDeviceGimasi: public CoTConfigDeviceNBIoT {
 public:
 	CoTConfigDeviceGimasi(const char* serverIP, const unsigned short serverPort, const char* imsi, const char* password  );
 };
 
-
+/**
+ * Device class for Tuino 1 IoT device.
+ */
 class CoTDeviceGimasi : public CoTDeviceNBIoT {
 public:
 	CoTDeviceGimasi(  CoTConfigDeviceGimasi& cfg );

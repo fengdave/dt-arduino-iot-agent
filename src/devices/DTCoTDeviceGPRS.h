@@ -6,6 +6,9 @@
 
 namespace DTCoT {
 
+   /**
+    * Config class for generic GPRS capable device.
+    */
 class CoTConfigDeviceGPRS: public CoTConfigDevice {
 public:
 	CoTConfigDeviceGPRS( const char* APN
@@ -23,6 +26,9 @@ private:
 	const char* _password;	
 };
 
+/**
+ * Device class for generic GPRS capable device.
+ */
 class CoTDeviceGPRS: public CoTDeviceBase { 
 public:
 	CoTDeviceGPRS( const CoTConfigDeviceGPRS& gprsConfig);

@@ -10,15 +10,35 @@
 
 namespace DTCoT {
 	
-	
+	/**
+	 * Communication via MQTT
+	 * This class allows connection to an MQTT broker on the internet. This uses a direct IP connection without a gateway. 
+	 *
+	 */
 	class CoTCommunicationMQTT: public CoTCommunicationBase { 
 	public:
+		
+		/**
+		 * Constructor
+		 * @param device interface to this hardware platform.
+		 * @param config config settings matching this hardware paltform
+		 * @param authentication login / auth details for this connection.
+		 */
 		CoTCommunicationMQTT(const CoTDeviceBase& device
 			, const CoTConfigBase& config
 			, const CoTAuthBase& authentication	);
 	
+	/**
+	 * Startup the MQTT channel
+	 */
 	void init();
 	
+	/**
+	 * Publish value on MQTT broker.
+	 * Publishes a value to the remote broker. You should see the value change immediately.
+	 * @param key the key/topic to publish to. For example /myproject/temperature
+	 * @param value the value to publish to the given key/topic. For example: "123", "hello" 
+	 */
 	void publish(const char * key, const char * value);
 	
 	private:

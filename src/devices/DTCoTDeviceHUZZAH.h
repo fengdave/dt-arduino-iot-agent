@@ -6,6 +6,9 @@
 
 namespace DTCoT {
 
+   /**
+    * Config class for HUZZAH ESP8266 device.
+    */
 class CoTConfigDeviceHUZZAH: public CoTConfigDeviceWiFi {
 public:
 	CoTConfigDeviceHUZZAH( const char* WiFiSSID
@@ -13,6 +16,9 @@ public:
 };
 
 
+/**
+ * Device class for HUZZAH ESP8266. This class should also work for any other ESP8266 based board running wifi.
+ */
 class CoTDeviceHUZZAH : public CoTDeviceWiFi {
 public:
 	CoTDeviceHUZZAH( const CoTConfigDeviceHUZZAH& cfg );

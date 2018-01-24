@@ -5,19 +5,38 @@
 
 namespace DTCoT 
 {
-	/* Base class for each device library is capable of working with */
+	/**
+	 * Base class for each device.
+	 * A device is a specific piece of hardware (i.e, Tuino, HUZZAH).
+	 * This class abstracts away the hardware details of the platform. It should not be used directly.*/
 	class CoTDeviceBase {
 	public:
+		/**
+		 * Constructor with config for a device.
+		 * @param deviceConfig The config file class should match the physical device's class.
+		 */
 		CoTDeviceBase( const CoTConfigBase& deviceConfig);
 
 	public:
+		/**
+		 * Begin using device
+		 */
 		virtual bool init() = 0;
 
-		/* Overload to get the device-specific error handling */
+		/**
+		 * Error occurred.
+		 * Overload to get the device-specific error handling
+		 */
 		//virtual void errorHandler( const CoTHandlerParam handler ) { };
 
-		virtual Client * getClient() const = 0; // Every device provides a client
-		//@TODO - Via an Arduino Client interface? Or we abstract this further - can do later https://www.arduino.cc/en/Reference/ClientConstructor
+		/**
+		 * Get client for this device.
+		 * Every Arduino platform should have a Client implementation. This is a standard communication channel
+		 * such as WiFi or Ethernet, which we can use for communication with our CoT server.
+		 *
+		 * @TODO this may be abstracted further in the future - https://www.arduino.cc/en/Reference/ClientConstructor
+		 */
+		virtual Client * getClient() const = 0;
 
 
 	protected:

@@ -25,13 +25,29 @@
 
 namespace DTCoT {
 
+   /**
+    * Config class for generic WiFi device.
+    */
 class CoTConfigDeviceWiFi: public CoTConfigDevice {
 public:
+	
+	/**
+	 * constructor
+	 * param WiFiSSID wifi AP
+	 * param WiFiPassword wifi password
+	 */
 	CoTConfigDeviceWiFi( const char* WiFiSSID
 	, const char* WiFiPassword );
 
 	public:
+		/**
+		 * Getter for wifi SSID
+		*/
 		const char* getWiFiSSID();
+		
+		/**
+		 * Getter for password
+		*/
 		const char* getWiFiPassword();
 	
 	private:
@@ -39,13 +55,18 @@ public:
 		const char* _WiFiPassword;
 };
 
-
+/**
+ * Device class for generic WiFi device.
+ */
 class CoTDeviceWiFi : public CoTDeviceBase {
 	
 public:
 	CoTDeviceWiFi( const CoTConfigDeviceWiFi& wifiDeviceConfig);
 	bool init();
 
+	/**
+	 * Get the Arduino standard Client interface for this device
+	 */
 	Client * getClient() const;
 
 private:

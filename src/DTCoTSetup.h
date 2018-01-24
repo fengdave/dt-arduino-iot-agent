@@ -1,10 +1,14 @@
 #ifndef DTCoT_SETUP_HEADER_FILE
 #define DTCoT_SETUP_HEADER_FILE
 
-/* DTCoT Library Setup File
+/**
+ * DTCoT Library Setup File.
+ *
+ * Edit this file to change which hardware and protocols will be used.
+ *
  * Intended audience - library maintainer, advanced library users
  *
- * To activate or deactivate certain feature of the library - 
+ * To activate or deactivate certain features of the library, 
  * uncomment or comment the definition of the feature respectively.
  */
 

@@ -14,7 +14,9 @@ namespace DTCoT
 typedef void* CoTHandlerParam;
 typedef void (*CoTHandler)(CoTHandlerParam);
 
-
+/**
+ * Private base class for all authentication.
+ */
 class CoTAuthBase { };
 
 

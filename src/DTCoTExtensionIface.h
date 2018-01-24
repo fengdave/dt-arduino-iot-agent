@@ -10,34 +10,71 @@
 namespace DTCoT 
 {
 
-/* Configuration for every supported device */
+/**
+ * Configuration for every supported device.
+ * This contains any configuration info that is common to all devices.
+ */
 class CoTConfigDevice: public CoTConfigBase { 
 public:
 	CoTConfigDevice();
 };
 
-/* Configuration for every communication method */
+/**
+ * Configuration for every communication method.
+ * This contains any configuration info that is common to all communication methods.
+ */
 class CoTConfigCommunication: public CoTConfigBase { };
 
-/* Configurationf or any authentication */
+/**
+ * Configuration for any authentication method.
+ */
 class CoTConfigAuth: public CoTConfigBase { };
 
 /* Communication types we support */
-/* Nothe: communication type does not belong to the Library public interface.
+/* Note: communication type does not belong to the Library public interface.
  * 	It should be hidden and selectable compile-time ( #define in DTCoTSetup.h? )
  */
 
+/**
+ * Configuration for MQTT.
+ * This class is used to configure an MQTT communications channel.
+ * There are standard parameters for connecting to an MQTT broker,
+ * and this class encapsulates them.
+ * 
+ */
 class CoTConfigCommunicationMQTT: public CoTConfigBase {
 public:
+	/**
+	 * Constructor
+	 * @param serverUrl whare to find the mqtt broker
+	 * @param portNumber port to connect to MQTT broker on.
+	 * @param password password for the broker account
+	 * @param userId user ID/name for the MQTT broker
+	 */
 	CoTConfigCommunicationMQTT( const char* serverUrl
 		, unsigned long portNumber 
 		, const char* password
 		, const char* userID );
 
 public:
+	/**
+	 * Getter for URL of the MQTT broker
+	 */
 	const char* getUrl();
+	
+/**
+ * Getter for URL of the MQTT port
+ */	
 	unsigned long getPortNumber();
+	
+/**
+ * Getter for password for the MQTT account
+ */
 	const char* getPassword();
+	
+   /**
+    * Getter for username / id for the MQTT account
+    */
 	const char* getUserId();
 
 private:
@@ -47,8 +84,26 @@ private:
 	const char* _userId;
 };
 
+/**
+ * Configuration for MQTT - SN.
+ * This class is used to configure an MQTT-SN communications channel.
+ * MQTT-SN is a cutdown version of MQTT, designed for small IoT devices.
+ * There are standard parameters for connecting to an MQTT-SN broker,
+ * and this class encapsulates them.
+ * Typically, it conneccts to a local gateway, which converts MQTT-SN
+ * traffic to MQTT and relays this to a broker on the internet.
+ * 
+ */
 class CoTConfigCommunicationMQTTSN: public CoTConfigBase {
 public:
+	
+/**
+ * Constructor
+ * @param serverIP whare to find the mqtt-sn gateway
+ * @param serverPort port to connect to MQTT gateway on.
+ * @param password password for the gateway account
+ * @param imsi user ID for the MQTT gateway
+ */
 	CoTConfigCommunicationMQTTSN( const char* serverIP
 		, const unsigned short serverPort
 		, const char* imsi
@@ -72,12 +127,26 @@ private:
 
 };
 
-
+/**
+ * REST interface (not implemented)
+ */
 class CoTCommunicationREST: public CoTCommunicationBase { };
 
 /* Authentication mechanisms we support */
+
+/**
+ * Fingerprint authentication
+ */
 class CoTAuthFingerPrint: public CoTAuthBase { };
+
+/**
+ * TLS authentication
+ */
 class CoTAuthTLS: public CoTAuthBase { };
+
+/**
+ * No authentication
+ */
 class CoTAuthNone: public CoTAuthBase { };
 
 } /* namespace DTCoT */

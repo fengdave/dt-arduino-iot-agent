@@ -24,17 +24,38 @@
 #include "Client.h"
 #include "IPAddress.h"
 
+/**
+ * Arduino Client interface for accessing NbIOT networks.
+ */
 class NbiotClient : public Client {
 
 public:
+	/**
+	 * Constructor
+	 * @param ipAddress connect to IP address
+	 * @param dbgOutputStream where to write debug info. Default to Serial.
+	 */
   explicit NbiotClient( const String& ipAddress
 	, Stream& dbgOutputStream = Serial
   );
 	
+/**
+ * Constructor
+ * @param ipAddress connect to socket ID
+ * @param dbgOutputStream where to write debug info. Default to Serial.
+ */
   explicit NbiotClient( uint8_t sock,  Stream& dbgOutputStream = Serial);
   
   explicit NbiotClient( Stream& dbgOutputStream = Serial);
   
+   /**
+    * Constructor
+    * @param serverIP IP address of the NBIoT server
+    * @param serverPort port of the NBIoT server
+    * @param imsi IMSI UID of this device
+    * @param password matching password fo the connection
+    * @param dbgOutputStream where to write debug info. Default to Serial.
+    */
   explicit NbiotClient(const String& serverIP
 	, const unsigned short& serverPort
 	, const String& imsi
@@ -42,23 +63,87 @@ public:
 	, Stream& dbgOutputStream = Serial
 	);
 
+  /**
+   * Get the status of this connection. See standard Arduino Client class docs.
+   */
   uint8_t status();
   
+  /**
+   * Connect to address
+   * @param ip ip address
+   * @param port port
+   */
   virtual int connect( IPAddress ip, uint16_t port);
+  
+ /**
+  * Connect to address
+  * @param host hostname
+  * @param port port
+  */
   virtual int connect( const char *host, uint16_t port);
+  
+ /**
+  * Write single byte
+  * @param byte to write
+  * @return 1 on success
+  */
   virtual size_t write( uint8_t);
+  
+ /**
+  * Write bytes
+  * @param bytes to write
+  * @param size num of bytes to write
+  * @return 1 on success
+  */
   virtual size_t write( const uint8_t *buf, size_t size);
+  
+ /**
+  * Bytes available
+  * @return num of bytes available to read
+  */
   virtual int available();
+  
+ /**
+  * Read a byte (NOT IMPLEMETED)
+  * @return byte
+  */
   virtual int read();
+  
+ /**
+  * Read bytes
+  * @param buffer to read to
+  * @param size max num of bytes to read
+  * @return num of bytes read
+  */
   virtual int read( uint8_t *buf, size_t size);
+  
   virtual int peek();
+  
+  /**
+   * Send all data
+   */
   virtual void flush();
+  
+  /**
+   * End connection
+   */
   virtual void stop();
+  
+  /**
+   * Is connected
+   * @return 1 if connected
+   */
   virtual uint8_t connected();
+  
+  /**
+   * Operator true if sockets available
+  */
   virtual operator bool();
+  
+  /**
+   * Setup the NBIoTClient interface
+   */
   int init();
-
-  // friend class NbiotServer;
 
   using Print::write;
 
