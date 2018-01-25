@@ -1,3 +1,15 @@
+/**
+ * @file test-huzzah-mqtt.ino
+ * @description Simple Demo for CoT Library using MQTT
+ * PLEASE NOTE: Because MQTT endpoint at CoT is not available at the moment this example can be used e.g. with adafruit mqtt broker
+ * @author Lyn Matten
+ * @copyright (C) 2018 mm1 Technology GmbH - all rights reserved. 
+ * @licence MIT licence
+ * 
+ * Find out more about mm1 Technology:
+ * Company: http://mm1-technology.de/
+ * GitHub:  https://github.com/mm1technology/
+ */
 /** Cloud-based blinker
 
    Objective:
@@ -11,7 +23,6 @@
    In this demo there is a counter that will be published as a named variable
    the cloud and the value of the variable will be sent to the
    subcriber (potentialy - another device)
-   When the variable value reaches certain threshold - LED will blink several times
 
 */
 
@@ -28,6 +39,7 @@ const unsigned char COUNTER_THRESHOLD = 0xFF;
 
 const unsigned short CLOUD_SERVER_PORT = 1883;
 
+/** Simulation of temperature values **/
 float exampleTemp = 25.4;
 String tmpDirection = "up";
 int tmpCounter = 0;
@@ -56,14 +68,14 @@ CoTConfigCommunicationMQTT mqttConfig = CoTConfigCommunicationMQTT( "io.adafruit
 
 CoTCloud cloud( 
   /* Configure communcation settings of your DT Cloud-enabled device */
-    device // @todo - why do these need to be instantiated individually? Is it creating them on the stack?
+    device 
   
   /* Setup the cloud communication method */ 
   , mqttConfig
 );
 
 
-
+/** Back channel is not supported yet **/
 void onCounterValueChanged( void* newCounterValue) {
   /* TODO: parameter NULL check
      TODO: casting outcome check
@@ -82,25 +94,25 @@ void onCounterValueChanged( void* newCounterValue) {
 
 
 void setup() {
-  delay(100);
-  Serial.begin(115200);
+  	delay(100);
+  	Serial.begin(115200);
     delay(100);
-   DEBUG_PRINT("Setup...");
+  	DEBUG_PRINT("Setup...");
 
-// @todo - why is device const? Can't call it ffrom with CoTCloud
-device.init();
-  cloud.init();
+
+	device.init();
+  	cloud.init();
   
-  /* Subscribe to the change of a cloud variable of interest */
-  cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
+	/** This is not supported yet **/
+  	/* Subscribe to the change of a cloud variable of interest */
+  	cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
 }
 
 
 void loop() {
      DEBUG_PRINT("Loop");
 
-    //DEBUG_PRINT(device.getWiFiSSID());
-
+	 
   /* Update cloud infrastructure client */
   if ( !cloud.process() ) {
     /* TODO: process error here */
@@ -138,12 +150,13 @@ void loop() {
      Serial.print("### Sending Temperature: ");
      Serial.println(examplTempStr);
     
-    if ( !cloud.publish( "{feed_name}", examplTempStr) ) { // @todo, send integers/reals
+    if ( !cloud.publish( "{feed_name}", examplTempStr) ) { 
       /* TODO: process error here */
     }
   }
-
-  delay(30000);
-}
+	
+  	/** send every 30 seconds **/
+  	delay(30000);
+	}
 }
 
