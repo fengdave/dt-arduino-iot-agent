@@ -1,7 +1,6 @@
 /**
  * @file DTCoTDebugOutput.h
- * @description Basic setup and protocol to interact 
- * with the Deutsche Telekom Cloud of things MQTT-SN connector.
+ * @description Global debug defines. Change these to change the debug logging target.
  * @author Andreas Krause
  * @copyright (C) 2018 mm1 Technology GmbH - all rights reserved. 
  * @licence MIT licence
@@ -15,7 +14,16 @@
 #define DEBUG_PRINT_h_
 
 #ifndef DEBUG_PRINT
+
+/**
+ * Always print this.
+ */
 #define DEBUG_PRINT(x) Serial.println(x)
+
+
+/**
+ * Informational level debug info. Not critical - only informs the user what is going on.
+ */
 #define DEBUG_PRINT_INFO(x) Serial.println(x)
 #endif /* DEBUG_PRINT */
 

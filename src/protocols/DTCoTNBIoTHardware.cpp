@@ -6,8 +6,15 @@
 #include <Arduino.h>
 
 /*
+ Notes for adding further hardware implementations.
  The parent GMX-NBIoT library is classless C++, so we won't use class heirarchies. Add hardware variants here.
- @todo move this to the DTCotDevice class
+ Put your hardware variant within an ifdef block for that specific hardware type (ie Tuino, other 3rd party board).
+ Fill in the required functions, with correct pins, init sequence, and reset procedure for the hardware.
+ 
+ DTCoTNBIoTHardware_init takes a callback as a parameter. This should be called whenever there is new data in the
+ NBIoT buffer. This interrupt will be hardware dependent.
+ 
+ @todo move this to the DTCotDevice class, if the gmx_nbiot or equivalent is brought into the DTCoT class hierarchy.
 */
 
 #ifdef TUINO_VARIANT

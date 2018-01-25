@@ -38,9 +38,14 @@
 #define GMX_UART_TIMEOUT              10000
 
 /**
+ * Perform any steps required to initialise the MBIoT hardware
  * @param callback callback for when data is available from the NBIoT buffer
  */
 int DTCoTNBIoTHardware_init(void( *callback)()); 
+
+/**
+ * Reset the NBIoT hardware.
+ */
 void DTCoTNBIoTHardware_reset();
 
 /**
