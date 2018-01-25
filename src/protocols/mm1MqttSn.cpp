@@ -18,6 +18,7 @@
 #include <Arduino.h>
 
 #include "mm1MqttSn.h"
+#include "utility/DTCoTDebugOutput.h"
 
 /* MM1MqttSn Library Header File */
 /* TODO: make sure platform-dependent WiFi header file is selected */
@@ -40,27 +41,27 @@ MM1MqttSn::MM1MqttSn( const char* imsi
  * \return false on error and true if init was successful
 */
 bool MM1MqttSn::init() {
-	Serial.println( "DBG: MM1MqttSn::init()" );
+	DEBUG_PRINT_INFO("DBG: MM1MqttSn::init()" );
 	//MQTTSN::searchgw( HOPS_TO_SEARCH_GATEWAY);
 }
 
 
 int MM1MqttSn::connect(const uint8_t flags, const uint16_t duration) {
 		
-	Serial.print("BG: MM1MqttSn::connect() with clientId: ");
-	Serial.println(_clientId);
+	DEBUG_PRINT_INFO("BG: MM1MqttSn::connect() with clientId: ");
+	DEBUG_PRINT_INFO(_clientId);
 	
 	_ioStream.connect("",0); /* FIXME: Dummy values because of virtual definition of function */
 	
 	MQTTSN::connect(flags, duration, _clientId.c_str());
 	
 	while(waiting_for_response) {
-		Serial.println("MM1MqttSn::connect() - calling parse_stream()");
+		DEBUG_PRINT_INFO("MM1MqttSn::connect() - calling parse_stream()");
 		parse_stream();
     }
 	
-	Serial.print("BG: MM1MqttSn::connect() Response: ");
-	Serial.println((char*)response_buffer);
+	DEBUG_PRINT_INFO("BG: MM1MqttSn::connect() Response: ");
+	DEBUG_PRINT_INFO((char*)response_buffer);
 	
 		return 0;
 		
@@ -89,18 +90,18 @@ bool MM1MqttSn::publish(
   MQTTSN::publish( tmpFlags, topicId, value, dataLen);
   
   while(waiting_for_response) {
-		Serial.println("MM1MqttSn::publish() - calling parse_stream()");
+		DEBUG_PRINT_INFO("MM1MqttSn::publish() - calling parse_stream()");
 		trialCounter++;
 		parse_stream();
-		Serial.print("MM1MqttSn::publish() - trialCounter: ");
-		Serial.println(trialCounter);
+		DEBUG_PRINT_INFO("MM1MqttSn::publish() - trialCounter: ");
+		DEBUG_PRINT_INFO(trialCounter);
 		if(trialCounter > 2) {
 			waiting_for_response = false;
 		}
     }
 	
-	Serial.print("BG: MM1MqttSn::publish() Response: ");
-	Serial.println((char*)response_buffer);
+	DEBUG_PRINT_INFO("BG: MM1MqttSn::publish() Response: ");
+	DEBUG_PRINT_INFO((char*)response_buffer);
 	
   return true;  
 }
@@ -108,10 +109,10 @@ bool MM1MqttSn::publish(
 
 int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
 	
-	Serial.print("MM1MqttSn::RegisterTopicDTCoT: topic: ");
-	Serial.print(topic);
-	Serial.print(" - valueType: ");
-	Serial.println(valueType);
+	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT: topic: ");
+	DEBUG_PRINT_INFO(topic);
+	DEBUG_PRINT_INFO(" - valueType: ");
+	DEBUG_PRINT_INFO(valueType);
 	
 	/*                               len   type  topicId     msgId*/
 	char myPayload[255] = {/*FIXME:*/0x00, 0x0A, 0x00, 0x00, (char)(_message_id / 256), (char)(_message_id % 256)};
@@ -130,14 +131,14 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
   	/*FIXME this payload length treatment doesn't work for sizes (>127)!*/
   	myPayload[0] = (char)myStrLen;
 	
-	Serial.print("MM1MqttSn::RegisterTopicDTCoT(): Payload: ");
-	Serial.print("NBIoT/");
-	Serial.print("{_imsi}");
-	Serial.print(_imsi);
-	Serial.print("/{topic}");
-	Serial.print(topic);
-	Serial.print("/{valueType}");
-	Serial.println(valueType);
+	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT(): Payload: ");
+	DEBUG_PRINT_INFO("NBIoT/");
+	DEBUG_PRINT_INFO("{_imsi}");
+	DEBUG_PRINT_INFO(_imsi);
+	DEBUG_PRINT_INFO("/{topic}");
+	DEBUG_PRINT_INFO(topic);
+	DEBUG_PRINT_INFO("/{valueType}");
+	DEBUG_PRINT_INFO(valueType);
 	
 	_ioStream.write(myPayload, myStrLen); /* TODO: add error handling */
     //_ioStream.flush();
@@ -145,16 +146,16 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
     readChars = _ioStream.read((byte*)myPayload, myStrLen);
 	if( readChars <= 0 )
   {
-    Serial.println("MM1MqttSn::RegisterTopicDTCoT(): Err CoT connection failed.");
+    DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT(): Err CoT connection failed.");
   }
   else
   {
-	  Serial.print("myStrLen: ");
-	  Serial.println(myStrLen);
-	  Serial.print("myPayload: ");
-	  Serial.println(myPayload);
-	  Serial.print("readChars: ");
-	  Serial.println(readChars);
+	  DEBUG_PRINT_INFO("myStrLen: ");
+	  DEBUG_PRINT_INFO(myStrLen);
+	  DEBUG_PRINT_INFO("myPayload: ");
+	  DEBUG_PRINT_INFO(myPayload);
+	  DEBUG_PRINT_INFO("readChars: ");
+	  DEBUG_PRINT_INFO(readChars);
 	  
 	  
 	  
@@ -163,12 +164,12 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
       /*TODO detailled check of content!*/
       mqttsnTopicId = myPayload[2] * 256;
       mqttsnTopicId += myPayload[3];
-      Serial.println("Got topic id: " + String(mqttsnTopicId));
+      DEBUG_PRINT_INFO("Got topic id: " + String(mqttsnTopicId));
       return mqttsnTopicId;
     }
     else
     {
-      Serial.println("Err unknown topic reg response.");
+      DEBUG_PRINT_INFO("Err unknown topic reg response.");
     }
   }
   return mqttsnTopicId;
@@ -180,7 +181,7 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
 }
 
 void MM1MqttSn::gwinfo_handler( const msg_gwinfo* msg) {
-	Serial.println( "DBG: MM1MqttSn::gwinfo_handler(): GW ID: "
+	DEBUG_PRINT_INFO( "DBG: MM1MqttSn::gwinfo_handler(): GW ID: "
 		+ String( msg->gw_id) );
 
 	MQTTSN::gwinfo_handler( msg);
@@ -191,7 +192,7 @@ void MM1MqttSn::gwinfo_handler( const msg_gwinfo* msg) {
 }
 
 void MM1MqttSn::advertise_handler(const msg_advertise* msg) {
-	Serial.println( "DBG: MM1MqttSn::advertise_handler(): GW ID: "
+	DEBUG_PRINT_INFO( "DBG: MM1MqttSn::advertise_handler(): GW ID: "
 		+ String( msg->gw_id) );
 
 	MQTTSN::advertise_handler( msg);
@@ -200,11 +201,11 @@ void MM1MqttSn::advertise_handler(const msg_advertise* msg) {
 void MM1MqttSn::disconnect_handler(const msg_disconnect* msg) {
 	MQTTSN::disconnect_handler( msg);
 
-	Serial.println( "DBG: MM1MqttSn::disconnect_handler()" );
+	DEBUG_PRINT_INFO("DBG: MM1MqttSn::disconnect_handler()" );
 }
 
 void MM1MqttSn::willtopicreq_handler(const message_header* msg) { 
-	Serial.println( "DBG: MM1MqttSn::willtopicreq_handler()" );
+	DEBUG_PRINT_INFO("DBG: MM1MqttSn::willtopicreq_handler()" );
 	MQTTSN::willtopicreq_handler( msg);
 
 	const uint8_t WILL_TOPIC_FLAGS =  0;
@@ -212,7 +213,7 @@ void MM1MqttSn::willtopicreq_handler(const message_header* msg) {
 }
 
 void MM1MqttSn::willmsgreq_handler(const message_header* msg) { 
-	Serial.println( "DBG: MM1MqttSn::willtopicreq_handler()" );
+	DEBUG_PRINT_INFO("DBG: MM1MqttSn::willtopicreq_handler()" );
 	MQTTSN::willmsgreq_handler( msg);
 
 	const char* millMsg = "See you next time";

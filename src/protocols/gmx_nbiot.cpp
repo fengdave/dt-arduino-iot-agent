@@ -267,10 +267,10 @@ byte gmxNB_connect(String ipAddress, int udpPort)
   udp_socket_ip = ipAddress;
   udp_port = udpPort;
   
-  Serial.print("GMXNB ipAddress: ");
-  Serial.println(udp_socket_ip);
-  Serial.print("GMXNB udpPort: ");
-  Serial.println(udp_port);
+  DEBUG_PRINT_INFO("GMXNB ipAddress: ");
+  DEBUG_PRINT_INFO(udp_socket_ip);
+  DEBUG_PRINT_INFO("GMXNB udpPort: ");
+  DEBUG_PRINT_INFO(udp_port);
   return GMXNB_OK;
 }
 
@@ -741,8 +741,8 @@ byte gmxNB_RXData(String &remoteIp, int udpPortNr, byte *binaryData, int &len)
       /*get hex encoded version of payload from rxStr*/
       _log("payload: " + subStr);
       gmxNB_HexToBinary(subStr, binaryData);
-	  Serial.print("binaryData length: ");
-	  Serial.println(sizeof(binaryData));
+	  DEBUG_PRINT_INFO("binaryData length: ");
+	  DEBUG_PRINT_INFO(sizeof(binaryData));
 	  
     }
   }

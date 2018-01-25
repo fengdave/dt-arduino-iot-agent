@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include <Client.h>
 #include <Arduino.h>
 
+#include "utility/DTCoTDebugOutput.h"
+
 #include "mqttsn-messages.h"
 #include "mqttsn.h"
 
@@ -52,7 +54,7 @@ MQTTSN::~MQTTSN() {
 
 bool MQTTSN::connected() {
 	
-	Serial.println("MQTTSN::connected():");
+	DEBUG_PRINT_INFO("MQTTSN::connected():");
 	delay(1000);
 	return _ioStream.connected();
 	
@@ -110,10 +112,10 @@ void MQTTSN::dispatch() {
     message_header* response_message = (message_header*)response_buffer;
     bool handled = true;
 	
-	Serial.print("MQTTSN::dispatch() - response_message->type: ");
-	Serial.println(response_message->type);
-	Serial.print("MQTTSN::dispatch() - response_to_wair_for: ");
-	Serial.println(response_to_wait_for);
+	DEBUG_PRINT_INFO("MQTTSN::dispatch() - response_message->type: ");
+	DEBUG_PRINT_INFO(response_message->type);
+	DEBUG_PRINT_INFO("MQTTSN::dispatch() - response_to_wair_for: ");
+	DEBUG_PRINT_INFO(response_to_wait_for);
 
     switch (response_message->type) {
     case ADVERTISE:
@@ -130,7 +132,7 @@ void MQTTSN::dispatch() {
 
     case CONNACK:
         if (waiting_for_response && response_to_wait_for == CONNACK) {
-			Serial.println("MQTTSN::dispatch() - CONNACK");
+			DEBUG_PRINT_INFO("MQTTSN::dispatch() - CONNACK");
             connack_handler((msg_connack*)response_buffer);
         } else {
             handled = false;
@@ -219,14 +221,14 @@ void MQTTSN::dispatch() {
 
     default:
 	
-		Serial.println("Unknown Response");
+		DEBUG_PRINT_INFO("Unknown Response");
 		
         return;
     }
 
     if (handled) {
 		
-		Serial.print("MQTTSN::dispatch() handled = true");
+		DEBUG_PRINT_INFO("MQTTSN::dispatch() handled = true");
         waiting_for_response = false;
     }
 }
@@ -234,7 +236,7 @@ void MQTTSN::dispatch() {
 void MQTTSN::send_message() {
     message_header* hdr = reinterpret_cast<message_header*>(message_buffer);
 	
-	Serial.println("MQTTSN::send_message()");
+	DEBUG_PRINT_INFO("MQTTSN::send_message()");
 
     _ioStream.write(message_buffer, hdr->length); /* TODO: add error handling */
     _ioStream.flush();
@@ -391,7 +393,7 @@ void MQTTSN::connect( const uint8_t flags
 	, const char* client_id ) {
 
 		
-	Serial.println("MQTTSN::connect()");
+	DEBUG_PRINT_INFO("MQTTSN::connect()");
     msg_connect* msg = reinterpret_cast<msg_connect*>(message_buffer);
 
     msg->length = sizeof(msg_connect) + strlen(client_id);
@@ -404,8 +406,8 @@ void MQTTSN::connect( const uint8_t flags
     send_message();
     waiting_for_response = true;
     response_to_wait_for = CONNACK;
-	Serial.print("MQTTSN::connect() - response_to_wair_for should be CONNACK and is ");
-	Serial.println(response_to_wait_for);
+	DEBUG_PRINT_INFO("MQTTSN::connect() - response_to_wair_for should be CONNACK and is ");
+	DEBUG_PRINT_INFO(response_to_wait_for);
 	
 }
 

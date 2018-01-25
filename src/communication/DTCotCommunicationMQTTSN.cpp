@@ -20,11 +20,11 @@
 #include "base-classes/DTCoTDeviceBase.h"
 #include "devices/DTCoTDeviceNBIoT.h"
 #include "DTCoTExtensionIface.h"
+#include "utility/DTCoTDebugOutput.h"
 
 
 using namespace DTCoT;
 
-#define DEBUG_PRINT(x) Serial.println(x)
 
 CoTCommunicationMQTTSN::CoTCommunicationMQTTSN(
 	const CoTDeviceBase& device

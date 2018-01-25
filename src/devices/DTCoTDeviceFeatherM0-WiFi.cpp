@@ -17,7 +17,6 @@
 
 using namespace DTCoT;
 
-#define DEBUG_PRINT(x) Serial.println(x) 
 
 CoTConfigDeviceFeatherM0_WiFi::CoTConfigDeviceFeatherM0_WiFi ( 
 	const char* WiFiSSID

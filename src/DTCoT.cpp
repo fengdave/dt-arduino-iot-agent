@@ -12,6 +12,7 @@
  */
 
 #include "DTCoT.h"
+#include "utility/DTCoTDebugOutput.h"
 
 using namespace DTCoT;
 

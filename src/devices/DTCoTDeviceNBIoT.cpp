@@ -22,8 +22,6 @@
 
 using namespace DTCoT;
 
-#define DEBUG_PRINT(x) Serial.println(x)
-
 CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT(
 	const char* serverIP
 	, const unsigned short serverPort

@@ -16,11 +16,11 @@
 #include "base-classes/DTCoTDeviceBase.h"
 #include "devices/DTCoTDeviceWiFi.h"
 #include "DTCoTExtensionIface.h"
+#include "utility/DTCoTDebugOutput.h"
 
 
 using namespace DTCoT;
 
-#define DEBUG_PRINT(x) Serial.println(x)
 
 
 CoTCommunicationMQTT::CoTCommunicationMQTT(

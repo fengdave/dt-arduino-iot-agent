@@ -108,18 +108,18 @@ void setup() {
   /* Subscribe to the change of a cloud variable of interest */
   cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
 
-  Serial.println("connected, registering topic...");
+  DEBUG_PRINT_INFO("connected, registering topic...");
   myMqttsnTopicId = cloud.Mqttsn_RegisterTopic(MQTTSN_TOPIC_MEASUREMENT, MQTTSN_MEAS_TYPE_TEMPERATURE);
   if(myMqttsnTopicId == MQTTSN_TOPIC_INVALID_ID)
   {
     /*TODO topic reg failed, disconnect / restart connect*/
-    Serial.println("INVALID MQTTSN_TOPIC_ID");
+    DEBUG_PRINT_INFO("INVALID MQTTSN_TOPIC_ID");
     
   }
   else {
-    Serial.println("topic registered, uploading data...");
-    Serial.print("myMqttsnTopicId: ");
-    Serial.println(myMqttsnTopicId);
+    DEBUG_PRINT_INFO("topic registered, uploading data...");
+    DEBUG_PRINT_INFO("myMqttsnTopicId: ");
+    DEBUG_PRINT_INFO(myMqttsnTopicId);
 	
 
   

@@ -21,7 +21,6 @@
 
 using namespace DTCoT;
 
-#define DEBUG_PRINT(x) Serial.println(x) 
 
 CoTConfigDeviceFeatherM0_NBIoT::CoTConfigDeviceFeatherM0_NBIoT ( 
 	const char* serverIP

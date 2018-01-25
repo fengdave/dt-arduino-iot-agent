@@ -21,7 +21,6 @@
 
 using namespace DTCoT;
 
-#define DEBUG_PRINT(x) Serial.println(x) 
 
 CoTConfigDeviceGimasi::CoTConfigDeviceGimasi ( 
 	const char* serverIP
