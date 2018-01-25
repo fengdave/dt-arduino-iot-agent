@@ -32,6 +32,10 @@
 // NOTE: You need to create this file with  SECRET_WIFI_SSID and SECRET_WIFI_PASSWORD defined
 #include "secrets.h"
 
+#if CONN_TYPE != NB_IOT
+#error("You need to enable NB_IOT in the config!")
+#endif
+
 /* Application-specific settings */
 const unsigned char ON_BOARD_LED = 13;
 const char* CLOUD_COUNTER_VAR_NAME = "cloud-counter";

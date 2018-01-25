@@ -18,10 +18,12 @@
 */
 
 #include "DTCOTSetup.h"
+#include "utility/DTCoTDebugOutput.h"
 
 #if CONN_TYPE == NB_IOT
 
 #include "gmx_nbiot.h"
+#include "DTCoTNBIoTHardware.h"
 #include "utility/Regexp.h"
 #include <string.h>
 //#include "DbgSerialInit.h"
@@ -43,8 +45,6 @@ String        udp_socket_ip;
 String        udp_port;
 const int     udp_rx_timeout = 30; // seconds
 const int     udp_max_packet_sz = 255;
-
-void(*_NBRing)();
 
 /*rx FIFO ringbuffer implementation*/
 #define NB_RINGBUFF_SZ (256)
@@ -147,38 +147,13 @@ String NbRingBuffReadString(void)
 
 
 
-//
-// ISR
-//
-ISR(PCINT1_vect) {
-  if (digitalRead(GMX_INT) == 0) {
-    if (_NBRing)
-      _NBRing();
-  }
-}
-
-
-void _resetGMX() {
-
-  pinMode(GMX_RESET, OUTPUT);
-  // Reset
-  digitalWrite(GMX_RESET, HIGH);
-  delay(100);
-  digitalWrite(GMX_RESET, LOW);
-  delay(100);
-  delay(100);
-  digitalWrite(GMX_RESET, HIGH);
-}
-
-
-
 void _log(String data )
 {
  /*FIXME param by reference*/
 #ifdef DEBUG
   // _log(data);
   //getSerialInst().println(data);
-	Serial.println(data);
+	DEBUG_PRINT_INFO(data);
 #endif
 }
 
@@ -304,75 +279,13 @@ byte gmxNB_connect(String ipAddress, int udpPort)
 byte gmxNB_init(bool forceReset, String ipAddress, int udpPort, void( *callback)())
 {
   String response;
-  byte init_status = GMXNB_KO;
 
   gmxNB_connect(ipAddress, udpPort);
 
   _log("GMXNB Init");
 
-  pinMode(GMX_GPIO1, OUTPUT);
-  pinMode(GMX_GPIO2, OUTPUT);
-  pinMode(GMX_GPIO3, OUTPUT);
-  digitalWrite(GMX_GPIO1, LOW);
-  digitalWrite(GMX_GPIO2, LOW);
-  digitalWrite(GMX_GPIO3, LOW);
+  byte init_status = DTCoTNBIoTHardware_init(callback);
 
-#if 1
-    if (Serial1) {
-		_resetGMX();
-		Serial1.begin(GMX_UART_SPEED);
-		_log("GMX Serial Interface");
-		init_status = GMXNB_OK;
-		// _gmxNB_AtCommTest(response);
-	}
-
-#else
-  // Init Interface
-  if ( gmxNB_interface == GMX_UART_INTERFACE )
-  {
-    // Setup Serial
-    if (Serial1) {
-      Serial1.begin(GMX_UART_SPEED);
-      _log("GMX Serial Interface");
-      init_status = GMXNB_OK;
-	  
-      /*try to avoid a module reset. check if there is an active network access already.*/
-      if((_gmxNB_AtCommTest(response) == GMXNB_OK) && (forceReset == false))
-      {
-		
-        if(gmxNB_isNetworkJoined() == NB_NETWORK_JOINED)
-        {
-          /*We still have network access. Let's keep it like this!*/
-          init_status = NB_NETWORK_JOINED;
-        }
-        else
-        {
-          //ak _resetGMX();
-        }
-      }
-      else
-      {
-        //ak _resetGMX();
-      }
-    }
-    else
-    {
-      return (GMXNB_NO_SERIAL);
-    }
-  }
-#endif
-
-  /*FIXME GMX_INT doesn't do anything at all. Can we configure the BC95 to do otherwise?*/
-  // Setup Interrupt PIN for Rx
-  *digitalPinToPCICR(GMX_INT) |= (1 << digitalPinToPCICRbit(GMX_INT));
-  *digitalPinToPCMSK(GMX_INT) |= (1 << digitalPinToPCMSKbit(GMX_INT));
-
-  // set RX callback
-  _NBRing = callback;
-
-  // delay to wait BootUp of GMX-LR
-  delay(GMX_BOOT_DELAY);
-  
   if(init_status == GMXNB_OK)
   {
     /*NOTE _gmxNB_AtCommTest() is intentionally run twice!*/
@@ -605,28 +518,6 @@ String gmxNB_BinaryToHex(const char *binaryData, int binaryLen )
 
 
 
-
-/*green LED*/
-void gmxNB_Led1(byte led_state)
-{
-  digitalWrite(GMX_GPIO1, led_state);
-}
-
-
-
-/*yellow(?) LED - quite weak...*/
-void gmxNB_Led2(byte led_state)
-{
-  digitalWrite(GMX_GPIO2, led_state);
-}
-
-
-
-/*orange LED*/
-void gmxNB_Led3(byte led_state)
-{
-  digitalWrite(GMX_GPIO3, led_state);
-}
 
 
 

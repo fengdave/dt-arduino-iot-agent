@@ -16,6 +16,7 @@
 
 #ifndef DEBUG_PRINT
 #define DEBUG_PRINT(x) Serial.println(x)
+#define DEBUG_PRINT_INFO(x) Serial.println(x)
 #endif /* DEBUG_PRINT */
 
 #endif

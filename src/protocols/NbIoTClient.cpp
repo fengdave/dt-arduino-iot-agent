@@ -401,9 +401,9 @@ bool NbiotClient::initNBIoTModem() {
 			break;
 		}
 
-		gmxNB_Led2(GMXNB_LED_ON);
+		DTCoTNBIoTHardware_led(GMXNB_LED_ON, 2);
 		delay(500);
-		gmxNB_Led2(GMXNB_LED_OFF);
+		DTCoTNBIoTHardware_led(GMXNB_LED_OFF, 2);
 		_dbgOutputStream.print(".");
 
 		delay(2500);
@@ -414,7 +414,7 @@ bool NbiotClient::initNBIoTModem() {
 		return false;
 	}
 	
-	gmxNB_Led2(GMXNB_LED_ON);
+	DTCoTNBIoTHardware_led(GMXNB_LED_ON, 2);
 	_dbgOutputStream.println( 
 		"NbiotClient::initNBIoTModem(): Successfuly joined the network");
 
