@@ -1,5 +1,5 @@
 /**
- * @file {{file}}
+ * @file DTCoTDeviceNBIoT.cpp
  * @description Basic setup and protocol to interact 
  * with the Deutsche Telekom Cloud of things MQTT-SN connector.
  * @author Andreas Krause

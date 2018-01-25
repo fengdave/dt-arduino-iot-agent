@@ -1,5 +1,5 @@
 /**
- * @file {{file}}
+ * @file DTCoTDeviceFeatherM0-NBIoT.h
  * @description Basic setup and protocol to interact 
  * with the Deutsche Telekom Cloud of things MQTT-SN connector.
  * @author Andreas Krause
