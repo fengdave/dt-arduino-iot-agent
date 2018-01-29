@@ -53,6 +53,8 @@ public:
     * @param serverPort port of the NBIoT server
     * @param imsi IMSI UID of this device
     * @param password matching password fo the connection
+  ` * @param serial the serial port with which to communicate with the NBIoT hardware.
+    * @param the reset pin which the NBIoT hardware is connected to. The actual reset procedure will depend on the hardware.
     * @param dbgOutputStream where to write debug info. Default to Serial.
     */
   explicit NbiotClient(const String& serverIP

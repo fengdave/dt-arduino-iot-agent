@@ -6,10 +6,10 @@
  * NB-IoT Credentials
  */
 
-#define NB_IOT_SERVER_IP      "{cloud_if_things_mqttsn_broker_ip}"
+#define NB_IOT_SERVER_IP      "172.25.102.151"
 #define NB_IOT_SERVER_PORT    1883
-#define NB_IOT_IMSI           "{nbiot_cot_sim_imsi}" 
-#define NB_IOT_COT_PWD        "{nbiot_cot_sim_password}"
+#define NB_IOT_IMSI           "901405800006627" 
+#define NB_IOT_COT_PWD        "MyUsx6tX"
 
 
 #endif /* DT_COT_ARDUINO_LIBRARY_SECRET_HEADER_FILE */
