@@ -13,8 +13,9 @@
 #ifndef DEBUG_PRINT_h_
 #define DEBUG_PRINT_h_
 
-#ifndef DEBUG_PRINT
-
+#include <Arduino.h>
+#include <stdarg.h>
+void debug_printf(String format, ...);
 /**
  * Debug levels.
  * 0 - never print anything
@@ -24,17 +25,17 @@
  */
 #define DEBUG_LEVEL 2
 
-#if DEBUG_LEVEL == 0
-	#define DEBUG_PRINT(x) //
-	#define DEBUG_PRINT_INFO(x) //
-#elif DEBUG_LEVEL > 0 // 
-	#define DEBUG_PRINT(x) Serial.println(x)
-	#define DEBUG_PRINT_INFO(x) //
-#elif DEBUG_LEVEL > 1 // 
-	#define DEBUG_PRINT(x) Serial.println(x)
-	#define DEBUG_PRINT_INFO(x) Serial.println(x)
-#endif
+#define DEBUG_PRINT(...) //
+#define DEBUG_PRINT_INFO(...) //
 
-#endif /* DEBUG_PRINT */
+#if DEBUG_LEVEL == 1 //
+	#undef DEBUG_PRINT
+	#define DEBUG_PRINT(...) debug_printf(__VA_ARGS__)
+#elif DEBUG_LEVEL == 2 //
+	#undef DEBUG_PRINT
+	#undef DEBUG_PRINT_INFO
+	#define DEBUG_PRINT(...) debug_printf(__VA_ARGS__)
+	#define DEBUG_PRINT_INFO(...) debug_printf(__VA_ARGS__)
+#endif
 
 #endif

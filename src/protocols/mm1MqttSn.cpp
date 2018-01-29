@@ -93,8 +93,7 @@ bool MM1MqttSn::publish(
 		DEBUG_PRINT_INFO("MM1MqttSn::publish() - calling parse_stream()");
 		trialCounter++;
 		parse_stream();
-		DEBUG_PRINT_INFO("MM1MqttSn::publish() - trialCounter: ");
-		DEBUG_PRINT_INFO(trialCounter);
+		DEBUG_PRINT_INFO("MM1MqttSn::publish() - trialCounter: %d", trialCounter);
 		if(trialCounter > 2) {
 			waiting_for_response = false;
 		}
@@ -109,10 +108,8 @@ bool MM1MqttSn::publish(
 
 int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
 	
-	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT: topic: ");
-	DEBUG_PRINT_INFO(topic);
-	DEBUG_PRINT_INFO(" - valueType: ");
-	DEBUG_PRINT_INFO(valueType);
+	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT: topic: " + topic);
+	DEBUG_PRINT_INFO(" - valueType: %c", valueType);
 	
 	/*                               len   type  topicId     msgId*/
 	char myPayload[255] = {/*FIXME:*/0x00, 0x0A, 0x00, 0x00, (char)(_message_id / 256), (char)(_message_id % 256)};
@@ -137,8 +134,7 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
 	DEBUG_PRINT_INFO(_imsi);
 	DEBUG_PRINT_INFO("/{topic}");
 	DEBUG_PRINT_INFO(topic);
-	DEBUG_PRINT_INFO("/{valueType}");
-	DEBUG_PRINT_INFO(valueType);
+	DEBUG_PRINT_INFO("/{valueType} %dsn-", valueType);
 	
 	_ioStream.write(myPayload, myStrLen); /* TODO: add error handling */
     //_ioStream.flush();
@@ -150,12 +146,10 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
   }
   else
   {
-	  DEBUG_PRINT_INFO("myStrLen: ");
-	  DEBUG_PRINT_INFO(myStrLen);
+	  DEBUG_PRINT_INFO("myStrLen: %d", myStrLen);
 	  DEBUG_PRINT_INFO("myPayload: ");
 	  DEBUG_PRINT_INFO(myPayload);
-	  DEBUG_PRINT_INFO("readChars: ");
-	  DEBUG_PRINT_INFO(readChars);
+	  DEBUG_PRINT_INFO("readChars: %d", readChars);
 	  
 	  
 	  

@@ -112,10 +112,8 @@ void MQTTSN::dispatch() {
     message_header* response_message = (message_header*)response_buffer;
     bool handled = true;
 	
-	DEBUG_PRINT_INFO("MQTTSN::dispatch() - response_message->type: ");
-	DEBUG_PRINT_INFO(response_message->type);
-	DEBUG_PRINT_INFO("MQTTSN::dispatch() - response_to_wair_for: ");
-	DEBUG_PRINT_INFO(response_to_wait_for);
+	DEBUG_PRINT_INFO("MQTTSN::dispatch() - response_message->type: %d",response_message->type);
+	DEBUG_PRINT_INFO("MQTTSN::dispatch() - response_to_wait_for: %d", response_to_wait_for);
 
     switch (response_message->type) {
     case ADVERTISE:
@@ -406,8 +404,7 @@ void MQTTSN::connect( const uint8_t flags
     send_message();
     waiting_for_response = true;
     response_to_wait_for = CONNACK;
-	DEBUG_PRINT_INFO("MQTTSN::connect() - response_to_wair_for should be CONNACK and is ");
-	DEBUG_PRINT_INFO(response_to_wait_for);
+	DEBUG_PRINT_INFO("MQTTSN::connect() - response_to_wair_for should be CONNACK and is %d", response_to_wait_for);
 	
 }
 

@@ -99,12 +99,12 @@ void setup() {
  	delay(100);
  	Serial.begin(115200);
     delay(100);
-   	DEBUG_PRINT("Setup...");
+   	DEBUG_PRINT_INFO("Setup...");
 
 
 	device.init();
 
-	DEBUG_PRINT("Setup...");
+	DEBUG_PRINT_INFO("Setup...");
   	cloud.init();
   
   /* Subscribe to the change of a cloud variable of interest */
@@ -120,8 +120,7 @@ void setup() {
   }
   else {
     DEBUG_PRINT_INFO("topic registered, uploading data...");
-    DEBUG_PRINT_INFO("myMqttsnTopicId: ");
-    DEBUG_PRINT_INFO(myMqttsnTopicId);	
+    DEBUG_PRINT_INFO("myMqttsnTopicId: %s", myMqttsnTopicId);	
   }
   
 }
@@ -165,8 +164,7 @@ void loop() {
       }
 
      dtostrf(exampleTemp, 2, 2, examplTempStr);
-     Serial.print("### Sending Temperature: ");
-     Serial.println(examplTempStr);
+     DEBUG_PRINT("### Sending Temperature: %s", examplTempStr);
     
     if ( !cloud.publish(myMqttsnTopicId, examplTempStr) ) { // @todo, send integers/reals
       /* TODO: process error here */
@@ -176,4 +174,3 @@ void loop() {
   delay(1000);
 }
 }
-
