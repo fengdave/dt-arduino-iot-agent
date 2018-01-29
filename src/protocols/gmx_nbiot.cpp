@@ -52,6 +52,7 @@ volatile char nbRingBuff[NB_RINGBUFF_SZ];
 volatile int  rxPosStart = 0;
 volatile int  rxPosEnd = 0;
 
+Stream * stream = 0;
 
 
 /**
@@ -171,7 +172,7 @@ void _sendCmd(String in) {
   for (int i = 0; i < len; i++) {
     if ( gmxNB_interface == GMX_UART_INTERFACE )
     {
-      Serial1.write(in.charAt(i));
+      stream->write(in.charAt(i));
     }
     delay(1);
   }
@@ -181,7 +182,7 @@ void _sendCmd(String in) {
   if ( gmxNB_interface == GMX_UART_INTERFACE )
   {
     start_timeout = millis();
-    while (Serial1.available() == 0) {
+    while (stream->available() == 0) {
       if (( millis() - start_timeout ) > GMX_UART_TIMEOUT  )
       {
         _log("TIMEOUT on :" + in);
@@ -204,11 +205,11 @@ byte _parseResponse(String& response, const char *searchPattern) {
   response = "";
 
   // Read from Serial
-  while (Serial1.available() > 0)
+  while (stream->available() > 0)
   {
-    while (Serial1.available() > 0)
+    while (stream->available() > 0)
     { // TODO: What if two or one and a half commands will come one after another?
-      gmxSerialString += (char)Serial1.read();
+      gmxSerialString += (char)stream->read();
     }
 
     delay(10);
@@ -276,15 +277,17 @@ byte gmxNB_connect(String ipAddress, int udpPort)
 
 
 
-byte gmxNB_init(bool forceReset, String ipAddress, int udpPort, void( *callback)())
+byte gmxNB_init(bool forceReset, String ipAddress, int udpPort, Stream & serial, int resetPin, void( *callback)())
 {
   String response;
+  
+  stream = &serial;
 
   gmxNB_connect(ipAddress, udpPort);
 
   _log("GMXNB Init");
 
-  byte init_status = DTCoTNBIoTHardware_init(callback);
+  byte init_status = DTCoTNBIoTHardware_init(resetPin, callback);
 
   if(init_status == GMXNB_OK)
   {
@@ -456,7 +459,7 @@ void gmxNB_Reset(void) {
   for (int i = 0; i < len; i++) {
     if ( gmxNB_interface == GMX_UART_INTERFACE )
     {
-      Serial1.write(command.charAt(i));
+      stream->write(command.charAt(i));
     }
     delay(1);
   }
@@ -612,7 +615,7 @@ String AtResponseTokenize(String atResponse, String delimiter, int &indexStart)
 
 int gmxNB_Available(void)
 {
-  return (Serial1.available());
+  return (stream->available());
 }
 
 
@@ -629,7 +632,7 @@ byte gmxNB_RXData(String &remoteIp, int udpPortNr, byte *binaryData, int &len)
   _log("gmxNB_RXData(): wait for incoming packet(s)");
 
   maxRetrials = 300;
-  while((Serial1.available() == 0) && (maxRetrials > 0))
+  while((stream->available() == 0) && (maxRetrials > 0))
   {
     maxRetrials--;
     delay(100);

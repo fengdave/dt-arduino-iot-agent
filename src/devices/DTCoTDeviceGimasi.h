@@ -28,7 +28,7 @@ namespace DTCoT {
     */
 class CoTConfigDeviceGimasi: public CoTConfigDeviceNBIoT {
 public:
-	CoTConfigDeviceGimasi(const char* serverIP, const unsigned short serverPort, const char* imsi, const char* password  );
+	CoTConfigDeviceGimasi(const char* serverIP, const unsigned short serverPort, const char* imsi, const char* password, Stream & serial, int resetPin );
 };
 
 /**

@@ -36,7 +36,7 @@ public:
     * @param imsi IMSI UID of this device
     * @param password matching password for the connection
     */
-	CoTConfigDeviceFeatherM0_NBIoT(const char* serverIP, const unsigned short serverPort, const char* imsi, const char* password  );
+	CoTConfigDeviceFeatherM0_NBIoT(const char* serverIP, const unsigned short serverPort, const char* imsi, const char* password, Stream& serial, int resetPin );
 };
 
 

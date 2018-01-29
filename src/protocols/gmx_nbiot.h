@@ -40,7 +40,7 @@
  *  the only parameter is the function for the RxData callback
  */
  
-byte gmxNB_init(bool forceReset, String ipAddress, int udpPort, void( *callback)());
+byte gmxNB_init(bool forceReset, String ipAddress, int udpPort, Stream & serial, int resetPin, void( *callback)());
 byte gmxNB_connect(String ipAddress, int udpPort);
 byte gmxNB_getVersion(String& version);
 byte gmxNB_getIMEI(String& imei);

@@ -64,12 +64,16 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream /* de
 
 }
 
-NbiotClient::NbiotClient(const String& serverIP, const unsigned short& serverPort, const String& imsi, const String& password, Stream& dbgOutputStream /* default = Serial */)
+NbiotClient::NbiotClient(const String& serverIP, const unsigned short& serverPort, const String& imsi
+						, const String& password, Stream& serial
+						, int resetPin, Stream& dbgOutputStream)
 	
 	: _serverIP(serverIP)
 	, _serverPort(serverPort)
 	, _imsi(imsi)
 	, _password(password)
+	, _serial(serial)
+	, _resetPin(resetPin)
 	, _dbgOutputStream( dbgOutputStream)
 	
 		
@@ -366,6 +370,8 @@ bool NbiotClient::initNBIoTModem() {
 	byte initStatus = gmxNB_init( /*forceReset:*/ false
 		,  _serverIP
 		, _serverPort
+		, _serial
+		, _resetPin 
 		, NULL );
 
 	if( ( initStatus != NB_NETWORK_JOINED) && ( initStatus != GMXNB_OK) ) {

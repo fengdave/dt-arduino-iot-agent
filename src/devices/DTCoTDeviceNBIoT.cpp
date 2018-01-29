@@ -26,9 +26,11 @@ CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT(
 	const char* serverIP
 	, const unsigned short serverPort
 	, const char* imsi
-	, const char* password)
+	, const char* password
+	, Stream& serial
+	, int resetPin )
 	:  _serverIP(serverIP), _serverPort(serverPort), 
-		_imsi(imsi), _password(password), CoTConfigDevice()
+		_imsi(imsi), _password(password), _serial(serial), _resetPin(resetPin), CoTConfigDevice()
 	
 {
 	//DEBUG_PRINT("CoTConfigDeviceNBIoT::CoTConfigDeviceNBIoT");
@@ -52,13 +54,24 @@ const char* CoTConfigDeviceNBIoT::getPassword() {
 	return _password; 
 }
 
+
+Stream & CoTConfigDeviceNBIoT::getSerial() {
+	return _serial;
+}
+
+int CoTConfigDeviceNBIoT::getResetPin() {
+	return _resetPin;
+}
+
 CoTDeviceNBIoT::CoTDeviceNBIoT(	 CoTConfigDeviceNBIoT& nbiotConfig)
 	: CoTDeviceBase( nbiotConfig)
 		
 	,_nbiotClient (NbiotClient( nbiotConfig.getServerIP()
-				,  nbiotConfig.getServerPort()
-				,  nbiotConfig.getIMSI()
-				,  nbiotConfig.getPassword()
+				, nbiotConfig.getServerPort()
+				, nbiotConfig.getIMSI()
+				, nbiotConfig.getPassword()
+				, nbiotConfig.getSerial()
+				, nbiotConfig.getResetPin()
 				))
 					
 					
@@ -77,8 +90,9 @@ bool CoTDeviceNBIoT::init() {
 }
 
 
-Client * DTCoT::CoTDeviceNBIoT::getClient() const {
+Client * CoTDeviceNBIoT::getClient() const {
 	return (Client*)(&_nbiotClient);
 }
+
 
 #endif

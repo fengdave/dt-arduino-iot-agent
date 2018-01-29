@@ -38,19 +38,23 @@ public:
     * @param imsi IMSI UID of this device
     * @param cot_pwd matching password fo the connection
     */
-	CoTConfigDeviceNBIoT( const char* serverIP, const unsigned short serverPort, const char* imsi, const char* cot_pwd  );
+	CoTConfigDeviceNBIoT( const char* serverIP, const unsigned short serverPort, const char* imsi, const char* cot_pwd, Stream& serial, int resetPin  );
 	
 	public:
 	const char* getServerIP();
 	const unsigned short getServerPort();
 	const char* getIMSI();
 	const char* getPassword();
+	Stream & getSerial();
+	int getResetPin();
 
 private:
 	const char* _serverIP;
 	const unsigned short _serverPort;
 	const char* _imsi;
 	const char* _password;
+	Stream& _serial;
+	int _resetPin;
 };
 
 /**

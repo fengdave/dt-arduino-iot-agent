@@ -56,7 +56,9 @@ using namespace DTCoT;
 
 CoTConfigDeviceGimasi devConfig 
   = CoTConfigDeviceGimasi(NB_IOT_SERVER_IP
-    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD);
+    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD
+	, Serial1 				// serial port to use for the NBIoT hardware
+	, GMX_RESET);			// reset pin to use for the NBIoT hardware
 
 CoTDeviceGimasi device = CoTDeviceGimasi(devConfig);
 
@@ -119,9 +121,8 @@ void setup() {
   else {
     DEBUG_PRINT_INFO("topic registered, uploading data...");
     DEBUG_PRINT_INFO("myMqttsnTopicId: ");
-    DEBUG_PRINT_INFO(myMqttsnTopicId);
-	
-
+    DEBUG_PRINT_INFO(myMqttsnTopicId);	
+  }
   
 }
 

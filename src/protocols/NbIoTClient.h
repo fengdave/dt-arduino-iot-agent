@@ -59,6 +59,8 @@ public:
 	, const unsigned short& serverPort
 	, const String& imsi
 	, const String& password
+	, Stream& serial
+	, int resetPin 
 	, Stream& dbgOutputStream = Serial
 	);
 
@@ -157,6 +159,8 @@ private:
 	String _serverIP;
 	String _imsi;
 	String _password;
+	Stream& _serial;
+	int _resetPin;
   
   
 

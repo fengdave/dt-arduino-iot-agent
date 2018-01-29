@@ -19,6 +19,8 @@
 
 #ifdef TUINO_VARIANT
 
+void DTCoTNBIoTHardware_reset(int resetPin);
+
 void(*_NBRing)();
 
 // Register interrupt. Not every board supports every sort of interrupt.
@@ -33,7 +35,7 @@ ISR(PCINT1_vect) {
 
 
 
-int DTCoTNBIoTHardware_init(void( *callback)()) {
+int DTCoTNBIoTHardware_init(int resetPin, void( *callback)()) {
 	byte init_status = GMXNB_KO;
 	
 	pinMode(GMX_GPIO1, OUTPUT);
@@ -44,7 +46,7 @@ int DTCoTNBIoTHardware_init(void( *callback)()) {
 	digitalWrite(GMX_GPIO3, LOW);
 	
     if (Serial1) {
-		DTCoTNBIoTHardware_reset();
+		DTCoTNBIoTHardware_reset(resetPin);
 		Serial1.begin(GMX_UART_SPEED);
 		DEBUG_PRINT_INFO("GMX Serial Interface");
 		init_status = GMXNB_OK;
@@ -66,15 +68,15 @@ int DTCoTNBIoTHardware_init(void( *callback)()) {
   return init_status;
 }
 
-void DTCoTNBIoTHardware_reset() {
-	pinMode(GMX_RESET, OUTPUT);
+void DTCoTNBIoTHardware_reset(int resetPin) {
+	pinMode(resetPin, OUTPUT);
 	// Reset
-	digitalWrite(GMX_RESET, HIGH);
+	digitalWrite(resetPin, HIGH);
 	delay(100);
-	digitalWrite(GMX_RESET, LOW);
+	digitalWrite(resetPin, LOW);
 	delay(100);
 	delay(100);
-	digitalWrite(GMX_RESET, HIGH);
+	digitalWrite(resetPin, HIGH);
 }
 
 void DTCoTNBIoTHardware_led(char led_state, char ledNumber) {

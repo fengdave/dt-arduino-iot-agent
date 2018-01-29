@@ -16,15 +16,25 @@
 #ifndef DEBUG_PRINT
 
 /**
- * Always print this.
+ * Debug levels.
+ * 0 - never print anything
+ * 1 - only print critical logs
+ * 2 - print debug logs also
+ * 3 - print informational logs also
  */
-#define DEBUG_PRINT(x) Serial.println(x)
+#define DEBUG_LEVEL 2
 
+#if DEBUG_LEVEL == 0
+	#define DEBUG_PRINT(x) //
+	#define DEBUG_PRINT_INFO(x) //
+#elif DEBUG_LEVEL > 0 // 
+	#define DEBUG_PRINT(x) Serial.println(x)
+	#define DEBUG_PRINT_INFO(x) //
+#elif DEBUG_LEVEL > 1 // 
+	#define DEBUG_PRINT(x) Serial.println(x)
+	#define DEBUG_PRINT_INFO(x) Serial.println(x)
+#endif
 
-/**
- * Informational level debug info. Not critical - only informs the user what is going on.
- */
-#define DEBUG_PRINT_INFO(x) Serial.println(x)
 #endif /* DEBUG_PRINT */
 
 #endif

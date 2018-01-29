@@ -26,9 +26,11 @@ CoTConfigDeviceFeatherM0_NBIoT::CoTConfigDeviceFeatherM0_NBIoT (
 	const char* serverIP
 	, const unsigned short serverPort
 	, const char* imsi
-	, const char* password)
+	, const char* password
+	, Stream & serial
+	, int resetPin)
 	: CoTConfigDeviceNBIoT( serverIP, serverPort, 
-		imsi, password)
+		imsi, password, serial, resetPin)
 {
 	
    

@@ -39,14 +39,10 @@
 
 /**
  * Perform any steps required to initialise the MBIoT hardware
+ * @param resetPin Pin to reset the NBIoT hardware
  * @param callback callback for when data is available from the NBIoT buffer
  */
-int DTCoTNBIoTHardware_init(void( *callback)()); 
-
-/**
- * Reset the NBIoT hardware.
- */
-void DTCoTNBIoTHardware_reset();
+int DTCoTNBIoTHardware_init(int resetPin, void( *callback)()); 
 
 /**
  * Change LED state on the hardare
