@@ -15,7 +15,7 @@
 
 #include <Arduino.h>
 #include <stdarg.h>
-void debug_printf(String format, ...);
+
 /**
  * Debug levels.
  * 0 - never print anything
@@ -24,6 +24,13 @@ void debug_printf(String format, ...);
  * 3 - print informational logs also
  */
 #define DEBUG_LEVEL 2
+
+
+/**
+ * Wrapper for formatting to debug output.
+ * If you want to format Arduino strings, just concatenate them with a + operator.
+*/
+void debug_printf(String format, ...);
 
 #define DEBUG_PRINT(...) //
 #define DEBUG_PRINT_INFO(...) //
