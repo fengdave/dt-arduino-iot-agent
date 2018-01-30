@@ -46,7 +46,10 @@ int DTCoTNBIoTHardware_init(Stream & serial, int resetPin, void( *callback)()) {
 	digitalWrite(GMX_GPIO3, LOW);
 	
 	DTCoTNBIoTHardware_reset(resetPin);
-	serial.begin(GMX_UART_SPEED);
+	
+	HardwareSerial * hwSerial = static_cast<HardwareSerial*>(&serial);
+	
+	hwSerial->begin(GMX_UART_SPEED);
 	DEBUG_PRINT_INFO("GMX Serial Interface");
 	init_status = GMXNB_OK;
 	// _gmxNB_AtCommTest(response);
@@ -121,7 +124,7 @@ int DTCoTNBIoTHardware_init(Stream & serial, int resetPin, void( *callback)()) {
 	digitalWrite(GMX_GPIO3, LOW);*/
 	
 	DTCoTNBIoTHardware_reset(resetPin);
-	Serial1.begin(GMX_UART_SPEED);
+	serial.begin(GMX_UART_SPEED);
 	DEBUG_PRINT_INFO("GMX Serial Interface");
 	init_status = GMXNB_OK;
 	// _gmxNB_AtCommTest(response);
