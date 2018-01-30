@@ -285,7 +285,7 @@ byte gmxNB_init(bool forceReset, String ipAddress, int udpPort, Stream & serial,
 
   _log("GMXNB Init");
 
-  byte init_status = DTCoTNBIoTHardware_init(resetPin, callback);
+  byte init_status = DTCoTNBIoTHardware_init(serial, resetPin, callback);
 
   if(init_status == GMXNB_OK)
   {

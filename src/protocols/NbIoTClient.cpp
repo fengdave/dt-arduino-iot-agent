@@ -51,6 +51,8 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream /* de
 	, _dbgOutputStream( dbgOutputStream)
 	, _modemInitialized( false)
 	, _serverIP( ipAddress)
+	, _serial(Serial)
+	, _resetPin(10)
 {
 	//_dbgOutputStream.println("NbiotClient::NbiotClient():");
 }
@@ -60,6 +62,8 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream /* de
  */
 	NbiotClient::NbiotClient(uint8_t sock, Stream& dbgOutputStream /* default = Serial */)
 			:	 _sock(sock)
+				, _serial(Serial)
+				, _resetPin(10)
 				,_dbgOutputStream( dbgOutputStream) {
 
 }
@@ -87,6 +91,8 @@ NbiotClient::NbiotClient(const String& serverIP, const unsigned short& serverPor
 
 NbiotClient::NbiotClient(Stream& dbgOutputStream /* default = Serial */)
 	: _dbgOutputStream( dbgOutputStream)
+		, _serial(Serial)
+		, _resetPin(10)
 		
 {
 	//Serial.println("NbiotClient::NbiotClient():");

@@ -35,7 +35,7 @@ ISR(PCINT1_vect) {
 
 
 
-int DTCoTNBIoTHardware_init(int resetPin, void( *callback)()) {
+int DTCoTNBIoTHardware_init(Stream & serial, int resetPin, void( *callback)()) {
 	byte init_status = GMXNB_KO;
 	
 	pinMode(GMX_GPIO1, OUTPUT);
@@ -45,13 +45,11 @@ int DTCoTNBIoTHardware_init(int resetPin, void( *callback)()) {
 	digitalWrite(GMX_GPIO2, LOW);
 	digitalWrite(GMX_GPIO3, LOW);
 	
-    if (Serial1) {
-		DTCoTNBIoTHardware_reset(resetPin);
-		Serial1.begin(GMX_UART_SPEED);
-		DEBUG_PRINT_INFO("GMX Serial Interface");
-		init_status = GMXNB_OK;
-		// _gmxNB_AtCommTest(response);
-	}
+	DTCoTNBIoTHardware_reset(resetPin);
+	serial.begin(GMX_UART_SPEED);
+	DEBUG_PRINT_INFO("GMX Serial Interface");
+	init_status = GMXNB_OK;
+	// _gmxNB_AtCommTest(response);
 
 
   /*FIXME GMX_INT doesn't do anything at all. Can we configure the BC95 to do otherwise?*/
@@ -90,6 +88,69 @@ void DTCoTNBIoTHardware_led(char led_state, char ledNumber) {
 	 digitalWrite(pin, led_state);
 }
 
+
+
+
+#else
+
+// For Feather M0 with uBlox
+
+void DTCoTNBIoTHardware_reset(int resetPin);
+
+void(*_NBRing)();
+
+// Register interrupt. Not every board supports every sort of interrupt.
+void ISR() {
+    if (_NBRing) {
+      	_NBRing();
+  	}
+}
+
+
+#define INTPIN 6
+
+
+int DTCoTNBIoTHardware_init(Stream & serial, int resetPin, void( *callback)()) {
+	byte init_status = GMXNB_KO;
+	
+	/*pinMode(GMX_GPIO1, OUTPUT);
+	pinMode(GMX_GPIO2, OUTPUT);
+	pinMode(GMX_GPIO3, OUTPUT);
+	digitalWrite(GMX_GPIO1, LOW);
+	digitalWrite(GMX_GPIO2, LOW);
+	digitalWrite(GMX_GPIO3, LOW);*/
+	
+	DTCoTNBIoTHardware_reset(resetPin);
+	Serial1.begin(GMX_UART_SPEED);
+	DEBUG_PRINT_INFO("GMX Serial Interface");
+	init_status = GMXNB_OK;
+	// _gmxNB_AtCommTest(response);
+
+
+    // set RX callback
+    _NBRing = callback;
+	attachInterrupt(INTPIN, ISR, FALLING);
+
+  // delay to wait BootUp of GMX-LR
+  delay(GMX_BOOT_DELAY);
+  
+  return init_status;
+}
+
+void DTCoTNBIoTHardware_reset(int resetPin) {
+	pinMode(resetPin, OUTPUT);
+	// Reset
+	digitalWrite(resetPin, HIGH);
+	delay(100);
+	digitalWrite(resetPin, LOW);
+	delay(100);
+	delay(100);
+	digitalWrite(resetPin, HIGH);
+}
+
+void DTCoTNBIoTHardware_led(char led_state, char ledNumber) {
+	
+}
 
 
 

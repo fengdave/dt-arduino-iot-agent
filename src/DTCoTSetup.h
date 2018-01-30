@@ -80,9 +80,9 @@
 
 /**********************************/
 /* Select the Hardware platform here */
-#define HW_PLATFORM          GIMASI_TUINO1
+//#define HW_PLATFORM          GIMASI_TUINO1
 //#define HW_PLATFORM          HUZZAH
-//#define HW_PLATFORM          FEATHER_M0
+#define HW_PLATFORM          FEATHER_M0
 /**********************************/
 
 /************************************************************************************************/

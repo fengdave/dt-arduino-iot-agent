@@ -42,7 +42,7 @@
  * @param resetPin Pin to reset the NBIoT hardware
  * @param callback callback for when data is available from the NBIoT buffer
  */
-int DTCoTNBIoTHardware_init(int resetPin, void( *callback)()); 
+int DTCoTNBIoTHardware_init(class Stream & serial, int resetPin, void( *callback)()); 
 
 /**
  * Change LED state on the hardare

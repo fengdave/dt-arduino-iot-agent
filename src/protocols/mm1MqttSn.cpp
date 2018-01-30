@@ -83,7 +83,7 @@ bool MM1MqttSn::publish(
   ) {
   const int tmpFlags = 0x20;
   
-  int dataLen = strlen(value);
+  int dataLen = strlen((char *)value);
   int trialCounter = 0;
 
   
@@ -136,7 +136,7 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
 	DEBUG_PRINT_INFO(topic);
 	DEBUG_PRINT_INFO("/{valueType} %dsn-", valueType);
 	
-	_ioStream.write(myPayload, myStrLen); /* TODO: add error handling */
+	_ioStream.write((uint8_t*)myPayload, myStrLen); /* TODO: add error handling */
     //_ioStream.flush();
 
     readChars = _ioStream.read((byte*)myPayload, myStrLen);
