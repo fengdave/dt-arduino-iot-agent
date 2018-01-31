@@ -97,21 +97,15 @@ void DTCoTNBIoTHardware_led(char led_state, char ledNumber) {
 #else
 
 // For Feather M0 with uBlox
+// Note that standard Arduino doesn't let you set interrupts on UARTS without hacking the variants.cpp file.
+// So we need to setup our own timer interrupts
 
 void DTCoTNBIoTHardware_reset(int resetPin);
 
-void(*_NBRing)();
-
-// Register interrupt. Not every board supports every sort of interrupt.
-void ISR() {
-    if (_NBRing) {
-      	_NBRing();
-  	}
-}
 
 
 #define INTPIN 6
-
+#define UBLOX_SARA_N2_DEFAULT_BAUD_RATE 9600
 
 int DTCoTNBIoTHardware_init(Stream & serial, int resetPin, void( *callback)()) {
 	byte init_status = GMXNB_KO;
@@ -123,16 +117,13 @@ int DTCoTNBIoTHardware_init(Stream & serial, int resetPin, void( *callback)()) {
 	digitalWrite(GMX_GPIO2, LOW);
 	digitalWrite(GMX_GPIO3, LOW);*/
 	
+	HardwareSerial * hwSerial = static_cast<HardwareSerial*>(&serial);
+	
 	DTCoTNBIoTHardware_reset(resetPin);
-	serial.begin(GMX_UART_SPEED);
-	DEBUG_PRINT_INFO("GMX Serial Interface");
+	hwSerial->begin(UBLOX_SARA_N2_DEFAULT_BAUD_RATE);
+	DEBUG_PRINT_INFO("uBlox N2 Serial Interface");
 	init_status = GMXNB_OK;
 	// _gmxNB_AtCommTest(response);
-
-
-    // set RX callback
-    _NBRing = callback;
-	attachInterrupt(INTPIN, ISR, FALLING);
 
   // delay to wait BootUp of GMX-LR
   delay(GMX_BOOT_DELAY);

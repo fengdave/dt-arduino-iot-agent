@@ -371,7 +371,7 @@ uint8_t NbiotClient::getFirstSocket()
 
 bool NbiotClient::initNBIoTModem() {
 	// Init NB IoT board
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Initialyzing modem ... ");
+	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Initializing modem ... ");
 	
 	byte initStatus = gmxNB_init( /*forceReset:*/ false
 		,  _serverIP
