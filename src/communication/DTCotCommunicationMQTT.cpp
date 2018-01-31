@@ -11,6 +11,10 @@
  * GitHub:  https://github.com/mm1technology/
  */
 
+#include "DTCOTSetup.h"
+
+#ifdef COMMUNICATION_MQTT
+
 #include "DTCoTCommunicationMQTT.h"
 #include "base-classes/DTCoTCommunicationBase.h"
 #include "base-classes/DTCoTDeviceBase.h"
@@ -127,5 +131,6 @@ void DTCoT::MQTTCommunication::init()
     DEBUG_PRINT("MQTT Connected!");
 }
 
-v*/
+*/
 
+#endif /*COMMUNICATION_MQTT*/

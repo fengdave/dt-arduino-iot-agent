@@ -16,7 +16,7 @@
 
 #include "DTCOTSetup.h"
 
-#if CONN_TYPE == NB_IOT
+#ifdef COMMUNICATION_MQTTSN
 
 #include "DTCoTPrivate.h"
 #include "base-classes/DTCoTCommunicationBase.h"
@@ -79,7 +79,7 @@ private:
 
 }
 
-#endif
+#endif /*COMMUNICATION_MQTTSN*/
 
-#endif // MQTTCommunication_h_
+#endif /*MQTTCommunication_h_*/
 

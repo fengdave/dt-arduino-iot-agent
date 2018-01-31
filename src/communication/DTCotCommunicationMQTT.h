@@ -15,6 +15,10 @@
 #define MQTTCommunication_h_
 
 
+#include "DTCOTSetup.h"
+
+#ifdef COMMUNICATION_MQTT
+
 #include <Adafruit_MQTT.h>
 #include <Adafruit_MQTT_Client.h>
 
@@ -78,6 +82,8 @@ namespace DTCoT {
 };
 
 }
+
+#endif /*COMMUNICATION_MQTT*/
 
 #endif // MQTTCommunication_h_
 

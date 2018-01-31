@@ -13,7 +13,7 @@
 
 #include "DTCOTSetup.h"
 
-#if CONN_TYPE == NB_IOT
+#ifdef COMMUNICATION_MQTTSN
 
 #include "DTCoTCommunicationMQTTSN.h"
 #include "base-classes/DTCoTCommunicationBase.h"
@@ -112,5 +112,4 @@ void CoTCommunicationMQTTSN::reconnect()
     DEBUG_PRINT("MQTT Connected!");
 }
 
-
-#endif
+#endif /*COMMUNICATION_MQTTSN*/

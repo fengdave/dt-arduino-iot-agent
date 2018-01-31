@@ -29,20 +29,29 @@
 
 
 #include "DTCoT.h"
-// NOTE: You need to create this file with  SECRET_WIFI_SSID and SECRET_WIFI_PASSWORD defined
+/* NOTE: You need to create this secrets.h file with the following defines:
+ #define NB_IOT_IMSI           "<IMSI, as found in the logs of your device>" 
+ #define NB_IOT_COT_PWD        "<password for access to the server>"
+*/
 #include "secrets.h"
 
+// IP address of the DT NBIoT server
+#define NB_IOT_SERVER_IP      "172.25.102.151"
+#define NB_IOT_SERVER_PORT    1883
+
+// Make sure we are using the correct hardware configuration for NB_IOT
 #if CONN_TYPE != NB_IOT
 #error("You need to enable NB_IOT in the config!")
 #endif
 
 /* Application-specific settings */
 const unsigned char ON_BOARD_LED = 13;
+
+/* The name of tthe variable on the server */
 const char* CLOUD_COUNTER_VAR_NAME = "cloud-counter";
 
+/* Wrap after this number */
 const unsigned char COUNTER_THRESHOLD = 0xFF;
-
-const unsigned short CLOUD_SERVER_PORT = 1883;
 
 int myMqttsnTopicId = MQTTSN_TOPIC_INVALID_ID;
 
@@ -54,14 +63,17 @@ char examplTempStr[10];
 
 using namespace DTCoT;
 
+/* Configure a Gimasi Tuino 1 device, connected to the CoT server */
 CoTConfigDeviceGimasi devConfig 
   = CoTConfigDeviceGimasi(NB_IOT_SERVER_IP
     , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD
 	, Serial1 				// serial port to use for the NBIoT hardware
 	, GMX_RESET);			// reset pin to use for the NBIoT hardware
 
+/* Create the device */
 CoTDeviceGimasi device = CoTDeviceGimasi(devConfig);
 
+/* Configure connection to the MQTT-SN backend */
 CoTConfigCommunicationMQTTSN mqttsnConfig(NB_IOT_SERVER_IP
     , NB_IOT_SERVER_PORT
     , NB_IOT_IMSI
@@ -110,6 +122,7 @@ void setup() {
   /* Subscribe to the change of a cloud variable of interest */
   cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
 
+  /* Register the topics that we want to publish to later */
   DEBUG_PRINT_INFO("connected, registering topic...");
   myMqttsnTopicId = cloud.Mqttsn_RegisterTopic(MQTTSN_TOPIC_MEASUREMENT, MQTTSN_MEAS_TYPE_TEMPERATURE);
   if(myMqttsnTopicId == MQTTSN_TOPIC_INVALID_ID)
@@ -165,7 +178,8 @@ void loop() {
 
      dtostrf(exampleTemp, 2, 2, examplTempStr);
      DEBUG_PRINT("### Sending Temperature: %s", examplTempStr);
-    
+
+    /* Publish our updated temperature value to the CoT server */
     if ( !cloud.publish(myMqttsnTopicId, examplTempStr) ) { // @todo, send integers/reals
       /* TODO: process error here */
     }

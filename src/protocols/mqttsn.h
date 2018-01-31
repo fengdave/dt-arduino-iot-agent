@@ -79,7 +79,7 @@ enum __attribute__ ((__packed__)) message_type {
     PUBREL			= 0x10,
     SUBSCRIBE 		= 0x12,
     SUBACK			= 0x13,
-    UNSUBSCRIBE	= 0x14,
+    UNSUBSCRIBE		= 0x14,
     UNSUBACK		= 0x15,
     PINGREQ			= 0x16,
     PINGRESP		= 0x17,
@@ -87,7 +87,7 @@ enum __attribute__ ((__packed__)) message_type {
     WILLTOPICUPD 	= 0x1A,
     WILLTOPICRESP	= 0x1B,
     WILLMSGUPD		= 0x1C,
-    WILLMSGRESP	= 0x1D
+    WILLMSGRESP		= 0x1D
 };
 
 #if DEBUG
