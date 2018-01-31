@@ -218,7 +218,7 @@ byte _parseResponse(String& response, const char *searchPattern) {
   // TODO: No check for buffer length! Potential buffer overflow!
   gmxSerialString.toCharArray(cmd, gmxSerialString.length());
   _log("<-----");
-  _log("RESPONSE: " + gmxSerialString);
+  _log("RESPONSE: '" + gmxSerialString+"'");
   _log("<-----");
 
   // Parse Response
@@ -289,9 +289,11 @@ byte gmxNB_init(bool forceReset, String ipAddress, int udpPort, Stream & serial,
 
   if(init_status == GMXNB_OK)
   {
+	DEBUG_PRINT_INFO("Testing hardware...");
     /*NOTE _gmxNB_AtCommTest() is intentionally run twice!*/
     _gmxNB_AtCommTest(response);
     init_status = _gmxNB_AtCommTest(response);
+
   }
   return init_status;
 }

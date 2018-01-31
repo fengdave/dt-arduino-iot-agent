@@ -57,8 +57,8 @@ using namespace DTCoT;
 CoTConfigDeviceFeatherM0_NBIoT devConfig 
   = CoTConfigDeviceFeatherM0_NBIoT(NB_IOT_SERVER_IP
     , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD
-	, Serial1 				// serial port to use for the NBIoT hardware
-	, 10);			// reset pin to use for the NBIoT hardware
+	, Serial1 	// serial port to use for the NBIoT hardware (marked as TX/RX on the Feather M0 board)
+	, 10);			// reset pin to use for the NBIoT hardware (just choose any free GPIO pin on the Feather M0)
 
 CoTDeviceFeatherM0_NBIoT device = CoTDeviceFeatherM0_NBIoT(devConfig);
 
@@ -163,10 +163,10 @@ void loop() {
           }
       }
 
+      sprintf(examplTempStr, "%.01f", exampleTemp);
+     DEBUG_PRINT("### Sending Temperature: %s", examplTempStr);
     
-     DEBUG_PRINT("### Sending Temperature:");
-    
-    if ( !cloud.publish(myMqttsnTopicId, "25.4") ) { // @todo, send integers/reals
+    if ( !cloud.publish(myMqttsnTopicId, examplTempStr) ) { // @todo, send integers/reals
       /* TODO: process error here */
     }
   }
