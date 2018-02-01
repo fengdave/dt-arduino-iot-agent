@@ -1,7 +1,8 @@
 /**
  * @file test-tuino1-cot-nbiot.ino
+ * @description Simple Demo
  * @description Simple Demo for CoT Library using NB-IoT
- *  @author Lyn Matten
+ * @author Lyn Matten
  * @copyright (C) 2018 mm1 Technology GmbH - all rights reserved. 
  * @licence MIT licence
  * 
@@ -34,10 +35,6 @@
  #define NB_IOT_COT_PWD        "<password for access to the server>"
 */
 #include "secrets.h"
-
-// IP address of the DT NBIoT server
-#define NB_IOT_SERVER_IP      "172.25.102.151"
-#define NB_IOT_SERVER_PORT    1883
 
 // Make sure we are using the correct hardware configuration for NB_IOT
 #if CONN_TYPE != NB_IOT
@@ -140,13 +137,13 @@ void setup() {
 
 
 void loop() {
-     DEBUG_PRINT("Loop");
+  DEBUG_PRINT("Loop");
 
 
   /* Update cloud infrastructure client */
   if ( !cloud.process() ) {
     /* TODO: process error here */
-
+  }
 
   static unsigned long counter = 0;
   ++counter;
@@ -187,4 +184,4 @@ void loop() {
 
   delay(1000);
 }
-}
+
