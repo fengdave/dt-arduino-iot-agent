@@ -1,4 +1,4 @@
-# Deutsche Telekom Cloud Of Things Library
+# Deutsche Telekom Cloud Of Things Arduino Library
 
 This is an Arduino library to connect to Deutsche Telekom Cloud of Things (DT-CoT) 
 network.
@@ -40,7 +40,7 @@ https://raw.githubusercontent.com/gimasi/TUINO_ONE/master/arduino_ide/package_tu
 
 
 
-## Cloud Of Things Library
+## [Cloud Of Things Arduino Lib Sources](src/readme.md)
 --------------------------------------------------------------------------------
 The sources of the Cloud of Things library can be found in 
 Arduino/libraries/dt-cot-arduino-library/src
@@ -49,7 +49,7 @@ The library features are described [here](src/readme.md).
 
 
 
-## Usage Examples For The Cloud Of Things Library
+## [Usage Examples For The Cloud Of Things Arduino Lib](examples/readme.md)
 --------------------------------------------------------------------------------
 The Cloud of Things example implementations can be found in 
 Arduino/libraries/dt-cot-arduino-library/examples
