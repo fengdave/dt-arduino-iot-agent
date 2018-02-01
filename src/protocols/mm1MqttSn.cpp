@@ -128,13 +128,13 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
   	/*FIXME this payload length treatment doesn't work for sizes (>127)!*/
   	myPayload[0] = (char)myStrLen;
 	
-	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT(): Payload: ");
-	DEBUG_PRINT_INFO("NBIoT/");
-	DEBUG_PRINT_INFO("{_imsi}");
-	DEBUG_PRINT_INFO(_imsi);
-	DEBUG_PRINT_INFO("/{topic}");
-	DEBUG_PRINT_INFO(topic);
-	DEBUG_PRINT_INFO("/{valueType} %dsn-", valueType);
+	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT(): Payload: NBIoT/{_imsi}%s/{topic}"+topic+"/{valueType}%c ",_imsi, valueType);
+	//DEBUG_PRINT_INFO("NBIoT/");, 
+	//DEBUG_PRINT_INFO("{_imsi}");
+	//DEBUG_PRINT_INFO(_imsi);
+	//DEBUG_PRINT_INFO("/{topic}");
+	//DEBUG_PRINT_INFO(topic);
+	//DEBUG_PRINT_INFO("/{valueType} %dsn-", valueType);
 	
 	_ioStream.write((uint8_t*)myPayload, myStrLen); /* TODO: add error handling */
     //_ioStream.flush();
