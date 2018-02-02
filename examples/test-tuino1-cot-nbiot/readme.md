@@ -13,9 +13,9 @@ Please check the following things before you try to compile any of the examples:
 * Make sure to always select the appropriate Board support in Arduino before compilation.
 
 -------------------------------------------------------------------------------
-## Prerequisits
+## Prerequisites
 
-The following prerequisits are neccesary to run this example:
+The following prerequisites are neccesary to run this example:
 * [Gimasi Tuino1](http://www.tuino.io/)
 * Gimasi NB-IoT module (based on Quectel BC95)
 * NB-IoT compatible SIM card
