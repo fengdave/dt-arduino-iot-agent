@@ -2,13 +2,10 @@
  * @file test-huzzah-mqtt.ino
  * @description Simple Demo for CoT Library using MQTT
  * PLEASE NOTE: Because MQTT endpoint at CoT is not available at the moment this example can be used e.g. with adafruit mqtt broker
- * @author Lyn Matten
- * @copyright (C) 2018 mm1 Technology GmbH - all rights reserved. 
+ * @author mm1 Technology GmbH
+ * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  * 
- * Find out more about mm1 Technology:
- * Company: http://mm1-technology.de/
- * GitHub:  https://github.com/mm1technology/
  */
 /** Cloud-based blinker
 

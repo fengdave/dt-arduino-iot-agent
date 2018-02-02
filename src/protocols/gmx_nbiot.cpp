@@ -1,21 +1,13 @@
-/* _____  _____  __  __             _____  _____
-  / ____||_   _||  \/  |    /\     / ____||_   _|
-  | |  __   | |  | \  / |   /  \   | (___    | |
-  | | |_ |  | |  | |\/| |  / /\ \   \___ \   | |
-  | |__| | _| |_ | |  | | / ____ \  ____) | _| |_
-  \_____||_____||_|  |_|/_/    \_\|_____/ |_____|
-  (c) 2017 GIMASI SA
+/**
+ * @file gmx_nbiot.cpp
+ * @description ST command based Driver für NB-IoT modules
+ * @author mm1 Technology GmbH
+ * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @licence MIT licence
+ * Based on the GIMASI Drivers Version 1.1 from July 27, 2017 from https://github.com/gimasi/GMX-NBIOT
+ */
 
-   gmx_nbiot.cpp
-
-    Created on: July 27, 2017
-        Author: Massimo Santoli
-        Brief: Tuino 1 interface for GMX-NB module family
-        Version: 1.1
-
-        License: it's free - do whatever you want! ( provided you leave the credits)
-
-*/
+ 
 
 #include "DTCOTSetup.h"
 #include "utility/DTCoTDebugOutput.h"

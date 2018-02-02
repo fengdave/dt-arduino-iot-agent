@@ -1,4 +1,10 @@
-
+/**
+ * @file DTCotDebugOutput.cpp
+ * @description Central debug output file
+ * @author mm1 Technology GmbH
+ * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @licence MIT licence
+ */
 #include <stdarg.h>
 
 #include "DTCoTDebugOutput.h"

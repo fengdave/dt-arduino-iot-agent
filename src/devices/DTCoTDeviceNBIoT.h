@@ -2,13 +2,9 @@
  * @file DTCoTDeviceNBIoT.h
  * @description Basic setup and protocol to interact 
  * with the Deutsche Telekom Cloud of things MQTT-SN connector.
- * @author Andreas Krause
- * @copyright (C) 2018 mm1 Technology GmbH - all rights reserved. 
+ * @author mm1 Technology GmbH
+ * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
- * 
- * Find out more about mm1 Technology:
- * Company: http://mm1-technology.de/
- * GitHub:  https://github.com/mm1technology/
  */
 
 #ifndef DT_COT_DEVICE_NBIOT_HEADER_FILE
