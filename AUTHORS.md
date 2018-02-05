@@ -10,7 +10,7 @@ __Developed by mm1 Technology GmbH on behalf of Deutsche Telekom AG__
 
 Special Thanks To
 
-* Patrik John - Intern
+* Patrik John - Developer
 
 __Find out more about mm1 Technology:__  
 Company: http://mm1-technology.de/  
