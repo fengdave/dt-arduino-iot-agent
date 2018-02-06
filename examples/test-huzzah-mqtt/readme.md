@@ -28,3 +28,8 @@ The following prerequisites are neccesary to run this example:
 * Make sure to select the correct serial interface (menu: Tools->Port...). If you can't find your Adafruit HUZZAH ESP8266 there check the connection between the board and your computer.
 * Compile and flash the sketch onto the board.
 * Open the serial monitor to see the device's activity (menu Tools->Serial Monitor)
+
+-------------------------------------------------------------------------------
+## Sleep Mode
+
+Huzzah comes with a (poor man's) sleep mode, [which is described here](Testing-HUZZAH-Sleep-Mode.md).
