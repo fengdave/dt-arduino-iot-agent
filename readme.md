@@ -12,16 +12,7 @@ The Arduino IDE needs additional setup and configuration steps to be ready for
 the Cloud Of Things Arduino Library. [Click here for the setup guide!](./arduino_setup.md)
 
 -------------------------------------------------------------------------------
-## [Cloud Of Things Arduino Lib Sources](src/readme.md)
-The library features are described [here](src/readme.md). The sources of the Cloud of Things library can be found in 
-
-Arduino/libraries/dt-cot-arduino-library/src/
-
--------------------------------------------------------------------------------
-## [Usage Examples For The Cloud Of Things Arduino Lib](examples/readme.md)
-The example are described [here](examples/readme.md). The Cloud of Things example implementations can be found in 
-
-Arduino/libraries/dt-cot-arduino-library/examples/
+## [Doxygen Documentation](doxy/index.html)
 
 -------------------------------------------------------------------------------
 ## [Authors](./AUTHORS.md)
