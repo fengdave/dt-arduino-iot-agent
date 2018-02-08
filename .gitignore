@@ -3,3 +3,7 @@ CMakeLists.txt
 .idea
 cmake-build-debug
 secrets.h
+.cproject
+.project
+.pydevproject
+add_filenames_to_comments.py
