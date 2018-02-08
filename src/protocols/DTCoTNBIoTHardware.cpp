@@ -32,6 +32,7 @@ void DTCoTNBIoTHardware_reset(int resetPin);
 
 void(*_NBRing)();
 
+/*
 // Register interrupt. Not every board supports every sort of interrupt.
 ISR(PCINT1_vect) {
   if (digitalRead(GMX_INT) == 0) {
@@ -39,7 +40,7 @@ ISR(PCINT1_vect) {
       _NBRing();
   }
 }
-
+*/
 
 
 
