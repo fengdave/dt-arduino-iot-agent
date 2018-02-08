@@ -1,5 +1,5 @@
 /**
- * @file mm1MqttSn.cpp
+ * @file DTCoTMqttSn.cpp
  * @description DT CoT specific MQTT-SN layer
  * @author mm1 Technology GmbH
  * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
@@ -12,13 +12,13 @@
 
 #include <Arduino.h>
 
-#include "mm1MqttSn.h"
+#include "DTCoTMqttSn.h"
 #include "utility/DTCoTDebugOutput.h"
 
-/* MM1MqttSn Library Header File */
+/* DTCoTMqttSn Library Header File */
 /* TODO: make sure platform-dependent WiFi header file is selected */
 
-MM1MqttSn::MM1MqttSn( const char* imsi
+DTCoTMqttSn::DTCoTMqttSn( const char* imsi
   , unsigned short brokerPort, const char* password
   , Client& ioStream ) 
   : _clientId( String(String(imsi) + String(password)))
@@ -29,21 +29,21 @@ MM1MqttSn::MM1MqttSn( const char* imsi
   { }
 
 /**
- * \brief bool MM1MqttSn::init()
+ * \brief bool DTCoTMqttSn::init()
  * 
  * Add more sophisticated error handling ( getLastError()? )
  * 
  * \return false on error and true if init was successful
 */
-bool MM1MqttSn::init() {
-	DEBUG_PRINT_INFO("DBG: MM1MqttSn::init()" );
+bool DTCoTMqttSn::init() {
+	DEBUG_PRINT_INFO("DBG: DTCoTMqttSn::init()" );
 	//MQTTSN::searchgw( HOPS_TO_SEARCH_GATEWAY);
 }
 
 
-int MM1MqttSn::connect(const uint8_t flags, const uint16_t duration) {
+int DTCoTMqttSn::connect(const uint8_t flags, const uint16_t duration) {
 		
-	DEBUG_PRINT_INFO("BG: MM1MqttSn::connect() with clientId: ");
+	DEBUG_PRINT_INFO("BG: DTCoTMqttSn::connect() with clientId: ");
 	DEBUG_PRINT_INFO(_clientId);
 	
 	_ioStream.connect("",0); /* FIXME: Dummy values because of virtual definition of function */
@@ -51,28 +51,28 @@ int MM1MqttSn::connect(const uint8_t flags, const uint16_t duration) {
 	MQTTSN::connect(flags, duration, _clientId.c_str());
 	
 	while(waiting_for_response) {
-		DEBUG_PRINT_INFO("MM1MqttSn::connect() - calling parse_stream()");
+		DEBUG_PRINT_INFO("DTCoTMqttSn::connect() - calling parse_stream()");
 		parse_stream();
     }
 	
-	DEBUG_PRINT_INFO("BG: MM1MqttSn::connect() Response: ");
+	DEBUG_PRINT_INFO("BG: DTCoTMqttSn::connect() Response: ");
 	DEBUG_PRINT_INFO((char*)response_buffer);
 	
 		return 0;
 		
 }
 	
-String MM1MqttSn::connectErrorString(int error){
+String DTCoTMqttSn::connectErrorString(int error){
 	
-	return "DBG: MM1MqttSn::connectErrorString() Error: " + String(error);
-	
-}
-
-void MM1MqttSn::disconnect() {
+	return "DBG: DTCoTMqttSn::connectErrorString() Error: " + String(error);
 	
 }
 
-bool MM1MqttSn::publish( 
+void DTCoTMqttSn::disconnect() {
+	
+}
+
+bool DTCoTMqttSn::publish(
   int topicId
   , const void* value
   ) {
@@ -85,25 +85,25 @@ bool MM1MqttSn::publish(
   MQTTSN::publish( tmpFlags, topicId, value, dataLen);
   
   while(waiting_for_response) {
-		DEBUG_PRINT_INFO("MM1MqttSn::publish() - calling parse_stream()");
+		DEBUG_PRINT_INFO("DTCoTMqttSn::publish() - calling parse_stream()");
 		trialCounter++;
 		parse_stream();
-		DEBUG_PRINT_INFO("MM1MqttSn::publish() - trialCounter: %d", trialCounter);
+		DEBUG_PRINT_INFO("DTCoTMqttSn::publish() - trialCounter: %d", trialCounter);
 		if(trialCounter > 2) {
 			waiting_for_response = false;
 		}
     }
 	
-	DEBUG_PRINT_INFO("BG: MM1MqttSn::publish() Response: ");
+	DEBUG_PRINT_INFO("BG: DTCoTMqttSn::publish() Response: ");
 	DEBUG_PRINT_INFO((char*)response_buffer);
 	
   return true;  
 }
 
 
-int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
+int DTCoTMqttSn::RegisterTopicDTCoT(String topic, char valueType) {
 	
-	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT: topic: " + topic);
+	DEBUG_PRINT_INFO("DTCoTMqttSn::RegisterTopicDTCoT: topic: " + topic);
 	DEBUG_PRINT_INFO(" - valueType: %c", valueType);
 	
 	/*                               len   type  topicId     msgId*/
@@ -123,7 +123,7 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
   	/*FIXME this payload length treatment doesn't work for sizes (>127)!*/
   	myPayload[0] = (char)myStrLen;
 	
-	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT(): Payload: NBIoT/{_imsi}%s/{topic}"+topic+"/{valueType}%c ",_imsi, valueType);
+	DEBUG_PRINT_INFO("DTCoTMqttSn::RegisterTopicDTCoT(): Payload: NBIoT/{_imsi}%s/{topic}"+topic+"/{valueType}%c ",_imsi, valueType);
 	
 	
 	_ioStream.write((uint8_t*)myPayload, myStrLen); /* TODO: add error handling */
@@ -132,7 +132,7 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
     readChars = _ioStream.read((byte*)myPayload, myStrLen);
 	if( readChars <= 0 )
   {
-    DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT(): Err CoT connection failed.");
+    DEBUG_PRINT_INFO("DTCoTMqttSn::RegisterTopicDTCoT(): Err CoT connection failed.");
   }
   else
   {
@@ -164,8 +164,8 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
 	
 }
 
-void MM1MqttSn::gwinfo_handler( const msg_gwinfo* msg) {
-	DEBUG_PRINT_INFO( "DBG: MM1MqttSn::gwinfo_handler(): GW ID: "
+void DTCoTMqttSn::gwinfo_handler( const msg_gwinfo* msg) {
+	DEBUG_PRINT_INFO( "DBG: DTCoTMqttSn::gwinfo_handler(): GW ID: "
 		+ String( msg->gw_id) );
 
 	MQTTSN::gwinfo_handler( msg);
@@ -175,29 +175,29 @@ void MM1MqttSn::gwinfo_handler( const msg_gwinfo* msg) {
      , CLIENT_ID );
 }
 
-void MM1MqttSn::advertise_handler(const msg_advertise* msg) {
-	DEBUG_PRINT_INFO( "DBG: MM1MqttSn::advertise_handler(): GW ID: "
+void DTCoTMqttSn::advertise_handler(const msg_advertise* msg) {
+	DEBUG_PRINT_INFO( "DBG: DTCoTMqttSn::advertise_handler(): GW ID: "
 		+ String( msg->gw_id) );
 
 	MQTTSN::advertise_handler( msg);
 }
 
-void MM1MqttSn::disconnect_handler(const msg_disconnect* msg) {
+void DTCoTMqttSn::disconnect_handler(const msg_disconnect* msg) {
 	MQTTSN::disconnect_handler( msg);
 
-	DEBUG_PRINT_INFO("DBG: MM1MqttSn::disconnect_handler()" );
+	DEBUG_PRINT_INFO("DBG: DTCoTMqttSn::disconnect_handler()" );
 }
 
-void MM1MqttSn::willtopicreq_handler(const message_header* msg) { 
-	DEBUG_PRINT_INFO("DBG: MM1MqttSn::willtopicreq_handler()" );
+void DTCoTMqttSn::willtopicreq_handler(const message_header* msg) {
+	DEBUG_PRINT_INFO("DBG: DTCoTMqttSn::willtopicreq_handler()" );
 	MQTTSN::willtopicreq_handler( msg);
 
 	const uint8_t WILL_TOPIC_FLAGS =  0;
    willtopic( WILL_TOPIC_FLAGS, "Will: " CLIENT_ID);
 }
 
-void MM1MqttSn::willmsgreq_handler(const message_header* msg) { 
-	DEBUG_PRINT_INFO("DBG: MM1MqttSn::willtopicreq_handler()" );
+void DTCoTMqttSn::willmsgreq_handler(const message_header* msg) {
+	DEBUG_PRINT_INFO("DBG: DTCoTMqttSn::willtopicreq_handler()" );
 	MQTTSN::willmsgreq_handler( msg);
 
 	const char* millMsg = "See you next time";

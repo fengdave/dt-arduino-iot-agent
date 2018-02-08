@@ -7,3 +7,4 @@ secrets.h
 .project
 .pydevproject
 add_filenames_to_comments.py
+src/DTCoTSetup.h

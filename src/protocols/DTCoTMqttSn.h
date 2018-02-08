@@ -1,13 +1,15 @@
 /**
- * @file mm1MqttSn.h
+ * @file DTCoTMqttSn.h
  * @description header file for DT CoT specific MQTT-SN layer
  * @author mm1 Technology GmbH
  * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
+ *
+ * dtcotmqttsn
  */
 
-#ifndef MM1_MQTTSN_HEADER_FILE
-#define MM1_MQTTSN_HEADER_FILE
+#ifndef DTCOT_MQTTSN_HEADER_FILE
+#define DTCOT_MQTTSN_HEADER_FILE
 
 #include "DTCOTSetup.h"
 
@@ -16,13 +18,13 @@
 #include <Arduino.h>
 #include <Client.h>
 
-#include "mm1MqttSnClientSettings.h"
+#include "DTCoTMqttSnClientSettings.h"
 #include "mqttsn-messages.h"
 
 /**
- * MM1's impementation of the MQTT-SN protocol
+ * DTCOT's impementation of the MQTT-SN protocol
  */
-class MM1MqttSn: public MQTTSN {
+class DTCoTMqttSn: public MQTTSN {
 public:
 
    /**
@@ -32,14 +34,14 @@ public:
     * @param ioStream standard Arduino communications Client to use (ie WiFi)
     * @param password password for the connection
     */
-  MM1MqttSn( const char* clientId
+  DTCoTMqttSn( const char* clientId
 	, unsigned short brokerPort
 	, const char* password
 	, Client& ioStream );
 
 public:
 	/**
-	 * Start MM1's MQTT-SN interface
+	 * Start DTCoT's MQTT-SN interface
 	 */
   bool init();
 
@@ -102,4 +104,4 @@ private:
 
 #endif
 
-#endif /* MM1_MQTTSN_HEADER_FILE */
+#endif /* DTCOT_MQTTSN_HEADER_FILE */

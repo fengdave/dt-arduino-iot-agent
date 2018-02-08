@@ -16,7 +16,7 @@
 #include "DTCoTPrivate.h"
 #include "base-classes/DTCoTCommunicationBase.h"
 #include "protocols/NbIoTClient.h"
-#include "protocols/mm1MqttSn.h"
+#include "../protocols/DTCoTMqttSn.h"
 
 
 namespace DTCoT {
@@ -69,7 +69,7 @@ private:
 	
 private:	
 	//NbiotClient nbiotClient;
-	MM1MqttSn mqttsn;
+	DTCoTMqttSn mqttsn;
 };
 
 }

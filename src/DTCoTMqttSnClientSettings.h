@@ -1,5 +1,5 @@
 /**
- * @file mm1MqttSnClientSettings.h
+ * @file DTCoTMqttSnClientSettings.h
  * @description Basic setup and protocol to interact 
  * with the Deutsche Telekom Cloud of things MQTT-SN connector.
  * @author mm1 Technology GmbH
@@ -10,9 +10,8 @@
  /**
  * CHECK IF THIS FILE IS STILL NEEDED!!
  **/
-
-#ifndef MM1_MQTTSN_CLIENT_SETTINGS_HEADER_FILE
-#define MM1_MQTTSN_CLIENT_SETTINGS_HEADER_FILE
+#ifndef DTCOT_MQTTSN_CLIENT_SETTINGS_HEADER_FILE
+#define DTCOT_MQTTSN_CLIENT_SETTINGS_HEADER_FILE
 
 #define WIFI_SSID ""
 #define WIFI_PASSWORD ""
@@ -20,7 +19,7 @@
 #define WIFI_CONNECTION_RETRY_DELAY_MS 100
 
 #define BROADCAST_IP_ADDRESS "255.255.255.255"
-#define CLIENT_ID "mm1-test-client"
+#define CLIENT_ID "dtcot-test-client"
 #define MQTTSN_BROKER_PORT 1883
 #define MQTTSN_CLIENT_LOCAL_PORT 1055
 #define MQTTSN_CONNECTION_DURATION_MS 10000
@@ -31,4 +30,4 @@
 // #define USE_NETWORK_INTERFACE_WIFI 1
 // #define USE_NETWORK_INTERFACE_GPRS 1
 
-#endif /* MM1_MQTTSN_CLIENT_SETTINGS_HEADER_FILE */
+#endif /* DTCOT_MQTTSN_CLIENT_SETTINGS_HEADER_FILE */
