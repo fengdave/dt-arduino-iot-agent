@@ -15,14 +15,14 @@ Please check the following things before you try to compile any of the examples:
 ## Examples
 The following examples are available (click on the links below to learn more):
 
-### [Feather M0: MQTT over WiFi](dt-cot-feather-m0-mqtt-test/readme.md)
+### [Feather M0: MQTT over WiFi](dt-cot-feather-m0-mqtt-test/README.md)
 This example is an Arduino sketch that implements an MQTT client over WiFi on an Adafruit Feather M0. At the moment this example cannot yet access the DT CoT. Instead, it shows the access of the Adafruit IO MQTT service. 
 
-### [Feather M0: MQTT-SN over NB-IoT](test-feather-m0-ublox-cot-nbiot/readme.md)
+### [Feather M0: MQTT-SN over NB-IoT](test-feather-m0-ublox-cot-nbiot/README.md)
 This example is an Arduino sketch that implements an MQTT-SN client over Narrowband Internet of Things (NB-IoT) on an Adafruit Feather M0. 
 
-### [Huzzah: MQTT over WiFi](test-huzzah-mqtt/readme.md)
+### [Huzzah: MQTT over WiFi](test-huzzah-mqtt/README.md)
 This example is an Arduino sketch that implements an MQTT client over WiFi on a Huzzah ESP8266. At the moment this example cannot yet access the DT CoT. Instead, it shows the access of the Adafruit IO MQTT service. 
 
-### [Tuino1: MQTT-SN over NB-IoT](test-tuino1-cot-nbiot/readme.md)
+### [Tuino1: MQTT-SN over NB-IoT](test-tuino1-cot-nbiot/README.md)
 This example is an Arduino sketch that implements an MQTT-SN client over Narrowband Internet of Things (NB-IoT) on a Tuino1. 

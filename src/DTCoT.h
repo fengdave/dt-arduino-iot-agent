@@ -1,6 +1,6 @@
 /**
  * @file DTCoT.h
- * @description Header file for entral class for interaction with Telekom Cloud of Things
+ * @description Header file for central class for interaction with Telekom Cloud of Things
  * @author mm1 Technology GmbH
  * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
