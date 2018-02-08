@@ -3,7 +3,7 @@
  * @description MQTT-SN serializer / deserialiser 
  * with the Deutsche Telekom Cloud of things MQTT-SN connector.
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  * Based on the implementation from John Donovan from 2014 at https://bitbucket.org/MerseyViking/mqtt-sn-arduino.git
  */

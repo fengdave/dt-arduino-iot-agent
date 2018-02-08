@@ -1,9 +1,8 @@
 /**
  * @file mm1MqttSn.cpp
- * @description Basic setup and protocol to interact 
- * with the Deutsche Telekom Cloud of things MQTT-SN connector.
+ * @description DT CoT specific MQTT-SN layer
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  */
 
@@ -125,12 +124,7 @@ int MM1MqttSn::RegisterTopicDTCoT(String topic, char valueType) {
   	myPayload[0] = (char)myStrLen;
 	
 	DEBUG_PRINT_INFO("MM1MqttSn::RegisterTopicDTCoT(): Payload: NBIoT/{_imsi}%s/{topic}"+topic+"/{valueType}%c ",_imsi, valueType);
-	//DEBUG_PRINT_INFO("NBIoT/");, 
-	//DEBUG_PRINT_INFO("{_imsi}");
-	//DEBUG_PRINT_INFO(_imsi);
-	//DEBUG_PRINT_INFO("/{topic}");
-	//DEBUG_PRINT_INFO(topic);
-	//DEBUG_PRINT_INFO("/{valueType} %dsn-", valueType);
+	
 	
 	_ioStream.write((uint8_t*)myPayload, myStrLen); /* TODO: add error handling */
     //_ioStream.flush();

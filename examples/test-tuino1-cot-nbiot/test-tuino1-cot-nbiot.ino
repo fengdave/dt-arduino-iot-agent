@@ -3,7 +3,7 @@
  * @description Simple Demo
  * @description Simple Demo for CoT Library using NB-IoT
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  * 
  */

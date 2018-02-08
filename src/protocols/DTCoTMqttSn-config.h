@@ -1,9 +1,9 @@
 /**
  * @file DTCoTMqttSn-config.h
- * @description Basic setup and protocol to interact 
- * with the Deutsche Telekom Cloud of things MQTT-SN connector.
+ * @description Defines for supported message types for DT CoT via MQTT-SN
+ * State of January 2018
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  */
  
@@ -13,8 +13,8 @@
 
 /*Available topics (use with Mqttsn_RegisterTopic())*/
 #define MQTTSN_TOPIC_MEASUREMENT        "MES"
-#define MQTTSN_TOPIC_ALARM				"ALM" /* not supported by CoT at 01/2018 */
-#define MQTTSN_TOPIC_EVENT				"EVT" /* not supported by CoT at 01/2018 */
+#define MQTTSN_TOPIC_ALARM				"ALM" 
+#define MQTTSN_TOPIC_EVENT				"EVT" 
 
 /*Avialable measurement types (use with Mqttsn_RegisterTopic())*/
 #define MQTTSN_MEAS_TYPE_TEMPERATURE    '1'

@@ -1,9 +1,8 @@
 /**
  * @file DTCoTDeviceNBIoT.h
- * @description Basic setup and protocol to interact 
- * with the Deutsche Telekom Cloud of things MQTT-SN connector.
+ * @description header file for base class for management and operations for all NB-IoT devices 
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  */
 

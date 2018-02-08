@@ -1,8 +1,8 @@
 /**
  * @file gmx_nbiot.h
- * @description ST command based Driver für NB-IoT modules
+ * @description Header file for AT command based Driver für NB-IoT modules
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  * Based on the GIMASI Drivers Version 1.1 from July 27, 2017 from https://github.com/gimasi/GMX-NBIOT
  */

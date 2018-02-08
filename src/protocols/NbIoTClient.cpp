@@ -1,8 +1,8 @@
 /**
  * @file NbiotClient.cpp
- * @description Network interface of an NB-IoT Modem.
+ * @description Abstracted Network interface of an NB-IoT Modem.
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  * 
  * Code pieces based on Arduino WiFiClient and GIMASI TUINO example project(s):

@@ -3,7 +3,7 @@
  * @description Simple Demo for CoT Library using MQTT
  * PLEASE NOTE: Because MQTT endpoint at CoT is not available at the moment this example can be used e.g. with adafruit mqtt broker
  * @author mm1 Technology GmbH
- * @copyright (C) 2018 Deutsche Telekom AG- all rights reserved. 
+ * @copyright (C) 2017-2018 Deutsche Telekom AG- all rights reserved. 
  * @licence MIT licence
  * 
  */
