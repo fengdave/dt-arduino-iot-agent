@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['wifi',['WIFI',['../_d_t_co_t_setup_8h.html#a14ed8168071c3bb8602b38ecb1b28178',1,'DTCoTSetup.h']]],
-  ['write',['write',['../class_nbiot_client.html#a701e98f89357a6d8accdfff87b13a8eb',1,'NbiotClient::write(uint8_t)'],['../class_nbiot_client.html#ae4886137093f6ded8c160bbd410a590b',1,'NbiotClient::write(const uint8_t *buf, size_t size)']]]
+  ['usage_20examples_20for_20the_20cloud_20of_20things_20arduino_20library',['Usage Examples For The Cloud Of Things Arduino Library',['../md_examples__r_e_a_d_m_e.html',1,'']]]
 ];

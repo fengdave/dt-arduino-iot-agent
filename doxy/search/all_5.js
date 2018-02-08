@@ -10,5 +10,5 @@ var searchData=
   ['gmx_5fnbiot_2ecpp',['gmx_nbiot.cpp',['../gmx__nbiot_8cpp.html',1,'']]],
   ['gmx_5fnbiot_2eh',['gmx_nbiot.h',['../gmx__nbiot_8h.html',1,'']]],
   ['gmxnb_5fsocketopen',['gmxNB_SocketOpen',['../gmx__nbiot_8cpp.html#a1d971132330db8a60e23772fe04cd01c',1,'gmxNB_SocketOpen(void):&#160;gmx_nbiot.cpp'],['../gmx__nbiot_8h.html#a1d971132330db8a60e23772fe04cd01c',1,'gmxNB_SocketOpen(void):&#160;gmx_nbiot.cpp']]],
-  ['gwinfo_5fhandler',['gwinfo_handler',['../class_m_m1_mqtt_sn.html#a805e5f49a48fc7aff1908bb2a8b6015f',1,'MM1MqttSn']]]
+  ['gwinfo_5fhandler',['gwinfo_handler',['../class_d_t_co_t_mqtt_sn.html#a05b73ef9ec8bd1e9f1abb8a4cec9b136',1,'DTCoTMqttSn']]]
 ];

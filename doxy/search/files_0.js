@@ -32,8 +32,10 @@ var searchData=
   ['dtcotextensioniface_2ecpp',['DTCoTExtensionIface.cpp',['../_d_t_co_t_extension_iface_8cpp.html',1,'']]],
   ['dtcotextensioniface_2eh',['DTCoTExtensionIface.h',['../_d_t_co_t_extension_iface_8h.html',1,'']]],
   ['dtcotmqttsn_2dconfig_2eh',['DTCoTMqttSn-config.h',['../_d_t_co_t_mqtt_sn-config_8h.html',1,'']]],
+  ['dtcotmqttsn_2ecpp',['DTCoTMqttSn.cpp',['../_d_t_co_t_mqtt_sn_8cpp.html',1,'']]],
+  ['dtcotmqttsn_2eh',['DTCoTMqttSn.h',['../_d_t_co_t_mqtt_sn_8h.html',1,'']]],
+  ['dtcotmqttsnclientsettings_2eh',['DTCoTMqttSnClientSettings.h',['../_d_t_co_t_mqtt_sn_client_settings_8h.html',1,'']]],
   ['dtcotnbiothardware_2eh',['DTCoTNBIoTHardware.h',['../_d_t_co_t_n_b_io_t_hardware_8h.html',1,'']]],
   ['dtcotprivate_2ecpp',['DTCoTPrivate.cpp',['../_d_t_co_t_private_8cpp.html',1,'']]],
-  ['dtcotprivate_2eh',['DTCoTPrivate.h',['../_d_t_co_t_private_8h.html',1,'']]],
-  ['dtcotsetup_2eh',['DTCoTSetup.h',['../_d_t_co_t_setup_8h.html',1,'']]]
+  ['dtcotprivate_2eh',['DTCoTPrivate.h',['../_d_t_co_t_private_8h.html',1,'']]]
 ];

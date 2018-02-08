@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_20bool',['operator bool',['../class_nbiot_client.html#add147b68fb30d0862f5b2ab8d7eeac9a',1,'NbiotClient']]]
+  ['publish',['publish',['../class_d_t_co_t_mqtt_sn.html#aa4510cd5a92f1e9a70251109c1095547',1,'DTCoTMqttSn']]]
 ];

@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['connect',['connect',['../class_m_m1_mqtt_sn.html#a4367f885c510363d7497ef481f6b649c',1,'MM1MqttSn::connect()'],['../class_nbiot_client.html#aaf25f398f2073cc5df086b44a358f7a4',1,'NbiotClient::connect(IPAddress ip, uint16_t port)'],['../class_nbiot_client.html#ae8ce79efb2d27b145cfdd2f63277e922',1,'NbiotClient::connect(const char *host, uint16_t port)']]],
+  ['connect',['connect',['../class_d_t_co_t_mqtt_sn.html#a48d3bfd5045c7e022912f15fc4ed7f4d',1,'DTCoTMqttSn::connect()'],['../class_nbiot_client.html#aaf25f398f2073cc5df086b44a358f7a4',1,'NbiotClient::connect(IPAddress ip, uint16_t port)'],['../class_nbiot_client.html#ae8ce79efb2d27b145cfdd2f63277e922',1,'NbiotClient::connect(const char *host, uint16_t port)']]],
   ['connected',['connected',['../class_nbiot_client.html#ad0ca190549817f0a2cf3e84b76829373',1,'NbiotClient']]],
-  ['connecterrorstring',['connectErrorString',['../class_m_m1_mqtt_sn.html#aa050b1d50da7f5f2edcdaa73d9192c4a',1,'MM1MqttSn']]],
+  ['connecterrorstring',['connectErrorString',['../class_d_t_co_t_mqtt_sn.html#a891b6f328c6d37e7437c80881a4381cc',1,'DTCoTMqttSn']]],
   ['cotauthbase',['CoTAuthBase',['../class_d_t_co_t_1_1_co_t_auth_base.html',1,'DTCoT']]],
   ['cotauthfingerprint',['CoTAuthFingerPrint',['../class_d_t_co_t_1_1_co_t_auth_finger_print.html',1,'DTCoT']]],
   ['cotauthnone',['CoTAuthNone',['../class_d_t_co_t_1_1_co_t_auth_none.html',1,'DTCoT']]],
@@ -35,5 +35,6 @@ var searchData=
   ['cotdevicehuzzah',['CoTDeviceHUZZAH',['../class_d_t_co_t_1_1_co_t_device_h_u_z_z_a_h.html',1,'DTCoT']]],
   ['cotdevicenbiot',['CoTDeviceNBIoT',['../class_d_t_co_t_1_1_co_t_device_n_b_io_t.html',1,'DTCoT']]],
   ['cotdevicewifi',['CoTDeviceWiFi',['../class_d_t_co_t_1_1_co_t_device_wi_fi.html',1,'DTCoT']]],
-  ['cloud_20of_20things_20library',['Cloud Of Things Library',['../md_src_readme.html',1,'']]]
+  ['contributors',['Contributors',['../md__a_u_t_h_o_r_s.html',1,'']]],
+  ['cloud_20of_20things_20library',['Cloud Of Things Library',['../md_src__r_e_a_d_m_e.html',1,'']]]
 ];

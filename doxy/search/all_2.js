@@ -2,7 +2,7 @@ var searchData=
 [
   ['debug_5flevel',['DEBUG_LEVEL',['../_d_t_co_t_debug_output_8h.html#ac2d33ccaf63f5d5b66552b95426c0137',1,'DTCoTDebugOutput.h']]],
   ['debug_5fprintf',['debug_printf',['../_d_t_co_t_debug_output_8cpp.html#a60e9784ce5cbff816926777070f8bf07',1,'debug_printf(String format,...):&#160;DTCoTDebugOutput.cpp'],['../_d_t_co_t_debug_output_8h.html#a60e9784ce5cbff816926777070f8bf07',1,'debug_printf(String format,...):&#160;DTCoTDebugOutput.cpp']]],
-  ['disconnect',['disconnect',['../class_m_m1_mqtt_sn.html#a7926ed8743cea3e21e3f464861bb36a9',1,'MM1MqttSn']]],
+  ['disconnect',['disconnect',['../class_d_t_co_t_mqtt_sn.html#a6468afb84aa6ae77751683916b1942ef',1,'DTCoTMqttSn']]],
   ['dtcot_2ecpp',['DTCoT.cpp',['../_d_t_co_t_8cpp.html',1,'']]],
   ['dtcot_2eh',['DTCoT.h',['../_d_t_co_t_8h.html',1,'']]],
   ['dtcotcommunicationbase_2eh',['DTCoTCommunicationBase.h',['../_d_t_co_t_communication_base_8h.html',1,'']]],
@@ -34,11 +34,15 @@ var searchData=
   ['dtcotdevicewifi_2eh',['DTCoTDeviceWiFi.h',['../_d_t_co_t_device_wi_fi_8h.html',1,'']]],
   ['dtcotextensioniface_2ecpp',['DTCoTExtensionIface.cpp',['../_d_t_co_t_extension_iface_8cpp.html',1,'']]],
   ['dtcotextensioniface_2eh',['DTCoTExtensionIface.h',['../_d_t_co_t_extension_iface_8h.html',1,'']]],
+  ['dtcotmqttsn',['DTCoTMqttSn',['../class_d_t_co_t_mqtt_sn.html',1,'DTCoTMqttSn'],['../class_d_t_co_t_mqtt_sn.html#a3501491c885ee533d1daeb177b37fa19',1,'DTCoTMqttSn::DTCoTMqttSn()']]],
   ['dtcotmqttsn_2dconfig_2eh',['DTCoTMqttSn-config.h',['../_d_t_co_t_mqtt_sn-config_8h.html',1,'']]],
+  ['dtcotmqttsn_2ecpp',['DTCoTMqttSn.cpp',['../_d_t_co_t_mqtt_sn_8cpp.html',1,'']]],
+  ['dtcotmqttsn_2eh',['DTCoTMqttSn.h',['../_d_t_co_t_mqtt_sn_8h.html',1,'']]],
+  ['dtcotmqttsnclientsettings_2eh',['DTCoTMqttSnClientSettings.h',['../_d_t_co_t_mqtt_sn_client_settings_8h.html',1,'']]],
   ['dtcotnbiothardware_2eh',['DTCoTNBIoTHardware.h',['../_d_t_co_t_n_b_io_t_hardware_8h.html',1,'']]],
   ['dtcotnbiothardware_5finit',['DTCoTNBIoTHardware_init',['../_d_t_co_t_n_b_io_t_hardware_8h.html#ae9ee8daf8a18df8a6a3ae28cab234422',1,'DTCoTNBIoTHardware.cpp']]],
   ['dtcotnbiothardware_5fled',['DTCoTNBIoTHardware_led',['../_d_t_co_t_n_b_io_t_hardware_8h.html#aa9695c80a4143658917419badee9b160',1,'DTCoTNBIoTHardware.cpp']]],
   ['dtcotprivate_2ecpp',['DTCoTPrivate.cpp',['../_d_t_co_t_private_8cpp.html',1,'']]],
   ['dtcotprivate_2eh',['DTCoTPrivate.h',['../_d_t_co_t_private_8h.html',1,'']]],
-  ['dtcotsetup_2eh',['DTCoTSetup.h',['../_d_t_co_t_setup_8h.html',1,'']]]
+  ['deutsche_20telekom_20cloud_20of_20things_20arduino_20library',['Deutsche Telekom Cloud Of Things Arduino Library',['../md__r_e_a_d_m_e.html',1,'']]]
 ];

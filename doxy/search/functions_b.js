@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['read',['read',['../class_nbiot_client.html#a5db9816edac5cf034b7082676feb0dee',1,'NbiotClient::read()'],['../class_nbiot_client.html#a2218792c26e262ac3d3854c1dbe60211',1,'NbiotClient::read(uint8_t *buf, size_t size)']]],
-  ['registertopicdtcot',['RegisterTopicDTCoT',['../class_m_m1_mqtt_sn.html#a49e9a3a540aafa82aee60c5f0483f73c',1,'MM1MqttSn']]]
+  ['status',['status',['../class_nbiot_client.html#a7c0310dfc113ecac0748dad1a474f6fb',1,'NbiotClient']]],
+  ['stop',['stop',['../class_nbiot_client.html#ac6c3a4c9bdcb80e8e14cf6a6caf72ca5',1,'NbiotClient']]]
 ];

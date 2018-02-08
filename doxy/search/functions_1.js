@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['connect',['connect',['../class_m_m1_mqtt_sn.html#a4367f885c510363d7497ef481f6b649c',1,'MM1MqttSn::connect()'],['../class_nbiot_client.html#aaf25f398f2073cc5df086b44a358f7a4',1,'NbiotClient::connect(IPAddress ip, uint16_t port)'],['../class_nbiot_client.html#ae8ce79efb2d27b145cfdd2f63277e922',1,'NbiotClient::connect(const char *host, uint16_t port)']]],
+  ['connect',['connect',['../class_d_t_co_t_mqtt_sn.html#a48d3bfd5045c7e022912f15fc4ed7f4d',1,'DTCoTMqttSn::connect()'],['../class_nbiot_client.html#aaf25f398f2073cc5df086b44a358f7a4',1,'NbiotClient::connect(IPAddress ip, uint16_t port)'],['../class_nbiot_client.html#ae8ce79efb2d27b145cfdd2f63277e922',1,'NbiotClient::connect(const char *host, uint16_t port)']]],
   ['connected',['connected',['../class_nbiot_client.html#ad0ca190549817f0a2cf3e84b76829373',1,'NbiotClient']]],
-  ['connecterrorstring',['connectErrorString',['../class_m_m1_mqtt_sn.html#aa050b1d50da7f5f2edcdaa73d9192c4a',1,'MM1MqttSn']]],
+  ['connecterrorstring',['connectErrorString',['../class_d_t_co_t_mqtt_sn.html#a891b6f328c6d37e7437c80881a4381cc',1,'DTCoTMqttSn']]],
   ['cotcloud',['CoTCloud',['../class_d_t_co_t_1_1_co_t_cloud.html#aa3604ff59d102f468306737ff2aaf6ca',1,'DTCoT::CoTCloud']]],
   ['cotcommunicationbase',['CoTCommunicationBase',['../class_d_t_co_t_1_1_co_t_communication_base.html#a46f666c4db4c8f1f62567e5153d010e6',1,'DTCoT::CoTCommunicationBase']]],
   ['cotconfigcommunicationmqtt',['CoTConfigCommunicationMQTT',['../class_d_t_co_t_1_1_co_t_config_communication_m_q_t_t.html#afc8016b5c4ad69bb2cb533e021ccd987',1,'DTCoT::CoTConfigCommunicationMQTT']]],
