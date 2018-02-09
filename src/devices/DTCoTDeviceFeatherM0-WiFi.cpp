@@ -6,7 +6,7 @@
  * @licence MIT licence
  */
 
-#include "DTCoTDeviceFeatherM0-WiFi.h"
+#include "DTCoTDeviceFeatherM0-WIFI.h"
 
 #include "utility/DTCoTDebugOutput.h"
 

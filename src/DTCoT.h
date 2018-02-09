@@ -26,7 +26,7 @@
 
 #elif defined(NB_IOT_ENABLED)
 
-	#include "devices/DTCoTDeviceNBioT.h"
+	#include "devices/DTCoTDeviceNBIoT.h"
 
 
 #elif defined(GSM_ENABLED)

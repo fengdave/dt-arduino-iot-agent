@@ -16,7 +16,7 @@
 #include "DTCoTPrivate.h"
 #include "base-classes/DTCoTCommunicationBase.h"
 #include "protocols/NbIoTClient.h"
-#include "../protocols/DTCoTMqttSn.h"
+#include "protocols/DTCoTMqttSn.h"
 
 
 namespace DTCoT {

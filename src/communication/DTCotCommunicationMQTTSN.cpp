@@ -10,7 +10,7 @@
 
 #ifdef COMMUNICATION_MQTTSN
 
-#include "DTCoTCommunicationMQTTSN.h"
+#include "DTCotCommunicationMQTTSN.h"
 #include "base-classes/DTCoTCommunicationBase.h"
 #include "base-classes/DTCoTDeviceBase.h"
 #include "devices/DTCoTDeviceNBIoT.h"
