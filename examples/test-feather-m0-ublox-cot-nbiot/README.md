@@ -29,6 +29,6 @@ The following prerequisites are neccesary to run this example:
 * Make sure to select "Adafruit Feather M0" board support in Arduino before compilation (menu: Tools->Board->"Adafruit Feather M0"). If you can't find the board [please re-check your Arduino IDE setup](../../arduino_setup.md).
 * Make sure to select the correct serial interface (menu: Tools->Port...). If you can't find your Adafruit Feather M0 there check the connection between the board and your computer.
 * Make sure to have a valid SIM card in the NB-IoT modem.
-* [Connect the NB-IoT modem to the Adafruit Feather M0, as shown here](../../doc/18_02_01QuickstartGuide_EVKN2_Feather_TNX.pdf).
+* [Connect the NB-IoT modem to the Adafruit Feather M0, as shown here](../../QuickstartGuide_EVKN2_Feather.md).
 * Compile and flash the sketch onto the board.
 * Open the serial monitor to see the device's activity (menu Tools->Serial Monitor)
