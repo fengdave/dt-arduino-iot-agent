@@ -9,7 +9,7 @@
 
  
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 #include "utility/DTCoTDebugOutput.h"
 
 #if CONN_TYPE == NB_IOT

@@ -9,7 +9,7 @@
 #ifndef MQTTSNCommunication_h_
 #define MQTTSNCommunication_h_
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #ifdef COMMUNICATION_MQTTSN
 

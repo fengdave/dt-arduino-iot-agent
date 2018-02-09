@@ -6,7 +6,7 @@
  * @licence MIT licence
  */
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #ifdef COMMUNICATION_MQTT
 

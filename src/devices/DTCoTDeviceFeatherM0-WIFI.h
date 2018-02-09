@@ -11,7 +11,7 @@
 #define DT_COT_DEVICE_FEATHER_M0_WIFI_HEADER_FILE
 
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #include "DTCoTPrivate.h"
 #include "DTCoTDeviceWiFi.h"

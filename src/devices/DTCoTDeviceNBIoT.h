@@ -9,7 +9,7 @@
 #ifndef DT_COT_DEVICE_NBIOT_HEADER_FILE
 #define DT_COT_DEVICE_NBIOT_HEADER_FILE
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #if CONN_TYPE == NB_IOT
 

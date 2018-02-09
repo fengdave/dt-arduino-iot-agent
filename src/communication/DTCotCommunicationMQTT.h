@@ -10,7 +10,7 @@
 #define MQTTCommunication_h_
 
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #ifdef COMMUNICATION_MQTT
 

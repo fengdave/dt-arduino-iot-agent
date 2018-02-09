@@ -10,7 +10,7 @@
 #define DT_COT_DEVICE_FEATHER_M0_NBIOT_HEADER_FILE
 
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #if CONN_TYPE == NB_IOT
 

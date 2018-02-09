@@ -11,7 +11,7 @@
 #ifndef DTCOT_MQTTSN_HEADER_FILE
 #define DTCOT_MQTTSN_HEADER_FILE
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #if CONN_TYPE == NB_IOT
 

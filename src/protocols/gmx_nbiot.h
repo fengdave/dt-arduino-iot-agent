@@ -8,7 +8,7 @@
  */
  
 
-#include "DTCOTSetup.h"
+#include "DTCoTSetup.h"
 
 #if CONN_TYPE == NB_IOT
 
