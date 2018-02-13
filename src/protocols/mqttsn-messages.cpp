@@ -387,6 +387,7 @@ void MQTTSN::connect( const uint8_t flags
     strcpy(msg->client_id, client_id);
 
     send_message();
+
     waiting_for_response = true;
     response_to_wait_for = CONNACK;
 	DEBUG_PRINT_INFO("MQTTSN::connect() - response_to_wair_for should be CONNACK and is %d", response_to_wait_for);
@@ -483,8 +484,6 @@ void MQTTSN::regack(const uint16_t topic_id, const uint16_t message_id, const re
 }
 
 void MQTTSN::publish(const uint8_t flags, const uint16_t topic_id, const void* data, const uint8_t data_len) {
-    ++_message_id;
-
     msg_publish* msg = reinterpret_cast<msg_publish*>(message_buffer);
 
     msg->length = sizeof(msg_publish) + data_len;
@@ -500,6 +499,8 @@ void MQTTSN::publish(const uint8_t flags, const uint16_t topic_id, const void* d
         waiting_for_response = true;
         response_to_wait_for = PUBACK;
     }
+
+    ++_message_id;
 }
 
 #ifdef USE_QOS2
@@ -544,8 +545,6 @@ void MQTTSN::puback(const uint16_t topic_id, const uint16_t message_id, const re
 }
 
 void MQTTSN::subscribe_by_name(const uint8_t flags, const char* topic_name) {
-    ++_message_id;
-
     msg_subscribe* msg = reinterpret_cast<msg_subscribe*>(message_buffer);
 
     // The -2 here is because we're unioning a 0-length member (topic_name)
@@ -562,11 +561,11 @@ void MQTTSN::subscribe_by_name(const uint8_t flags, const char* topic_name) {
         waiting_for_response = true;
         response_to_wait_for = SUBACK;
     }
+
+    ++_message_id;
 }
 
 void MQTTSN::subscribe_by_id(const uint8_t flags, const uint16_t topic_id) {
-    ++_message_id;
-
     msg_subscribe* msg = reinterpret_cast<msg_subscribe*>(message_buffer);
 
     msg->length = sizeof(msg_subscribe);
@@ -581,11 +580,11 @@ void MQTTSN::subscribe_by_id(const uint8_t flags, const uint16_t topic_id) {
         waiting_for_response = true;
         response_to_wait_for = SUBACK;
     }
+
+    ++_message_id;
 }
 
 void MQTTSN::unsubscribe_by_name(const uint8_t flags, const char* topic_name) {
-    ++_message_id;
-
     msg_unsubscribe* msg = reinterpret_cast<msg_unsubscribe*>(message_buffer);
 
     // The -2 here is because we're unioning a 0-length member (topic_name)
@@ -602,11 +601,11 @@ void MQTTSN::unsubscribe_by_name(const uint8_t flags, const char* topic_name) {
         waiting_for_response = true;
         response_to_wait_for = UNSUBACK;
     }
+
+    ++_message_id;
 }
 
 void MQTTSN::unsubscribe_by_id(const uint8_t flags, const uint16_t topic_id) {
-    ++_message_id;
-
     msg_unsubscribe* msg = reinterpret_cast<msg_unsubscribe*>(message_buffer);
 
     msg->length = sizeof(msg_unsubscribe);
@@ -621,6 +620,8 @@ void MQTTSN::unsubscribe_by_id(const uint8_t flags, const uint16_t topic_id) {
         waiting_for_response = true;
         response_to_wait_for = UNSUBACK;
     }
+
+    ++_message_id;
 }
 
 void MQTTSN::pingreq(const char* client_id) {
