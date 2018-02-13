@@ -304,8 +304,11 @@ byte gmxNB_getVersion(String& version)
 /* IMEI */
 byte gmxNB_getIMEI(String& imei)
 {
+  byte retval;
   _sendCmd( "AT+CGSN=1\r" );
-  return ( _parseResponse(imei) );
+  retval = _parseResponse(imei);
+  imei.trim();
+  return ( retval );
 }
 
 
@@ -313,8 +316,11 @@ byte gmxNB_getIMEI(String& imei)
 /* IMSI */
 byte gmxNB_getIMSI(String& imsi)
 {
-  _sendCmd( "AT+CIMI\r" );
-  return ( _parseResponse(imsi) );
+	byte retval;
+	_sendCmd( "AT+CIMI\r" );
+	retval = _parseResponse(imsi);
+	imsi.trim();
+	return ( retval );
 }
 
 
@@ -370,6 +376,9 @@ void gmxNB_startDT()
 	/* TODO: Provide meaningful return values */
 	/* TODO: move to provider-specific code - this is not a part of the driver ! */
 
+	/*TODO radio off can fail. find out why!*/
+	gmxNB_radioOFF(dummyResponse);
+
 	_sendCmd( "AT+NCONFIG=AUTOCONNECT,TRUE\r" );
 	_parseResponse(dummyResponse);
 	
@@ -379,27 +388,25 @@ void gmxNB_startDT()
 	_sendCmd( "AT+NCONFIG=CR_0859_SI_AVOID,TRUE\r" );
 	_parseResponse(dummyResponse);
 	
-	/*WARNING Do not delete this line! gmxNB_radioOFF() and gmxNB_radioON() depend on it.*/
-	//wrong warning :( gmxNB_getIMSI(dummyResponse);
-	gmxNB_getIMSI(dummyResponse);
-	
 	/*TODO radio off can fail. find out why!*/
-	gmxNB_radioOFF(dummyResponse);
+	// gmxNB_radioOFF(dummyResponse);
 	
 	// ak: should be auto-configured from provider
 	// _sendCmd( "AT+CGDCONT=1,\"IP\",\"internet.nbiot.telekom.de.MNC040.MCC901.GPRS\"\r" );
 	// _parseResponse(dummyResponse);
 	// gmxNB_setAPN("internet.nbiot.telekom.de.MNC040.MCC901.GPRS"); 
-	gmxNB_setAPN( DT_COT_APN);
-	
-	gmxNB_radioON(dummyResponse);
+	gmxNB_setAPN( DT_COT_APN );
 	
 	_sendCmd( "AT+NBAND=8\r" );
 	_parseResponse(dummyResponse);
-	
+
+	gmxNB_radioON(dummyResponse);
+
 	_sendCmd( "AT+COPS=1,2,\"26201\"\r" );
 	_parseResponse(dummyResponse);
 
+	/*TODO use this value as authentication parameter*/
+	gmxNB_getIMSI(dummyResponse);
 }
 
 
