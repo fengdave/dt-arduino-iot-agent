@@ -170,7 +170,9 @@ void loop() {
           }
       }
 
-     dtostrf(exampleTemp, 2, 2, examplTempStr);
+     /* NOTE on workaround: 
+      * DT MQTTSN connector accepts only ONE position after decimal point!*/
+     dtostrf(exampleTemp, 2, 1, examplTempStr);
      DEBUG_PRINT("### Sending Temperature: %s", examplTempStr);
 
     /* Publish our updated temperature value to the CoT server */
