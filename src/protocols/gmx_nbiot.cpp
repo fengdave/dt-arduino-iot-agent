@@ -25,8 +25,8 @@
 #define INVALID_SOCKET (-1)
 
 // TODO: move to user-specific settings
-#define DT_COT_APN "internet.nbiot.telekom.de.MNC040.MCC901.GPRS"
-// #define DT_COT_APN "nb-cloud.ic.m2mportal.de"
+// #define DT_COT_APN "internet.nbiot.telekom.de.MNC040.MCC901.GPRS"
+#define DT_COT_APN "nb-cloud.ic.m2mportal.de"
 
 
 
@@ -260,8 +260,8 @@ byte gmxNB_connect(String ipAddress, int udpPort)
   udp_socket_ip = ipAddress;
   udp_port = udpPort;
   
-  DEBUG_PRINT_INFO("GMXNB ipAddress:" + udp_socket_ip);
-  debug_printf("GMXNB udpPort: %d", udpPort);
+  DEBUG_PRINT("GMXNB ipAddress:" + udp_socket_ip);
+  DEBUG_PRINT("GMXNB udpPort: %d", udpPort);
   return GMXNB_OK;
 }
 
@@ -376,7 +376,6 @@ void gmxNB_startDT()
 	/* TODO: Provide meaningful return values */
 	/* TODO: move to provider-specific code - this is not a part of the driver ! */
 
-	/*TODO radio off can fail. find out why!*/
 	gmxNB_radioOFF(dummyResponse);
 
 	_sendCmd( "AT+NCONFIG=AUTOCONNECT,TRUE\r" );
@@ -388,13 +387,7 @@ void gmxNB_startDT()
 	_sendCmd( "AT+NCONFIG=CR_0859_SI_AVOID,TRUE\r" );
 	_parseResponse(dummyResponse);
 	
-	/*TODO radio off can fail. find out why!*/
-	// gmxNB_radioOFF(dummyResponse);
-	
-	// ak: should be auto-configured from provider
-	// _sendCmd( "AT+CGDCONT=1,\"IP\",\"internet.nbiot.telekom.de.MNC040.MCC901.GPRS\"\r" );
-	// _parseResponse(dummyResponse);
-	// gmxNB_setAPN("internet.nbiot.telekom.de.MNC040.MCC901.GPRS"); 
+	// TODO: should be auto-configured by network provider
 	gmxNB_setAPN( DT_COT_APN );
 	
 	_sendCmd( "AT+NBAND=8\r" );
@@ -405,7 +398,7 @@ void gmxNB_startDT()
 	_sendCmd( "AT+COPS=1,2,\"26201\"\r" );
 	_parseResponse(dummyResponse);
 
-	/*TODO use this value as authentication parameter*/
+	/*TODO use IMSI as authentication parameter*/
 	gmxNB_getIMSI(dummyResponse);
 }
 
