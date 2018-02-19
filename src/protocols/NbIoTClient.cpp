@@ -33,6 +33,7 @@ extern "C" {
 #include "gmx_nbiot.h"
 #include "protocols/NbIoTClient.h"
 #include "DTCoTSetup.h"
+#include "utility/DTCoTDebugOutput.h"
 
 
 #define MAX_SOCK_NUM  0xFF
@@ -104,7 +105,7 @@ NbiotClient::NbiotClient(Stream& dbgOutputStream /* default = Serial */)
  */
 int NbiotClient::connect(const char* host, uint16_t port) {
 
-	_dbgOutputStream.println("NbiotClient::connect(const char* host, uint16_t port)");
+	// _dbgOutputStream.println("NbiotClient::connect(const char* host, uint16_t port)");
 	/*NOTE Do some stupid stuff to make the compiler happy. :-| */
 	host = host;
 	port = port;
@@ -369,28 +370,30 @@ bool NbiotClient::initNBIoTModem() {
 	// Init NB IoT board
 	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Initializing modem ... ");
 	
-	byte initStatus = gmxNB_init( /*forceReset:*/ false
-		,  _serverIP
-		, _serverPort
-		, _serial
-		, _resetPin 
-		, NULL );
+	byte initStatus = gmxNB_init(
+			/*forceReset:*/ false,
+			_serverIP,
+			_serverPort,
+			_serial,
+			_resetPin,
+			NULL
+		);
 
 	if( ( initStatus != NB_NETWORK_JOINED) && ( initStatus != GMXNB_OK) ) {
-		_dbgOutputStream.println( "");
-		_dbgOutputStream.println( "NbiotClient::initNBIoTModem(): ERROR: Failed to initialize modem");
+		_dbgOutputStream.println("");
+		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): ERROR: Failed to initialize modem");
 		return false;
 	}
 	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Modem initialized");
 
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Collecting modem IMEI ... " );
+	// _dbgOutputStream.println("NbiotClient::initNBIoTModem(): Collecting modem IMEI ... " );
 	String imeiInfo;
 	if( gmxNB_getIMEI( imeiInfo) != GMXNB_OK ) {
-		_dbgOutputStream.println( "");
-		_dbgOutputStream.println( "NbiotClient::initNBIoTModem(): ERROR: Failed to aquire modem IMEI");
+		_dbgOutputStream.println("");
+		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): ERROR: Failed to aquire modem IMEI");
 		return false;
 	}
-	_dbgOutputStream.println( "NbiotClient::initNBIoTModem(): IMEI:" + imeiInfo);
+	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): IMEI:" + imeiInfo);
 
 	if (initStatus != NB_NETWORK_JOINED) {
 		/* TODO: check for return code after it is implemented in the driver! */
@@ -399,11 +402,19 @@ bool NbiotClient::initNBIoTModem() {
 		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Configured for DT network" );
 	}
 
+	// _dbgOutputStream.println("NbiotClient::initNBIoTModem(): Aquiring IMSI ..." );
+
+	String testImsi;
+	gmxNB_getIMSI(testImsi);
+	/* TODO:
+	 * 1) check for return code after it is implemented in the driver!
+	 * 2) IMSI should also be used for athentication.
+	 */
+	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): IMSI: " + testImsi);
+
 	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Attempting to join the network ..." );
 	unsigned long netJoinRetryCounter = 0;
-	//const unsigned long MAX_NETWORK_JOIN_RETRIES = 100; /* moved to DTCoTSetup.h */
-	for( ; netJoinRetryCounter < MAX_NETWORK_JOIN_RETRIES
-		; netJoinRetryCounter++ ) {
+	for( ; netJoinRetryCounter < MAX_NETWORK_JOIN_RETRIES; netJoinRetryCounter++ ) {
 
 		if( gmxNB_isNetworkJoined() == NB_NETWORK_JOINED) {
 			break;
@@ -416,26 +427,17 @@ bool NbiotClient::initNBIoTModem() {
 
 		delay(2500);
 	}
+	_dbgOutputStream.println("");
 
 	if( netJoinRetryCounter >= MAX_NETWORK_JOIN_RETRIES) {
-		_dbgOutputStream.println( "NbiotClient::initNBIoTModem(): Failed to join network");
+		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Failed to join network");
 		return false;
 	}
 	
 	DTCoTNBIoTHardware_led(GMXNB_LED_ON, 2);
-	_dbgOutputStream.println( 
-		"NbiotClient::initNBIoTModem(): Successfuly joined the network");
-
-	_dbgOutputStream.println(
-		"NbiotClient::initNBIoTModem(): Aquiring IMSI ..." );
-
-	String testImsi;
-	gmxNB_getIMSI(testImsi); /* TODO: check for return code after it is implemented in the driver! */
-	_dbgOutputStream.print(
-		"NbiotClient::initNBIoTModem(): IMSI: " + testImsi);
+	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Successfuly joined the network");
 
 	_modemInitialized = true;
-	
 	return true;
 }
 
