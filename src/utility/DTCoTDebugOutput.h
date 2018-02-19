@@ -19,7 +19,7 @@
  * 2 - print debug logs also
  * 3 - print informational logs also
  */
-#define DEBUG_LEVEL 2
+#define DEBUG_LEVEL 1
 
 
 /**
