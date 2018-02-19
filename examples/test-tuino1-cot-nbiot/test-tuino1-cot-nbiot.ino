@@ -25,11 +25,11 @@
 
 */
 
-
+#include <stdint.h>
 #include "DTCoT.h"
 /* NOTE: You need to create this secrets.h file with the following defines:
  #define NB_IOT_IMSI           "<IMSI, as found in the logs of your device>" 
- #define NB_IOT_COT_PWD        "<password for access to the server>"
+ #define NB_IOT_MQTTSN_PWD        "<password for access to the server>"
 */
 #include "secrets.h"
 
@@ -39,148 +39,155 @@
 #endif
 
 /* Application-specific settings */
-const unsigned char ON_BOARD_LED = 13;
-
+const uint8_t ON_BOARD_LED = 13;
 /* The name of tthe variable on the server */
-const char* CLOUD_COUNTER_VAR_NAME = "cloud-counter";
-
+const char CLOUD_COUNTER_VAR_NAME[] = "cloud-counter";
 /* Wrap after this number */
-const unsigned char COUNTER_THRESHOLD = 0xFF;
+const uint8_t COUNTER_THRESHOLD = 0xFF;
+/*MQTTSN topic ID for this example*/
+uint16_t myMqttsnTopicId = MQTTSN_TOPIC_INVALID_ID;
 
-int myMqttsnTopicId = MQTTSN_TOPIC_INVALID_ID;
 
-/** Simulation of temperature values **/
-float exampleTemp = 25.4;
-String tmpDirection = "up";
-int tmpCounter = 0;
-char examplTempStr[10];
 
 using namespace DTCoT;
 
+/********** DT CoT Library Initialisation **********/
+
 /* Configure a Gimasi Tuino 1 device, connected to the CoT server */
-CoTConfigDeviceGimasi devConfig 
-  = CoTConfigDeviceGimasi(NB_IOT_SERVER_IP
-    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD
-	, Serial1 				// serial port to use for the NBIoT hardware
-	, GMX_RESET);			// reset pin to use for the NBIoT hardware
+CoTConfigDeviceGimasi devConfig = CoTConfigDeviceGimasi
+    (
+        NB_IOT_SERVER_IP,
+        NB_IOT_SERVER_PORT, 
+        NB_IOT_IMSI, 
+        NB_IOT_MQTTSN_PWD,
+        Serial1, 				// serial port to use for the NBIoT hardware
+        GMX_RESET				// reset pin to use for the NBIoT hardware
+    );
 
 /* Create the device */
 CoTDeviceGimasi device = CoTDeviceGimasi(devConfig);
 
 /* Configure connection to the MQTT-SN backend */
-CoTConfigCommunicationMQTTSN mqttsnConfig(NB_IOT_SERVER_IP
-    , NB_IOT_SERVER_PORT
-    , NB_IOT_IMSI
-    , NB_IOT_COT_PWD
+CoTConfigCommunicationMQTTSN mqttsnConfig
+    (
+        NB_IOT_SERVER_IP,
+        NB_IOT_SERVER_PORT,
+        NB_IOT_IMSI,
+        NB_IOT_MQTTSN_PWD
     );
 
-CoTCloud cloud( 
-  /* Configure communcation settings of your DT Cloud-enabled device */
-    device 
-  
-  /* Setup the cloud communication method */ 
-  , mqttsnConfig
-);
+CoTCloud cloud
+    ( 
+        /* Configure communcation settings of your DT Cloud-enabled device */
+        device,
+        /* Setup the cloud communication method */ 
+        mqttsnConfig
+    );
 
 
-/** Back channel is not supported yet **/
+
+
 void onCounterValueChanged( void* newCounterValue) {
-  /* TODO: parameter NULL check
-     TODO: casting outcome check
-     TODO: provide helper-macro for easy app-specific casting
-     TODO: figure out how to avoid casting for different payload types
-  */
-  unsigned long counterValue = *(static_cast< unsigned long*>(newCounterValue) );
+    /* TODO: 
+     * parameter NULL check
+     * casting outcome check
+     * provide helper-macro for easy app-specific casting
+     * figure out how to avoid casting for different payload types
+    */
+    unsigned long counterValue = *(static_cast< unsigned long*>(newCounterValue));
 
-  if ( counterValue >= COUNTER_THRESHOLD) {
-    digitalWrite( ON_BOARD_LED, HIGH);
-  }
-  else {
-    digitalWrite( ON_BOARD_LED, LOW);
-  }
+    if ( counterValue >= COUNTER_THRESHOLD) {
+        digitalWrite( ON_BOARD_LED, HIGH);
+    }
+    else {
+        digitalWrite( ON_BOARD_LED, LOW);
+    }
 }
 
 
 void setup() {
- 	delay(100);
- 	Serial.begin(115200);
     delay(100);
-   	DEBUG_PRINT_INFO("Setup...");
+    Serial.begin(115200);
+    delay(100);
+    DEBUG_PRINT_INFO("Setup...");
 
+    device.init();
 
-	device.init();
+    DEBUG_PRINT_INFO("Setup...");
+    cloud.init();
 
-	DEBUG_PRINT_INFO("Setup...");
-  	cloud.init();
-  
-  /* Subscribe to the change of a cloud variable of interest */
-  cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
+    /* Subscribe to the change of a cloud variable of interest */
+    cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
 
-  /* Register the topics that we want to publish to later */
-  DEBUG_PRINT_INFO("connected, registering topic...");
-  myMqttsnTopicId = cloud.Mqttsn_RegisterTopic(MQTTSN_TOPIC_MEASUREMENT, MQTTSN_MEAS_TYPE_TEMPERATURE);
-  if(myMqttsnTopicId == MQTTSN_TOPIC_INVALID_ID)
-  {
-    /*TODO topic reg failed, disconnect / restart connect*/
-    DEBUG_PRINT_INFO("INVALID MQTTSN_TOPIC_ID");
-    
-  }
-  else {
-    DEBUG_PRINT_INFO("topic registered, uploading data...");
-    DEBUG_PRINT_INFO("myMqttsnTopicId: %s", myMqttsnTopicId);	
-  }
-  
+    /* Register the topics that we want to publish to later */
+    DEBUG_PRINT_INFO("connected, registering topic...");
+    myMqttsnTopicId = cloud.Mqttsn_RegisterTopic(MQTTSN_TOPIC_MEASUREMENT, MQTTSN_MEAS_TYPE_TEMPERATURE);
+    if(myMqttsnTopicId == MQTTSN_TOPIC_INVALID_ID)
+    {
+        /*TODO topic reg failed, disconnect / restart connect*/
+        DEBUG_PRINT_INFO("INVALID MQTTSN_TOPIC_ID");
+    }
+    else {
+        DEBUG_PRINT_INFO("topic registered, uploading data...");
+        DEBUG_PRINT_INFO("myMqttsnTopicId: %s", myMqttsnTopicId);	
+    }
+
 }
 
 
+
+/** 
+ * @brief Simulation of temperature values going up and down.
+ * 
+ * Temperature value wobbles between 20..30°.
+ */
+float GetTemperature(void) {
+    static float exampleTemp = 25.4;
+    static bool tempRising = false;
+
+    if(exampleTemp <= 20.0) {
+    	tempRising = true;
+    }
+    else if(exampleTemp >= 30.0) {
+    	tempRising = false;
+    }
+
+    if(tempRising) {
+        exampleTemp += 0.5;
+    }
+    else {
+        exampleTemp -= 0.5;
+    }
+    
+    return exampleTemp;
+}
+
+
+
 void loop() {
-  DEBUG_PRINT("Loop");
+    /** Simulation of temperature values **/
+    float exampleTemp = GetTemperature();
+    char examplTempStr[10];
 
+    DEBUG_PRINT_INFO("Loop");
 
-  /* Update cloud infrastructure client */
-  if ( !cloud.process() ) {
-    /* TODO: process error here */
-  }
+    /* Update/poll cloud infrastructure client */
+    if ( !cloud.process() ) {
+        /* TODO: process error here */
+    }
 
-  static unsigned long counter = 0;
-  ++counter;
-
-  if ( counter ) {
-
-      if (tmpDirection == "up") {
-          if(tmpCounter < 10) {
-            exampleTemp += 0.5;
-            tmpCounter++;
-          }
-          else {
-            tmpCounter = 0;
-            tmpDirection = "down";
-            exampleTemp -= 0.5;
-          }
-      }
-      else {
-        if(tmpCounter < 10) {
-            exampleTemp -= 0.5;
-            tmpCounter++;
-          }
-          else {
-            tmpCounter = 0;
-            tmpDirection = "up";
-            exampleTemp += 0.5;
-          }
-      }
-
-     /* NOTE on workaround: 
-      * DT MQTTSN connector accepts only ONE position after decimal point!*/
-     dtostrf(exampleTemp, 2, 1, examplTempStr);
-     DEBUG_PRINT("### Sending Temperature: %s", examplTempStr);
+    /* NOTE on workaround: 
+     * Remote DT MQTT-SN connector accepts only ONE position after decimal point!
+     */
+    dtostrf(exampleTemp, 2, 1, examplTempStr);
+    DEBUG_PRINT("### Sending Temperature: %s", examplTempStr);
 
     /* Publish our updated temperature value to the CoT server */
-    if ( !cloud.publish(myMqttsnTopicId, examplTempStr) ) { // @todo, send integers/reals
-      /* TODO: process error here */
+    if ( !cloud.publish(myMqttsnTopicId, examplTempStr) ) { 
+        // @todo, send integers/reals
+        /* TODO: process error here */
     }
-  }
 
-  delay(1000);
+    delay(5000);
 }
 
