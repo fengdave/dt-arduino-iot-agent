@@ -53,7 +53,7 @@ using namespace DTCoT;
 
 CoTConfigDeviceFeatherM0_NBIoT devConfig 
   = CoTConfigDeviceFeatherM0_NBIoT(NB_IOT_SERVER_IP
-    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_COT_PWD
+    , NB_IOT_SERVER_PORT, NB_IOT_IMSI, NB_IOT_MQTTSN_PWD
 	, Serial1 	// serial port to use for the NBIoT hardware (marked as TX/RX on the Feather M0 board)
 	, 10);			// reset pin to use for the NBIoT hardware (just choose any free GPIO pin on the Feather M0)
 
@@ -62,7 +62,7 @@ CoTDeviceFeatherM0_NBIoT device = CoTDeviceFeatherM0_NBIoT(devConfig);
 CoTConfigCommunicationMQTTSN mqttsnConfig(NB_IOT_SERVER_IP
     , NB_IOT_SERVER_PORT
     , NB_IOT_IMSI
-    , NB_IOT_COT_PWD
+    , NB_IOT_MQTTSN_PWD
     );
 
 CoTCloud cloud( 

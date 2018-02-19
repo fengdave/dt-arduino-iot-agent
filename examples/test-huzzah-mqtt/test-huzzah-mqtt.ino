@@ -94,7 +94,7 @@ void setup() {
   	delay(100);
   	Serial.begin(115200);
     delay(100);
-  	DEBUG_PRINT("Setup...");
+  	DEBUG_PRINT_INFO("Setup...");
 
 
 	device.init();
@@ -107,7 +107,7 @@ void setup() {
 
 
 void loop() {
-     DEBUG_PRINT("Loop");
+     DEBUG_PRINT_INFO("Loop");
 
 	 
   /* Update cloud infrastructure client */

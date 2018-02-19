@@ -96,7 +96,7 @@ void setup() {
   delay(100);
   Serial.begin(115200);
     delay(100);
-   DEBUG_PRINT("Setup...");
+   DEBUG_PRINT("Starting Setup()");
 
    //Configure pins for Adafruit ATWINC1500 Feather
   WiFi.setPins(8,7,4,2);
@@ -107,11 +107,13 @@ void setup() {
   
   /* Subscribe to the change of a cloud variable of interest */
   cloud.subscribe( CLOUD_COUNTER_VAR_NAME, onCounterValueChanged); // @todo implement
+  
+  DEBUG_PRINT_INFO("Finished Setup()");
 }
 
 
 void loop() {
-     DEBUG_PRINT("Loop");
+     DEBUG_PRINT_INFO("Loop");
 
 	
   /* Update cloud infrastructure client */
