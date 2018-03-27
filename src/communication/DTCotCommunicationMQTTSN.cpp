@@ -93,7 +93,7 @@ void CoTCommunicationMQTTSN::reconnect()
     DEBUG_PRINT("Connecting to MQTTSN Gateway ... ");
 
     uint8_t retries = 3;
-    while ((ret = mqttsn.connect(FLAG_CLEAN, MQTTSN_CONNECTION_DURATION_MS)) != 0) { // connect will return 0 for connected
+    while ((ret = mqttsn.connect(FLAG_CLEAN, MQTTSN_CONNECTION_DURATION_SEC)) != 0) { // connect will return 0 for connected
          DEBUG_PRINT(mqttsn.connectErrorString(ret));
          DEBUG_PRINT("Retrying MQTT connection in 5 seconds...");
          mqttsn.disconnect();
