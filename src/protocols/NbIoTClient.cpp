@@ -51,7 +51,7 @@ NbiotClient::NbiotClient( const String& ipAddress, Stream& dbgOutputStream /* de
 	, _serial(Serial)
 	, _resetPin(10)
 {
-	//_dbgOutputStream.println("NbiotClient::NbiotClient():");
+	//DEBUG_PRINT_INFO("NbiotClient::NbiotClient():");
 }
 
 /**
@@ -80,7 +80,7 @@ NbiotClient::NbiotClient(const String& serverIP, const unsigned short& serverPor
 		
 		
 {
-	//_dbgOutputStream.println("NbiotClient::NbiotClient():");
+	//DEBUG_PRINT_INFO("NbiotClient::NbiotClient():");
 	//Serial.println("NbiotClient::NbiotClient():");
 	//delay(1000);
 	
@@ -105,7 +105,7 @@ NbiotClient::NbiotClient(Stream& dbgOutputStream /* default = Serial */)
  */
 int NbiotClient::connect(const char* host, uint16_t port) {
 
-	// _dbgOutputStream.println("NbiotClient::connect(const char* host, uint16_t port)");
+	// DEBUG_PRINT_INFO("NbiotClient::connect(const char* host, uint16_t port)");
 	/*NOTE Do some stupid stuff to make the compiler happy. :-| */
 	host = host;
 	port = port;
@@ -136,7 +136,7 @@ int NbiotClient::connect(const char* host, uint16_t port) {
  * @returns 1 if connected successfully, 0 on failure.
  */
 int NbiotClient::connect(IPAddress ip, uint16_t port) {
-	_dbgOutputStream.println( "NbiotClient::connect( ip=" + String( _serverIP) 
+	DEBUG_PRINT_INFO( "NbiotClient::connect( ip=" + String( _serverIP)
 		+ ", port=" + String( _serverPort) + ")" );
 
 	
@@ -164,7 +164,7 @@ int NbiotClient::connect(IPAddress ip, uint16_t port) {
  * @returns Always 0, because no data transmission is executed.
  */
 size_t NbiotClient::write(uint8_t b) {
-	_dbgOutputStream.println("NbiotClient::write(uint8_t b)");
+	DEBUG_PRINT_INFO("NbiotClient::write(uint8_t b)");
 
 	if( !_modemInitialized ) {
 		_modemInitialized = initNBIoTModem();
@@ -190,7 +190,7 @@ size_t NbiotClient::write(const uint8_t *buf, size_t size) {
 	if( !_modemInitialized ) {
 		_modemInitialized = initNBIoTModem();
 		if( !_modemInitialized ) {
-			_dbgOutputStream.println( "NbiotClient::write(const uint8_t *buf, size_t size): ERROR: Failed to initialize the modem");
+			DEBUG_PRINT( "NbiotClient::write(const uint8_t *buf, size_t size): ERROR: Failed to initialize the modem");
 			return 0;
 		}
 	}
@@ -218,7 +218,7 @@ size_t NbiotClient::write(const uint8_t *buf, size_t size) {
  * @returns 0 for no pending packet, >0 otherwise.
  */
 int NbiotClient::available() {
-	_dbgOutputStream.println("NbiotClient::available()");
+	DEBUG_PRINT_INFO("NbiotClient::available()");
   return gmxNB_Available();
 }
 
@@ -230,7 +230,7 @@ int NbiotClient::available() {
  * @brief Always returns an error.
  */
 int NbiotClient::read() {
-	_dbgOutputStream.println("NbiotClient::read()");
+	DEBUG_PRINT_INFO("NbiotClient::read()");
   /*TODO Implement byte-wise read operation. (not recommended though!)*/
   return -1;
 }
@@ -238,7 +238,7 @@ int NbiotClient::read() {
 
 int NbiotClient::read(uint8_t* buf, size_t size) {
 
-	_dbgOutputStream.println("NbiotClient::read(uint8_t* buf, size_t size)");
+	DEBUG_PRINT_INFO("NbiotClient::read(uint8_t* buf, size_t size)");
 
   byte status;
   int _size = size;
@@ -250,7 +250,7 @@ int NbiotClient::read(uint8_t* buf, size_t size) {
   
   if( status != GMXNB_OK )
   {
-    _dbgOutputStream.println("NbiotClient::read(): Err CoT connection failed.");
+    DEBUG_PRINT_INFO("NbiotClient::read(): Err CoT connection failed.");
     return -1;
   }
   else
@@ -273,7 +273,7 @@ int NbiotClient::read(uint8_t* buf, size_t size) {
 
 int NbiotClient::peek() {
 
-	_dbgOutputStream.println("NbiotClient::peek()");
+	DEBUG_PRINT_INFO("NbiotClient::peek()");
 
   return -1;
   
@@ -290,7 +290,7 @@ int NbiotClient::peek() {
 
 
 void NbiotClient::flush() {
-	_dbgOutputStream.println("NbiotClient::flush()");
+	DEBUG_PRINT_INFO("NbiotClient::flush()");
   // TODO: a real check to ensure transmission has been completed
 }
 
@@ -301,7 +301,7 @@ void NbiotClient::flush() {
  * @note Not yet implemented. Restart the system, instead.
  */
 void NbiotClient::stop() {
-	_dbgOutputStream.println("NbiotClient::stop()");
+	DEBUG_PRINT_INFO("NbiotClient::stop()");
   if (_sock == MAX_SOCK_NUM)
     return;
 
@@ -311,7 +311,7 @@ void NbiotClient::stop() {
 
 
 uint8_t NbiotClient::connected() {
-	_dbgOutputStream.println("NbiotClient::connected()");
+	DEBUG_PRINT_INFO("NbiotClient::connected()");
 	if( !_modemInitialized) {
 		return 0;
 	}
@@ -340,7 +340,7 @@ uint8_t NbiotClient::connected() {
 
 uint8_t NbiotClient::status() {
 
-	_dbgOutputStream.println("NbiotClient::status()");
+	DEBUG_PRINT_INFO("NbiotClient::status()");
 
   if (_sock == MAX_SOCK_NUM) {
     return 0;
@@ -352,7 +352,7 @@ uint8_t NbiotClient::status() {
 
 
 NbiotClient::operator bool() {
-	_dbgOutputStream.println("NbiotClient::operator bool()");
+	DEBUG_PRINT_INFO("NbiotClient::operator bool()");
   return _sock != MAX_SOCK_NUM;
 }
 
@@ -361,14 +361,14 @@ NbiotClient::operator bool() {
 // Private Methods
 uint8_t NbiotClient::getFirstSocket()
 {
-	_dbgOutputStream.println("NbiotClient::getFirstSocket()");
+	DEBUG_PRINT_INFO("NbiotClient::getFirstSocket()");
   return 0;
 }
 
 
 bool NbiotClient::initNBIoTModem() {
 	// Init NB IoT board
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Initializing modem ... ");
+	DEBUG_PRINT_INFO("NbiotClient::initNBIoTModem(): Initializing modem ... ");
 	
 	byte initStatus = gmxNB_init(
 			/*forceReset:*/ false,
@@ -380,29 +380,29 @@ bool NbiotClient::initNBIoTModem() {
 		);
 
 	if( ( initStatus != NB_NETWORK_JOINED) && ( initStatus != GMXNB_OK) ) {
-		_dbgOutputStream.println("");
-		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): ERROR: Failed to initialize modem");
+		DEBUG_PRINT_INFO("");
+		DEBUG_PRINT("NbiotClient::initNBIoTModem(): ERROR: Failed to initialize modem");
 		return false;
 	}
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Modem initialized");
+	DEBUG_PRINT("NbiotClient::initNBIoTModem(): Modem initialized");
 
-	// _dbgOutputStream.println("NbiotClient::initNBIoTModem(): Collecting modem IMEI ... " );
+	// DEBUG_PRINT_INFO("NbiotClient::initNBIoTModem(): Collecting modem IMEI ... " );
 	String imeiInfo;
 	if( gmxNB_getIMEI( imeiInfo) != GMXNB_OK ) {
-		_dbgOutputStream.println("");
-		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): ERROR: Failed to aquire modem IMEI");
+		DEBUG_PRINT_INFO("");
+		DEBUG_PRINT("NbiotClient::initNBIoTModem(): ERROR: Failed to aquire modem IMEI");
 		return false;
 	}
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): IMEI:" + imeiInfo);
+	DEBUG_PRINT("NbiotClient::initNBIoTModem(): IMEI:" + imeiInfo);
 
 	if (initStatus != NB_NETWORK_JOINED) {
 		/* TODO: check for return code after it is implemented in the driver! */
-		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Configuring for DT network ... " );
+		DEBUG_PRINT_INFO("NbiotClient::initNBIoTModem(): Configuring for DT network ... " );
 		gmxNB_startDT();
-		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Configured for DT network" );
+		DEBUG_PRINT_INFO("NbiotClient::initNBIoTModem(): Configured for DT network" );
 	}
 
-	// _dbgOutputStream.println("NbiotClient::initNBIoTModem(): Aquiring IMSI ..." );
+	// DEBUG_PRINT_INFO("NbiotClient::initNBIoTModem(): Aquiring IMSI ..." );
 
 	String testImsi;
 	gmxNB_getIMSI(testImsi);
@@ -410,9 +410,9 @@ bool NbiotClient::initNBIoTModem() {
 	 * 1) check for return code after it is implemented in the driver!
 	 * 2) IMSI should also be used for athentication.
 	 */
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): IMSI: " + testImsi);
+	DEBUG_PRINT("NbiotClient::initNBIoTModem(): IMSI: " + testImsi);
 
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Attempting to join the network ..." );
+	DEBUG_PRINT("NbiotClient::initNBIoTModem(): Attempting to join the network ..." );
 	unsigned long netJoinRetryCounter = 0;
 	for( ; netJoinRetryCounter < MAX_NETWORK_JOIN_RETRIES; netJoinRetryCounter++ ) {
 
@@ -423,19 +423,19 @@ bool NbiotClient::initNBIoTModem() {
 		DTCoTNBIoTHardware_led(GMXNB_LED_ON, 2);
 		delay(500);
 		DTCoTNBIoTHardware_led(GMXNB_LED_OFF, 2);
-		_dbgOutputStream.print(".");
+		DEBUG_PRINT(".");
 
 		delay(2500);
 	}
-	_dbgOutputStream.println("");
+	DEBUG_PRINT("\n");
 
 	if( netJoinRetryCounter >= MAX_NETWORK_JOIN_RETRIES) {
-		_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Failed to join network");
+		DEBUG_PRINT("NbiotClient::initNBIoTModem(): Failed to join network");
 		return false;
 	}
 	
 	DTCoTNBIoTHardware_led(GMXNB_LED_ON, 2);
-	_dbgOutputStream.println("NbiotClient::initNBIoTModem(): Successfuly joined the network");
+	DEBUG_PRINT("NbiotClient::initNBIoTModem(): Successfuly joined the network");
 
 	_modemInitialized = true;
 	return true;
@@ -449,7 +449,7 @@ int NbiotClient::init() {
 	if( !_modemInitialized ) {
 		_modemInitialized = initNBIoTModem();
 		if( !_modemInitialized ) {
-			_dbgOutputStream.println( "NbiotClient::init(): ERROR: Failed to initialize the modem");
+			DEBUG_PRINT_INFO( "NbiotClient::init(): ERROR: Failed to initialize the modem");
 			return 0;
 		}
 	}
