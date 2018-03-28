@@ -22,7 +22,7 @@
 #define CLIENT_ID "dtcot-test-client"
 #define MQTTSN_BROKER_PORT 1883
 #define MQTTSN_CLIENT_LOCAL_PORT 1055
-#define MQTTSN_CONNECTION_DURATION_MS 10000
+#define MQTTSN_CONNECTION_DURATION_SEC 10000
 #define HOPS_TO_SEARCH_GATEWAY 1
 
 /* Select one of network interfaces */

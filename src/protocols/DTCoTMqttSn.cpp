@@ -171,7 +171,7 @@ void DTCoTMqttSn::gwinfo_handler( const msg_gwinfo* msg) {
 	MQTTSN::gwinfo_handler( msg);
 
    MQTTSN::connect( FLAG_QOS_0 | FLAG_CLEAN | FLAG_WILL
-     , MQTTSN_CONNECTION_DURATION_MS
+     , MQTTSN_CONNECTION_DURATION_SEC
      , CLIENT_ID );
 }
 
