@@ -37,115 +37,15 @@ String        udp_socket_ip;
 String        udp_port;
 const int     udp_rx_timeout = 30; // seconds
 const int     udp_max_packet_sz = 255;
-
-/*rx FIFO ringbuffer implementation*/
-#define NB_RINGBUFF_SZ (256)
-volatile char nbRingBuff[NB_RINGBUFF_SZ];
-volatile int  rxPosStart = 0;
-volatile int  rxPosEnd = 0;
+int           rxBytesPending = 0;
 
 Stream * stream = 0;
-
-
-/**
- * @brief Initialises the ring buffer indices.
- */
-void NbRingBuffReset(void)
-{
-  rxPosStart = 0;
-  rxPosEnd = 0;
-}
-
-
-/**
- * @brief Checks if the ring buffer contains pending valid data.
- * @returns true if data is pending, false otherwise.
- */
-bool NbRingBuffIsAvailable(void)
-{
-  return (rxPosStart != rxPosEnd);
-}
-
-
-
-/**
- * @brief Checks the ring buffer is overflown.
- * @returns true for an overflow condition, false otherwise.
- */
-bool NbRingBuffIsOverflow(void)
-{
-  return (rxPosStart == ((rxPosEnd + 1) % NB_RINGBUFF_SZ));
-}
-
-
-
-/**
- * @brief Writes a character into the ring buffer.
- * @param c The character that shall be written.
- * @returns true if the write operation was successful, false otherwise (i.e. on overflow).
- */
-bool NbRingBuffWriteChar(char c)
-{
-  int nextRxPosEnd = (rxPosEnd + 1) % NB_RINGBUFF_SZ;
-  
-  if(rxPosStart == nextRxPosEnd)
-  {
-    /*overflow condition detected. Will not write this character anymore.*/
-    return false;
-  }
-  else
-  {
-    nbRingBuff[rxPosEnd] = c;
-    rxPosEnd = nextRxPosEnd;
-    return true;
-  }
-}
-
-
-
-/**
- * @brief Reads and removes the oldest character from the ring buffer.
- * @returns The oldest character pending in the ring buffer, -1 if the buffer was empty.
- */
-char NbRingBuffReadChar()
-{
-  char retval = -1;
-  
-  if(NbRingBuffIsAvailable())
-  {
-    retval = nbRingBuff[rxPosStart];
-    rxPosStart = (rxPosStart + 1) % NB_RINGBUFF_SZ;
-  }
-
-  return retval;
-}
-
-
-
-/**
- * @brief Reads and removes all pending characters from the ring buffer and puts them into a String object.
- * @returns A string object that contains all characters that were pending in the ring buffer.
- */
-String NbRingBuffReadString(void)
-{
-  String retStr = "";
-  
-  while(NbRingBuffIsAvailable())
-  {
-    retStr += NbRingBuffReadChar();
-  }
-
-  return retStr;
-}
-
 
 
 void _log(String data )
 {
  /*FIXME param by reference*/
 #ifdef DEBUG
-  // _log(data);
-  //getSerialInst().println(data);
 	DEBUG_PRINT_INFO(data);
 #endif
 }
@@ -188,13 +88,15 @@ void _sendCmd(String in) {
 
 /*overloaded function for backward compatibility. This version can deal with different search strings.*/
 byte _parseResponse(String& response, const char *searchPattern) {
-  // RegExp Engine
-  static MatchState ms;
-  static char buf[512];
-  char cmd[128];
-  String gmxSerialString = "";
+	// RegExp Engine
+	static MatchState ms;
+	static char buf[512];
+	char cmd[128];
+	String gmxSerialString = "";
+	char result;
+	int strPos;
 
-  response = "";
+	response = "";
 
   // Read from Serial
   while (stream->available() > 0)
@@ -207,34 +109,62 @@ byte _parseResponse(String& response, const char *searchPattern) {
     delay(10);
   }
 
-  // TODO: No check for buffer length! Potential buffer overflow!
-  gmxSerialString.toCharArray(cmd, gmxSerialString.length());
-  _log("<-----");
-  _log("RESPONSE: '" + gmxSerialString+"'");
-  _log("<-----");
+	// TODO: No check for buffer length! Potential buffer overflow!
+	gmxSerialString.toCharArray(cmd, gmxSerialString.length());
+	if(gmxSerialString.length() > 0)
+	{
+		_log("<-----");
+		_log("RESPONSE: '" + gmxSerialString+"'");
+		_log("<-----");
+	}
+	
+	// Always check for incoming unsolicited packet (+NSONMI)
+	ms.Target(cmd);
+	result = ms.Match ("+NSONMI:", 0);
+	if ( result == REGEXP_MATCHED ) {
+		_log("detected rxPacket");
+		ms.GetCapture (buf, 0);
+		response = String(buf);
 
-  // Parse Response
-  ms.Target(cmd);
-  char result = ms.Match (searchPattern, 0);
-  if ( result == REGEXP_MATCHED ) {
-    ms.GetCapture (buf, 0);
+		/*decode +NSONMI response. How many bytes are pending?*/
+		response.toCharArray(cmd, response.length());
+		response = String(cmd);
+		response.trim();
+		strPos = 0;
+		AtResponseTokenize(response, ",", strPos);
+		response = response.substring(strPos, response.length());
+		if(response == "")
+		{
+			_log("error decoding +NSONMI");
+		}
+		else
+		{
+			/*get hex encoded version of payload from rxStr*/
+			rxBytesPending = response.toInt();
+			_log("rxBytesPending: " + String(rxBytesPending));
+		}
+	}
 
-    response = String(buf);
+	// Parse Response
+	result = ms.Match (searchPattern, 0);
+	if ( result == REGEXP_MATCHED ) {
+		ms.GetCapture (buf, 0);
+		response = String(buf);
 
-    // remove second \r\n => Not very elegant to optimize
-    response.toCharArray(cmd, response.length());
-    response = String(cmd);
+		// remove second \r\n => Not very elegant to optimize
+		response.toCharArray(cmd, response.length());
+		response = String(cmd);
+		return (GMXNB_OK);
+	}
 
-    return (GMXNB_OK);
-  }
+	// Check for Errors
+	result = ms.Match ("(.*)\r\nERROR", 0);
+	if ( result == REGEXP_MATCHED ) {
+		return (GMXNB_AT_ERROR);
+	}
 
-  // Check for Errors
-  result = ms.Match ("(.*)\r\nERROR", 0);
-  if ( result == REGEXP_MATCHED ) {
-    return (GMXNB_AT_ERROR);
-  }
-
-  return (GMXNB_AT_GENERIC_ERROR);
+	/*TODO ak should we cancel the received characters?*/
+	return (GMXNB_AT_GENERIC_ERROR);
 }
 
 
@@ -607,7 +537,14 @@ String AtResponseTokenize(String atResponse, String delimiter, int &indexStart)
 
 int gmxNB_Available(void)
 {
-  return (stream->available());
+	static String dummyResponse;
+	byte status;
+
+	// return (stream->available());
+	/*TODO check for received packets here (i.e. keep monitoring serial if for +NSONMI)*/
+	dummyResponse = "";
+	status = _parseResponse(dummyResponse, "+NSONMI:");
+	return rxBytesPending;
 }
 
 
@@ -623,42 +560,17 @@ byte gmxNB_RXData(String &remoteIp, int udpPortNr, byte *binaryData, int &len)
 
   _log("gmxNB_RXData(): wait for incoming packet(s)");
 
-  maxRetrials = 300;
-  while((stream->available() == 0) && (maxRetrials > 0))
-  {
-    maxRetrials--;
-    delay(100);
-    /*wait for incoming characters*/
-  }
+	maxRetrials = 300;
+
+    /*wait for incoming packet*/
+	while((gmxNB_Available() <= 0) && (maxRetrials > 0))
+	{
+		maxRetrials--;
+		delay(100);
+	}
 
 
-  if(maxRetrials <= 0)
-  {
-    _log("ERR: Remote host didn't respond.");
-    return GMXNB_AT_TIMEOUT;
-  }
-  else
-  {
-    _log("data from modem pending");
-    maxRetrials = 5;
-  }
-
-  do {
-    /*
-      Find a +NSONMI:[socket],[bytes] indication in incoming string
-      if yes cancel sensing the serial
-    */
-    _log("read/parse...");
-    status = _parseResponse(dummyResponse, "+NSONMI:");
-    _log("parse status = " + String(status));
-    delay(100);
-    maxRetrials--;
-  }  while ((status != GMXNB_OK) && (maxRetrials > 0));
-
-  _log("loop left with parse status = " + String(status));
-  _log(dummyResponse);
-
-  if ((status != GMXNB_OK) || (maxRetrials <= 0))
+  if(gmxNB_Available() <= 0)
   {
     _log("ERR: Remote host didn't respond.");
   }
@@ -739,6 +651,20 @@ byte gmxNB_RXData(String &remoteIp, int udpPortNr, byte *binaryData, int &len)
 	  DEBUG_PRINT_INFO("binaryData length: %d", sizeof(binaryData));
 	  
     }
+
+		/*rxBytesStillPending*/
+		subStr = rxStr.substring(currentStrIndex, rxStr.length());
+		if(subStr == "")
+		{
+			_log("error decoding rxBytesStillPending");
+			return GMXNB_AT_GENERIC_ERROR;
+		}
+		else
+		{
+			/*get hex encoded version of payload from rxStr*/
+			rxBytesPending = subStr.toInt();
+			_log("rxBytesPending: " + String(rxBytesPending));
+		}
   }
   
   return GMXNB_OK;
